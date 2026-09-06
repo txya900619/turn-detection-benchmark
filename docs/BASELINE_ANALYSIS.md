@@ -135,6 +135,38 @@ points (-19.47 to -11.61) and -18.42 points (-22.76 to -14.03), respectively.
 The reproducible trace-replay artifact is under
 `results/analysis/eotbench/20260906T083000Z/`.
 
+### TurnSense in a streaming setting
+
+TurnSense's FastTurn advantage does not transfer. Measured on eot-bench with a
+predeclared `invalid` policy, on the same 100 ms decision grid as VAP:
+
+| Language | Model | FC @300 ms | FC @600 ms | Latency @5% |
+|---|---|---:|---:|---:|
+| ZH | DualTurn | 23.36% | 10.20% | 910 ms |
+| ZH | Realtime-VAP 20 s | 25.66% | 9.87% | 910 ms |
+| ZH | **TurnSense** | **49.18%** | 15.79% | 990 ms |
+| EN | DualTurn | 22.13% | 9.65% | 991 ms |
+| EN | Realtime-VAP 20 s | 30.35% | 14.04% | 1184 ms |
+| EN | **TurnSense** | **55.60%** | 21.70% | 1608 ms |
+
+The paired conversation-cluster comparison puts TurnSense +25.82 points behind
+DualTurn in Chinese, 95% CI [+20.31, +31.42], and +23.52 behind Realtime-VAP,
+CI [+18.34, +28.69]. It fails hardest on ordinary 300--500 ms pauses, at 66.0%
+against 21.2% for both references.
+
+This settles the Chinese model-selection question that the FastTurn result had
+left open. Being the best isolated Complete/Incomplete classifier does not make
+a model a usable streaming endpointer: FastTurn asks what a finished segment
+was, while eot-bench asks when to cut, and TurnSense is strong at the first and
+weak at the second.
+
+The English row deserves one clarification. It is not a degenerate timeout
+fallback: all 392 English false cutoffs are model-triggered and none are
+timeout-triggered. Under zero-shot English its score distribution collapses
+toward zero, with median `p_eot` 0.0054 against 0.7353 in Chinese, so the
+prescribed sweep selects a very low threshold at which the model crosses on
+essentially every pause beyond 500 ms.
+
 ## FastTurn paired EOT analysis
 
 TurnSense and SmartTurn were compared on the identical 18,352 Complete and
@@ -271,15 +303,17 @@ semantic path for middle-turn speech.
 - EOT production candidate: DualTurn first, with SmartTurn as the small-model
   reference. Realtime-VAP remains a research baseline because of signal
   provenance and license.
-- Isolated Chinese Complete/Incomplete candidate: TurnSense, while retaining a
-  HOLD-safe policy for invalid and sub-second inputs.
+- Isolated Chinese Complete/Incomplete candidate: TurnSense, **for clip
+  classification only**. It is the worst streaming endpointer measured, +25.82
+  points behind DualTurn on Chinese eot-bench, so it must not be carried over
+  into a streaming role on the strength of its FastTurn score.
 - Native four-state reference: Easy Turn, with its same-team benchmark and
   possible overlap caveat kept visible.
 - Interruption candidate: DualTurn-derived policy only as an interim baseline;
   a native Chinese semantic-interruption model is still an open gap.
 
 The canonical normalized report and plots are under
-`results/comparison/20260906T150444Z/`.
+`results/comparison/20260906T161125Z/`.
 
 The reproducible SID paired report is under
 `results/analysis/sidbench/20260906T080000Z/`. It hashes all manifests, frozen

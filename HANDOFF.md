@@ -9,7 +9,7 @@ This is the primary handoff document for the next working session. Read this fil
 - The benchmark harness, dataset adapters, model adapters, metrics, reports, runtime probes, and CI fixtures are implemented.
 - The complete test suite passes: **128 passed** with the `smart-turn` extra installed. A plain `uv sync --frozen`, which is what CI does, gives 127 passed and 1 skipped.
 - No benchmark or model process was running at the time of handoff.
-- The canonical cross-benchmark report is in [`results/comparison/20260906T150444Z/`](results/comparison/20260906T150444Z/).
+- The canonical cross-benchmark report is in [`results/comparison/20260906T161125Z/`](results/comparison/20260906T161125Z/).
 - The current research interpretation is in [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
 - English and Chinese component suites have been run for the selected open-weight baselines.
 - **X2-Turn is explicitly deferred** because the released checkpoint is very large. Do not resume a full X2-Turn run unless the user reverses this decision.
@@ -196,7 +196,7 @@ New analysis code:
 
 ### 8.1 Unified comparison report
 
-Canonical directory: [`results/comparison/20260906T150444Z/`](results/comparison/20260906T150444Z/)
+Canonical directory: [`results/comparison/20260906T161125Z/`](results/comparison/20260906T161125Z/)
 
 It contains:
 
@@ -286,6 +286,8 @@ All percentages below are percentage points. Consult the immutable JSON and Parq
 | ZH | SmartTurn v3.2 | 41.78% | 12.83% | 928 ms | 667 ms |
 | EN | Realtime-VAP, 20 s context | 30.35% | 14.04% | 1184 ms | 753 ms |
 | ZH | Realtime-VAP, 20 s context | 25.66% | 9.87% | 910 ms | 590 ms |
+| EN | TurnSense INT8 (zero-shot) | 55.60% | 21.70% | 1608 ms | 942 ms |
+| ZH | TurnSense INT8 | 49.18% | 15.79% | 990 ms | 719 ms |
 
 The 20 s rows are a controlled checkpoint ablation on the same pinned revision,
 frame rate held at 10 Hz. It was run to test whether the long-HOLD failures
@@ -416,7 +418,7 @@ On the tested older CPU, DualTurn misses an 80 ms p90 frame budget, so GPU execu
 ## 10. Current research conclusions
 
 - **Production EOT candidate:** DualTurn, with SmartTurn retained as a very small CPU-friendly reference.
-- **Chinese isolated EOT candidate:** TurnSense INT8, but an explicit abstention and short-utterance policy is still needed.
+- **Chinese clip-classification candidate:** TurnSense INT8, but **for isolated clips only**. Its FastTurn lead does not transfer to streaming: on eot-bench ZH it is 49.18% FC@300 against DualTurn's 23.36%, a paired +25.82 pp with CI [+20.31, +31.42], and it fails hardest on ordinary 300-500 ms pauses. An abstention and short-utterance policy is still needed for the clip role.
 - **Four-state reference:** Easy Turn, with the independence and licensing caveats above.
 - **Coverage caveat:** SID-Bench can evaluate exactly one of the five candidate interruption architectures. Every other evaluated signal commits at the first frame of every clip, either because it is defined relative to an agent channel the benchmark does not provide, or because it does not localize onset. DualTurn's lead is uncontested rather than earned, and both Realtime-VAP rows are degenerate artifacts. See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
 - **Interruption interim baseline:** DualTurn-derived policy. It is far safer than the current VAP heuristic on middle speech and noise, but its non-break trigger rate and immediate-barge-in trade-off are still not production quality.
@@ -474,7 +476,7 @@ Do not use the SID test set or FastTurn test set to choose final production thre
 
 ### P1 — Resolve evidence gaps
 
-0. Close the prioritized coverage gaps in [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md). The audit classifies all 88 model/benchmark cells; 24 are unrun with no recorded reason. G1, G3 and G4 are closed; G8 was withdrawn. The open priority is G2 (TurnSense on eot-bench, the only natively Chinese model with no streaming result). Interruption coverage is now limited by SID-Bench itself rather than by missing runners: it needs a dual-channel Chinese interruption set, or a fallback protocol supplying a realistic agent channel instead of digital silence.
+0. Close the prioritized coverage gaps in [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md). The audit classifies all 88 model/benchmark cells; 24 are unrun with no recorded reason. G1, G3 and G4 are closed; G8 was withdrawn. G2 is closed too, with a negative result that settles Chinese model selection: DualTurn stands, TurnSense does not transfer to streaming. No high-value coverage gap remains. Interruption coverage is now limited by SID-Bench itself rather than by missing runners: it needs a dual-channel Chinese interruption set, or a fallback protocol supplying a realistic agent channel instead of digital silence.
 1. Investigate the small local-versus-model-card DualTurn eot-bench discrepancy.
 2. Audit Easy Turn training data, FastTurn overlap, and dataset/model licenses.
 3. Define and evaluate TurnSense abstention behavior on independent calibration data.

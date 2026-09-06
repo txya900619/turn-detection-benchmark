@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T16:11:30.515463+00:00",
+  "source_summary": "/mnt/md0/user_wayne/turn-detection-benchmark/results/comparison/20260906T161125Z/summary.json",
+  "inputs": [
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/comparison/20260906T161125Z/summary.json",
+      "sha256": "c547aec432e1056d73eea392357490b05bd7572ee8147802af72250ff31e264f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/metrics.json",
+      "sha256": "d12e76fd164d0bd67a3be4c48087d6e27564d583ac45d85824b07dde7acd8d1a"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/fixed_timeout_oracle_vad/20260904T131955441085Z-dc2d6a7b/metrics.json",
+      "sha256": "a99c9bbccd97ac1bec1b123a6db210ca004c22c37cc6410207915585a0b07237"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/metrics.json",
+      "sha256": "fa5b82bd7f54600813277f6599d0e9ba86345597f96cbc630a36fc21ac5d3cfe"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback-10hz-20s/20260906T144607414428Z-685f4e7b/metrics.json",
+      "sha256": "2e3af2e4e4126e351ac54e3048b67ad4e207082bce00f595600e1942fb80ac2d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/metrics.json",
+      "sha256": "32fe66ce58f38291a06beda729bd0d168e6ac1e420c72702574725cf8f14f963"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/turnsense_int8_cpu/20260906T160912790700Z-23bb983a/metrics.json",
+      "sha256": "0209baad7c71917a894b7ceae359545f28321775f18e79fd4059794bd221f093"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/metrics.json",
+      "sha256": "38ed228be591dfe91f31757f934a34c1b7fd0728af76785b9746037eb0843e98"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/fixed_timeout_oracle_vad/20260904T131954888548Z-25979a77/metrics.json",
+      "sha256": "7bb42006e3182ca1e9646d07c24bee29646ab7ff68c37ba7b8948bcb4a95a070"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/metrics.json",
+      "sha256": "7b99fe05b19c1749987c8163f9cfb06ef7d1cfdb7cc9d7919d2d8908f2c0b448"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback-10hz-20s/20260906T150241252324Z-daec211f/metrics.json",
+      "sha256": "d0a8488bc927c129c3385cf5c7de8366bc8ee7b6ee2e3a42bacbc41748fd96ca"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/metrics.json",
+      "sha256": "8e747be9fb7b20d9d80aa5f46521d9f1c59c98535f9a720a83da858d6a8b114f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/turnsense_int8_cpu/20260906T155021467274Z-938a789b/metrics.json",
+      "sha256": "88895b7731eff9510e138f2f0a88eb2e67182ba551129c0e7e44bf1375e72fd5"
+    }
+  ],
+  "images": [
+    "eot_pareto_en.png",
+    "eot_pareto_zh.png",
+    "sid_interruption_tradeoff.png"
+  ],
+  "sid_threshold_policy": "external-frozen-only; no test-set sweep",
+  "single_overall_score": false
+}

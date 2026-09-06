@@ -78,6 +78,7 @@ from turn_eval.models.turnsense import (
     TURNSENSE_REVISION,
     TURNSENSE_SOURCE_REVISION,
     TurnSenseFastTurnAdapter,
+    TurnSensePointwiseAdapter,
 )
 from turn_eval.models.x2_turn import (
     X2_TURN_DEFAULT_DELAY_MS,
@@ -130,6 +131,7 @@ class _CliProgress:
 
 def _evaluation_mode(
     signal_provenance: SignalProvenance = SignalProvenance.NATIVE,
+    language_support: SupportStatus = SupportStatus.SUPPORTED,
 ) -> EvaluationMode:
     return EvaluationMode(
         channel_mode=ChannelMode.NATIVE_SINGLE,
@@ -137,7 +139,7 @@ def _evaluation_mode(
         signal_provenance=signal_provenance,
         transcript_mode=TranscriptMode.NONE,
         service_mode=ServiceMode.LOCAL,
-        language_support=SupportStatus.SUPPORTED,
+        language_support=language_support,
     )
 
 
@@ -261,11 +263,57 @@ def _run_eot_bench_dualturn_subprocess(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_eot_bench_turnsense_subprocess(args: argparse.Namespace) -> int:
+    project = Path("environments/turnsense").resolve()
+    command = [
+        "uv",
+        "run",
+        "--project",
+        str(project),
+        "--frozen",
+        "turn-eval",
+        "run-eot-bench",
+        "--lang",
+        args.lang,
+        "--revision",
+        args.revision,
+        "--model",
+        "turnsense",
+        "--turnsense-revision",
+        args.turnsense_revision,
+        "--threads",
+        str(args.threads),
+        "--output-dir",
+        str(args.output_dir),
+        "--inference-interval-ms",
+        str(args.inference_interval_ms),
+        "--min-silence-span-ms",
+        str(args.min_silence_span_ms),
+        "--progress-interval-s",
+        str(args.progress_interval_s),
+    ]
+    if args.limit is not None:
+        command.extend(("--limit", str(args.limit)))
+    if args.local_files_only:
+        command.append("--local-files-only")
+    if args.quiet:
+        command.append("--quiet")
+    environment = os.environ.copy()
+    environment.pop("VIRTUAL_ENV", None)
+    environment["TURN_EVAL_TURNSENSE_BACKEND"] = "1"
+    completed = subprocess.run(command, check=False, env=environment)
+    if completed.returncode:
+        raise RuntimeError(f"TurnSense backend exited with status {completed.returncode}")
+    return 0
+
+
 def _run_eot_bench(args: argparse.Namespace) -> int:
     if args.model == "dualturn":
         return _run_eot_bench_dualturn_subprocess(args)
     if args.model == "realtime-vap":
         return _run_eot_bench_vap_subprocess(args)
+    if args.model == "turnsense" and os.environ.get("TURN_EVAL_TURNSENSE_BACKEND") != "1":
+        return _run_eot_bench_turnsense_subprocess(args)
     dataset = load_eot_bench(
         args.lang,
         revision=args.revision,
@@ -281,6 +329,14 @@ def _run_eot_bench(args: argparse.Namespace) -> int:
             sample_rate=16_000,
             lookahead_ms=args.lookahead_ms,
         )
+    elif args.model == "turnsense":
+        if args.lookahead_ms != 0:
+            raise ValueError("TurnSense declares zero lookahead; --lookahead-ms is invalid")
+        model = TurnSensePointwiseAdapter(
+            revision=args.turnsense_revision,
+            threads=args.threads,
+            local_files_only=args.local_files_only,
+        )
     else:
         if args.lookahead_ms != 0:
             raise ValueError("SmartTurn v3.2 declares zero lookahead; --lookahead-ms is invalid")
@@ -291,7 +347,12 @@ def _run_eot_bench(args: argparse.Namespace) -> int:
         )
     initialization_time_ms = (perf_counter() - started) * 1_000
     mode = _evaluation_mode(
-        SignalProvenance.DERIVED if args.model == "fixed-timeout" else SignalProvenance.NATIVE
+        SignalProvenance.DERIVED if args.model == "fixed-timeout" else SignalProvenance.NATIVE,
+        # TurnSense declares Chinese support only, so an English run is an
+        # explicitly unverified zero-shot row.
+        SupportStatus.UNVERIFIED_ZERO_SHOT
+        if args.model == "turnsense" and args.lang not in model.descriptor.supported_languages
+        else SupportStatus.SUPPORTED,
     )
     policy = (
         eot_bench_vad_policy_grid()
@@ -329,6 +390,15 @@ def _run_eot_bench(args: argparse.Namespace) -> int:
         )
     else:
         model_options["onnx_intra_op_threads"] = args.threads
+    if args.model == "turnsense":
+        model_options.update(
+            {
+                "turnsense_source_revision": TURNSENSE_SOURCE_REVISION,
+                "eot_mapping": "raw P(complete); invalid mass left in the denominator",
+                "invalid_policy": "no-renormalisation-low-confidence-keeps-waiting",
+                "invalid_policy_selected_on": "predeclared, not selected on eot-bench",
+            }
+        )
     run_id = make_run_id(model.descriptor, policy, model_options)
     manifest = build_manifest(
         run_id=run_id,
@@ -340,7 +410,7 @@ def _run_eot_bench(args: argparse.Namespace) -> int:
         benchmark_metadata=dataset.benchmark_metadata,
         execution_metadata={
             "device": "cpu",
-            "thread_count": args.threads if args.model == "smart-turn-v3.2" else 1,
+            "thread_count": (args.threads if args.model in {"smart-turn-v3.2", "turnsense"} else 1),
             "batch_size": 1,
             "seed": 0,
         },
@@ -1600,10 +1670,11 @@ def build_parser() -> argparse.ArgumentParser:
     eot_bench.add_argument("--output-dir", type=Path, default=Path("results"))
     eot_bench.add_argument(
         "--model",
-        choices=("fixed-timeout", "smart-turn-v3.2", "realtime-vap", "dualturn"),
+        choices=("fixed-timeout", "smart-turn-v3.2", "turnsense", "realtime-vap", "dualturn"),
         default="fixed-timeout",
     )
     eot_bench.add_argument("--model-revision", default=SMART_TURN_REVISION)
+    eot_bench.add_argument("--turnsense-revision", default=TURNSENSE_REVISION)
     eot_bench.add_argument("--limit", type=int)
     eot_bench.add_argument("--model-timeout-ms", type=float, default=0.0)
     eot_bench.add_argument("--vap-frame-rate-hz", type=float)

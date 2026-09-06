@@ -9,9 +9,11 @@ import numpy as np
 from turn_eval.core.types import (
     AudioData,
     ClipRequest,
+    DecisionRequest,
     ExecutionMode,
     ModelDescriptor,
     StatePrediction,
+    TurnPrediction,
     TurnState,
 )
 
@@ -126,6 +128,84 @@ class _AudioFrontend:
         dimension = features.shape[1]
         features = (features + self._cmvn[0, :dimension]) * self._cmvn[1, :dimension]
         return features[None].astype(np.float32), np.asarray([len(features)], dtype=np.int64)
+
+
+class TurnSensePointwiseAdapter:
+    """TurnSense INT8 scored at eot-bench decision points.
+
+    The eot-bench harness sweeps a threshold over a continuous ``p_eot``, so the
+    three-way native output has to be reduced to one number. The reduction is
+    predeclared here and is not a free parameter:
+
+    ``p_eot`` is the raw ``P(complete)`` softmax component, with the ``invalid``
+    mass left in the denominator. When the model is unsure and puts weight on
+    ``invalid``, ``P(complete)`` falls automatically, so the policy is less
+    likely to cut off. That is the "do not decide, keep waiting" semantics the
+    coverage audit asked for, and it needs no extra parameter.
+
+    Renormalizing over ``complete`` and ``incomplete`` alone was rejected
+    a priori rather than by measurement: it would rescale a low-confidence
+    frame such as ``(0.05, 0.05, 0.90)`` back up to 0.5 and make the model
+    *more* likely to cut off exactly where it is least certain.
+    """
+
+    def __init__(
+        self,
+        *,
+        revision: str = TURNSENSE_REVISION,
+        threads: int = 4,
+        local_files_only: bool = False,
+        infer: Callable[[np.ndarray], np.ndarray] | None = None,
+    ) -> None:
+        if threads <= 0:
+            raise ValueError("TurnSense thread count must be positive")
+        self._infer = infer or TurnSenseFastTurnAdapter._load_runtime(
+            revision, threads, local_files_only
+        )
+        self._max_samples = TURNSENSE_CONTEXT_SECONDS * TURNSENSE_SAMPLE_RATE
+        self._descriptor = ModelDescriptor(
+            name="turnsense-int8-cpu",
+            revision=revision,
+            native_sample_rate=TURNSENSE_SAMPLE_RATE,
+            execution_modes=frozenset({ExecutionMode.POINTWISE}),
+            output_signals=frozenset({"eot"}),
+            supported_languages=frozenset({"zh"}),
+            accepted_inputs=frozenset({"user_audio"}),
+            context_window_s=TURNSENSE_CONTEXT_SECONDS,
+            artifact_checksum=f"sha256:{TURNSENSE_MODEL_SHA256}",
+            artifact_size_bytes=TURNSENSE_MODEL_BYTES,
+            model_license="Apache-2.0",
+            code_license="Apache-2.0",
+            known_training_datasets=("upstream training set not disclosed",),
+            # The card documents Chinese and English; only Chinese is declared
+            # supported above, so an English run must be labelled zero-shot.
+            allow_unverified_zero_shot=True,
+        )
+
+    @property
+    def descriptor(self) -> ModelDescriptor:
+        return self._descriptor
+
+    def predict(self, request: DecisionRequest) -> TurnPrediction:
+        if request.user_audio.sample_rate != TURNSENSE_SAMPLE_RATE:
+            raise ValueError("TurnSense requires 16 kHz audio")
+        samples = np.asarray(request.user_audio.samples, dtype=np.float32)[-self._max_samples :]
+        probabilities = _normalize_turnsense_output(self._infer(samples))
+        complete, incomplete, invalid = (float(value) for value in probabilities)
+        return TurnPrediction(
+            example_id=request.example_id,
+            decision_point_id=request.decision_point_id,
+            available_at_s=request.observed_until_s,
+            observed_until_s=request.observed_until_s,
+            scores={
+                "eot": complete,
+                # Preserved so the raw three-way output stays auditable in the
+                # prediction Parquet rather than being collapsed irrecoverably.
+                "turnsense_incomplete": incomplete,
+                "turnsense_invalid": invalid,
+            },
+            emitted_at_ns=monotonic_ns(),
+        )
 
 
 class TurnSenseFastTurnAdapter:

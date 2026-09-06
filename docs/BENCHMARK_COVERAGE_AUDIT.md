@@ -1,6 +1,6 @@
 # Cross-Benchmark Coverage Audit
 
-Audited: 2026-09-06 UTC. Last updated after closing gaps G4, G1 and G3.
+Audited: 2026-09-06 UTC. Last updated after closing gaps G4, G1, G3 and G2.
 
 ## Purpose
 
@@ -17,8 +17,8 @@ simply unrun work.
 ## Verdict
 
 Across 11 models and 8 benchmark splits there are 88 cells. The canonical
-comparison fills **28**. Of the 60 empty cells, **34 are blocked** by a
-capability or protocol limit, **11 are recorded decisions**, and **15 are gaps
+comparison fills **30**. Of the 58 empty cells, **34 are blocked** by a
+capability or protocol limit, **11 are recorded decisions**, and **13 are gaps
 with no recorded reason**.
 
 Closing G1 and G3 produced a structural result about the benchmark rather than
@@ -42,7 +42,7 @@ Classification is decided by comparing what a benchmark requires against what a
 model declares in its `ModelDescriptor`
 ([`src/turn_eval/core/types.py:276`](../src/turn_eval/core/types.py)) and in the
 `channel_mode` / `execution_mode` / `signal_provenance` fields recorded in
-[`results/comparison/20260906T150444Z/summary.csv`](../results/comparison/20260906T150444Z/summary.csv).
+[`results/comparison/20260906T161125Z/summary.csv`](../results/comparison/20260906T161125Z/summary.csv).
 
 | Code | Meaning |
 | --- | --- |
@@ -94,7 +94,7 @@ explains most of the `BLOCKED` cells in both directions.
 | ESPnet TurnTaking | GAP | GAP | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
 | Mimi Endpointer | GAP | GAP | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
 | Kyutai Semantic VAD | GAP | GAP | DONE | BLOCKED | BLOCKED | DONE | DECIDED | DONE |
-| TurnSense INT8 | **GAP** | **GAP** | DECIDED | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
+| TurnSense INT8 | DONE | DONE | DECIDED | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
 | Easy Turn | BLOCKED | BLOCKED | BLOCKED | DONE | DONE | BLOCKED | BLOCKED | BLOCKED |
 | X2-Turn 4B | BLOCKED | BLOCKED | BLOCKED | DECIDED | DECIDED | BLOCKED | BLOCKED | BLOCKED |
 
@@ -227,7 +227,7 @@ would breach HANDOFF section 4.5.
 
 Every gap below has an existing precedent in this repository, so the work is a
 new runner or a re-scoring pass, not new protocol design. The seven groups below
-account for all 15 remaining gap cells.
+account for all 13 remaining gap cells.
 
 Each SID-Bench run also produces the shared noise split under the same frozen
 policy, so a SID gap group always covers its model's `SID-EN` and `SID-noise`
@@ -236,7 +236,7 @@ cells together.
 | Group | Cells | Cost |
 | --- | --- | --- |
 | G1 | VapGPT OTO on SID-EN, SID-noise | Closed 2026-09-06; negative result |
-| G2 | TurnSense on eot-ZH, eot-EN | New adapter, then CPU inference |
+| G2 | TurnSense on eot-ZH, eot-EN | Closed 2026-09-06; negative result |
 | G3 | Kyutai on SID-EN, SID-noise | Closed 2026-09-06; negative result |
 | G4 | Easy Turn on FastTurn 2-state | Closed 2026-09-06, re-scoring only |
 | G5 | DualTurn and Realtime-VAP on FastTurn 2-state | Blocked on P1 calibration |
@@ -283,25 +283,58 @@ Two implementation notes for anyone reproducing this:
   absolute difference of 0.
 - Runtime is not the constraint: RTF is 0.015, about 67 times real time.
 
-### G2. TurnSense on eot-bench ZH and EN
+### G2. TurnSense on eot-bench ZH and EN — CLOSED, negative result
 
-TurnSense is the only natively Chinese-trained candidate in the roster, and it
-has the best Chinese two-state numbers by a wide margin (+12.59 pp paired
-accuracy over SmartTurn). It has never been measured in a streaming setting, so
-it cannot be placed on the same axes as DualTurn, and the Chinese production
-recommendation currently rests on a zero-shot English model.
+Closed on 2026-09-06 with `TurnSensePointwiseAdapter`. TurnSense was the only
+natively Chinese-trained candidate and had the best Chinese two-state numbers by
+a wide margin, but had never been measured in a streaming setting, so it and
+DualTurn shared no axis. **Its FastTurn advantage does not transfer.**
 
-Feasible: TurnSense emits a three-way softmax, so `P(complete)` is continuous
-and satisfies the sweep requirement. Only `TurnSenseFastTurnAdapter`
-(`ClipClassificationModelAdapter`) exists; a `PointwiseModelAdapter` must be
-added, mirroring `SmartTurnV32Adapter`
-([`src/turn_eval/models/smart_turn.py:39`](../src/turn_eval/models/smart_turn.py)).
+False-cutoff rate by HOLD duration, all three models on the identical 100 ms
+decision grid:
 
-One design decision must be made and recorded first: what the `invalid` class
-means at a streaming decision point. Folding it into `P(complete)` dilutes the
-score; treating it as "do not decide, keep waiting" is more defensible but is a
-policy choice that must be frozen on calibration data, not selected on
-eot-bench.
+| Language | HOLD duration | TurnSense | VAP 20 s | DualTurn |
+| --- | --- | ---: | ---: | ---: |
+| ZH | 300--<500 ms | 66.0% | 21.2% | 21.2% |
+| ZH | 500--<1000 ms | 68.4% | 40.9% | 35.7% |
+| ZH | 1--<2 s | 91.1% | 88.9% | 77.8% |
+| ZH | all spans | **49.2%** | 25.7% | 23.4% |
+| EN | 300--<500 ms | 43.1% | 22.4% | 14.2% |
+| EN | 500--<1000 ms | 100.0% | 44.9% | 33.8% |
+| EN | all spans | **55.6%** | 30.4% | 22.1% |
+
+Paired conversation-cluster bootstrap, TurnSense minus reference:
+
+| Language | vs DualTurn | vs VAP 20 s |
+| --- | --- | --- |
+| ZH | +25.82 pp, CI [+20.31, +31.42] | +23.52 pp, CI [+18.34, +28.69] |
+| EN | +33.48 pp, CI [+29.29, +37.57] | +25.25 pp, CI [+20.38, +30.29] |
+
+Every interval is far from zero. TurnSense is decisively the worst streaming EOT
+model measured, in both languages, and it fails hardest on the ordinary
+300--500 ms pauses that dominate real conversation.
+
+Two notes on reading the numbers:
+
+- The comparison against VAP is exactly like-for-like: both score 9,441 Chinese
+  and 11,191 English decision points on the same 100 ms grid. The comparison
+  against **SmartTurn is not**: SmartTurn declares a 200 ms
+  `natural_score_point_ms`, so it is scored at 952 and 1,105 points
+  respectively. TurnSense's 49.18% against SmartTurn's 41.78% is therefore not
+  an apples-to-apples row, while its loss to VAP and DualTurn is.
+- The English row is not a degenerate timeout fallback: 392 of its 392 English
+  false cutoffs are model-triggered and none are timeout-triggered. Under
+  zero-shot English the score distribution collapses towards zero (median
+  `p_eot` 0.0054 against 0.7353 in Chinese), so the prescribed sweep must select
+  a very low threshold, at which the model crosses on essentially every pause
+  beyond 500 ms.
+
+The `invalid` policy was predeclared before the run and is recorded in every
+manifest: `p_eot` is the raw `P(complete)` with the `invalid` mass left in the
+denominator, so a low-confidence frame becomes less likely to cut off.
+Renormalising over `complete` and `incomplete` alone was rejected a priori, not
+by measurement, because it would rescale a frame such as `(0.05, 0.05, 0.90)`
+back to 0.5.
 
 ### G3. Kyutai Semantic VAD on SID-Bench EN — CLOSED, negative result
 
@@ -438,5 +471,5 @@ not support.
 Update this file whenever a model or benchmark is added, and re-derive the
 matrix from the canonical comparison manifest rather than from memory. The
 matrix above was generated against
-`results/comparison/20260906T150444Z/summary.csv`, which selects 46 rows from 85
+`results/comparison/20260906T161125Z/summary.csv`, which selects 48 rows from 89
 hashed input artifacts.
