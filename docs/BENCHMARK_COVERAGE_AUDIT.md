@@ -42,7 +42,7 @@ Classification is decided by comparing what a benchmark requires against what a
 model declares in its `ModelDescriptor`
 ([`src/turn_eval/core/types.py:276`](../src/turn_eval/core/types.py)) and in the
 `channel_mode` / `execution_mode` / `signal_provenance` fields recorded in
-[`results/comparison/20260906T135941Z/summary.csv`](../results/comparison/20260906T135941Z/summary.csv).
+[`results/comparison/20260906T150444Z/summary.csv`](../results/comparison/20260906T150444Z/summary.csv).
 
 | Code | Meaning |
 | --- | --- |
@@ -438,5 +438,5 @@ not support.
 Update this file whenever a model or benchmark is added, and re-derive the
 matrix from the canonical comparison manifest rather than from memory. The
 matrix above was generated against
-`results/comparison/20260906T135941Z/summary.csv`, which selects 44 rows from 81
+`results/comparison/20260906T150444Z/summary.csv`, which selects 46 rows from 85
 hashed input artifacts.

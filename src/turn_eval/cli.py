@@ -181,8 +181,13 @@ def _run_synthetic(args: argparse.Namespace) -> int:
 
 
 def _run_eot_bench_vap_subprocess(args: argparse.Namespace) -> int:
-    if args.inference_interval_ms != 100.0 or args.min_silence_span_ms != 100.0:
-        raise ValueError("Realtime-VAP uses its native 100 ms eot-bench decision grid")
+    frame_rate_hz = args.vap_frame_rate_hz or 10.0
+    native_grid_ms = 1_000.0 / frame_rate_hz
+    if args.inference_interval_ms != native_grid_ms or args.min_silence_span_ms != native_grid_ms:
+        raise ValueError(
+            f"Realtime-VAP at {frame_rate_hz:g} Hz uses a native "
+            f"{native_grid_ms:g} ms eot-bench decision grid"
+        )
     project = Path("environments/realtime_vap").resolve()
     command = [
         "uv",
@@ -201,6 +206,10 @@ def _run_eot_bench_vap_subprocess(args: argparse.Namespace) -> int:
         "--device",
         args.device,
     ]
+    if args.vap_frame_rate_hz is not None:
+        command.extend(("--frame-rate-hz", str(args.vap_frame_rate_hz)))
+    if args.vap_context_window_s is not None:
+        command.extend(("--context-window-s", str(args.vap_context_window_s)))
     if args.limit is not None:
         command.extend(("--limit", str(args.limit)))
     if args.local_files_only:
@@ -1597,6 +1606,8 @@ def build_parser() -> argparse.ArgumentParser:
     eot_bench.add_argument("--model-revision", default=SMART_TURN_REVISION)
     eot_bench.add_argument("--limit", type=int)
     eot_bench.add_argument("--model-timeout-ms", type=float, default=0.0)
+    eot_bench.add_argument("--vap-frame-rate-hz", type=float)
+    eot_bench.add_argument("--vap-context-window-s", type=float)
     eot_bench.add_argument("--lookahead-ms", type=float, default=0.0)
     eot_bench.add_argument("--inference-interval-ms", type=float, default=100.0)
     eot_bench.add_argument("--min-silence-span-ms", type=float, default=100.0)

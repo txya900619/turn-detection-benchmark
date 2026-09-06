@@ -36,6 +36,51 @@ run shows no catastrophic shift: FC @300/600 differs by only +1.23/+0.55 points.
 AUC falls from 0.966 to 0.933 and AP from 0.922 to 0.818, which is evidence that
 the score distribution and calibration do change across languages.
 
+### Context length: a checkpoint ablation
+
+The pinned `maai-kyoto/vap_tri` revision publishes one checkpoint per (frame
+rate, context length) pair. Holding the frame rate at 10 Hz and moving the
+context from 5 s to 20 s changes nothing else, which makes it a controlled test
+of the hypothesis that the long-HOLD failures below are a context-length
+problem.
+
+**The hypothesis is not supported.** False-cutoff rate by HOLD duration:
+
+| Language | HOLD duration | N | VAP 5 s | VAP 20 s | DualTurn |
+|---|---|---:|---:|---:|---:|
+| EN | 300--<500 ms | 246 | 29.3% | 22.4% | 14.2% |
+| EN | 500--<1000 ms | 207 | 43.5% | 44.9% | 33.8% |
+| EN | 1--<2 s | 61 | 90.2% | 78.7% | 62.3% |
+| EN | 2--5 s | 18 | 100.0% | 100.0% | 72.2% |
+| ZH | 300--<500 ms | 212 | 34.9% | 21.2% | 21.2% |
+| ZH | 500--<1000 ms | 171 | 46.2% | 40.9% | 35.7% |
+| ZH | 1--<2 s | 45 | 80.0% | 88.9% | 77.8% |
+| ZH | 2--5 s | 1 | 100.0% | 100.0% | 100.0% |
+
+Four times the context leaves both 2--5 s slices at 100%, and the Chinese
+1--2 s slice gets worse rather than better. Those long slices hold 61, 45, 18
+and 1 spans, so none of their movements is well supported on its own; the
+defensible reading is that context length does not address long hesitation.
+
+The gain is real but sits somewhere else, on ordinary 300--500 ms pauses:
+-6.9 points in English and -13.7 points in Chinese. Aggregated over all HOLD
+spans, the paired conversation-cluster comparison against the 5 s checkpoint is
+-2.98 points in English with a 95% interval of -7.09 to +1.13, which includes
+zero, and -5.59 points in Chinese with an interval of -9.53 to -1.84, which does
+not.
+
+The Chinese result matters for model selection. Against DualTurn, the 20 s
+checkpoint is +2.30 points with an interval of -1.97 to +6.67: on Chinese
+eot-bench the two are now statistically indistinguishable at the 300 ms
+operating point, where the 5 s checkpoint had been 7.89 points worse. DualTurn
+remains clearly ahead in English, at +8.23 points with an interval of +4.23 to
++12.16.
+
+The improvement is not free. At the 5% cutoff operating point mean latency rises
+by 168 ms in English and 32 ms in Chinese, and FC@600 is marginally worse in
+both. The license also does not change: this is still the CC-BY-NC-SA-4.0
+checkpoint, so it is a research reference rather than a production candidate.
+
 ### False-cutoff timing slices
 
 At the prescribed 300 ms operating point, a false cutoff can come from the
@@ -234,7 +279,7 @@ semantic path for middle-turn speech.
   a native Chinese semantic-interruption model is still an open gap.
 
 The canonical normalized report and plots are under
-`results/comparison/20260906T135941Z/`.
+`results/comparison/20260906T150444Z/`.
 
 The reproducible SID paired report is under
 `results/analysis/sidbench/20260906T080000Z/`. It hashes all manifests, frozen

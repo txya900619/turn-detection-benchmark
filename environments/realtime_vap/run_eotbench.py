@@ -14,7 +14,6 @@ from run_turnbench import (  # noqa: E402
     MAAI_CODE_REVISION,
     MAAI_VERSION,
     MAAI_WHEEL_SHA256,
-    MODEL_FILENAME,
     MODEL_LICENSE,
     MODEL_REPOSITORY,
     MODEL_REVISION,
@@ -54,25 +53,31 @@ def main() -> int:
     parser.add_argument("--limit", type=int)
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--frame-rate-hz", type=float, default=FRAME_RATE_HZ)
+    parser.add_argument("--context-window-s", type=float, default=CONTEXT_WINDOW_S)
     args = parser.parse_args()
 
     dataset = load_eot_bench(
         args.lang,
         revision=args.revision,
         limit=args.limit,
-        inference_interval_s=1 / FRAME_RATE_HZ,
-        min_silence_span_s=1 / FRAME_RATE_HZ,
+        inference_interval_s=1 / args.frame_rate_hz,
+        min_silence_span_s=1 / args.frame_rate_hz,
         local_files_only=args.local_files_only,
     )
     started = perf_counter()
     runtime_model, checkpoint, cpc_path = _build_model(
         args.device,
         local_files_only=args.local_files_only,
+        frame_rate_hz=args.frame_rate_hz,
+        context_window_s=args.context_window_s,
     )
     model = RealtimeVAPSingleChannelEOTAdapter(
         runtime_model,
         artifact_checksum=f"sha256:{_sha256(checkpoint)}",
         artifact_size_bytes=checkpoint.stat().st_size,
+        frame_rate_hz=args.frame_rate_hz,
+        context_s=args.context_window_s,
     )
     initialization_time_ms = (perf_counter() - started) * 1_000
     mode = EvaluationMode(
@@ -97,7 +102,9 @@ def main() -> int:
         "maai_wheel_sha256": MAAI_WHEEL_SHA256,
         "checkpoint_repository": MODEL_REPOSITORY,
         "checkpoint_revision": MODEL_REVISION,
-        "checkpoint_filename": MODEL_FILENAME,
+        "checkpoint_filename": checkpoint.name,
+        "frame_rate_hz": args.frame_rate_hz,
+        "context_window_s": args.context_window_s,
         "cpc_sha256": _sha256(cpc_path),
         "dataset_language": args.lang,
         "dataset_revision": args.revision,
@@ -125,13 +132,18 @@ def main() -> int:
             "batch_size": 1,
             "seed": 0,
             "native_sample_rate": NATIVE_SAMPLE_RATE,
-            "frame_rate_hz": FRAME_RATE_HZ,
-            "context_window_s": CONTEXT_WINDOW_S,
+            "frame_rate_hz": args.frame_rate_hz,
+            "context_window_s": args.context_window_s,
             "model_license": MODEL_LICENSE,
         },
     )
+    # The default configuration keeps its established directory; a checkpoint
+    # variant gets its own so the two never share a leaderboard folder.
+    variant = ""
+    if (args.frame_rate_hz, args.context_window_s) != (FRAME_RATE_HZ, CONTEXT_WINDOW_S):
+        variant = f"-{args.frame_rate_hz:g}hz-{args.context_window_s:g}s"
     destination = write_run_artifacts(
-        args.output_dir / args.lang / "eotbench" / "realtime_vap_single_channel_fallback",
+        args.output_dir / args.lang / "eotbench" / f"realtime_vap_single_channel_fallback{variant}",
         run_id=run_id,
         manifest=manifest,
         run=run,

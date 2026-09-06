@@ -9,7 +9,7 @@ This is the primary handoff document for the next working session. Read this fil
 - The benchmark harness, dataset adapters, model adapters, metrics, reports, runtime probes, and CI fixtures are implemented.
 - The complete test suite passes: **128 passed** with the `smart-turn` extra installed. A plain `uv sync --frozen`, which is what CI does, gives 127 passed and 1 skipped.
 - No benchmark or model process was running at the time of handoff.
-- The canonical cross-benchmark report is in [`results/comparison/20260906T135941Z/`](results/comparison/20260906T135941Z/).
+- The canonical cross-benchmark report is in [`results/comparison/20260906T150444Z/`](results/comparison/20260906T150444Z/).
 - The current research interpretation is in [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
 - English and Chinese component suites have been run for the selected open-weight baselines.
 - **X2-Turn is explicitly deferred** because the released checkpoint is very large. Do not resume a full X2-Turn run unless the user reverses this decision.
@@ -196,7 +196,7 @@ New analysis code:
 
 ### 8.1 Unified comparison report
 
-Canonical directory: [`results/comparison/20260906T135941Z/`](results/comparison/20260906T135941Z/)
+Canonical directory: [`results/comparison/20260906T150444Z/`](results/comparison/20260906T150444Z/)
 
 It contains:
 
@@ -284,6 +284,17 @@ All percentages below are percentage points. Consult the immutable JSON and Parq
 | ZH | DualTurn fallback | 23.36% | 10.20% | 910 ms | 612 ms |
 | ZH | Realtime-VAP fallback | 31.25% | 9.70% | 879 ms | 597 ms |
 | ZH | SmartTurn v3.2 | 41.78% | 12.83% | 928 ms | 667 ms |
+| EN | Realtime-VAP, 20 s context | 30.35% | 14.04% | 1184 ms | 753 ms |
+| ZH | Realtime-VAP, 20 s context | 25.66% | 9.87% | 910 ms | 590 ms |
+
+The 20 s rows are a controlled checkpoint ablation on the same pinned revision,
+frame rate held at 10 Hz. It was run to test whether the long-HOLD failures
+below are a context-length problem. **They are not:** both 2-5 s slices stay at
+100% and the Chinese 1-2 s slice worsens. The gain is on ordinary 300-500 ms
+pauses, is significant only in Chinese (-5.59 pp, CI -9.53 to -1.84), and costs
+up to 168 ms of latency at the 5% operating point. On Chinese it does make VAP
+statistically indistinguishable from DualTurn at FC@300 (+2.30 pp, CI -1.97 to
++6.67). See [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
 
 Interpretation:
 

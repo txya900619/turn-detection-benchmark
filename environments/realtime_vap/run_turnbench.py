@@ -29,6 +29,9 @@ from turn_eval.benchmarks.turnbench import (  # noqa: E402
     load_turnbench,
 )
 from turn_eval.core.audio import StreamingLinearResampler  # noqa: E402
+from turn_eval.models.realtime_vap import (  # noqa: E402
+    realtime_vap_checkpoint_filename,
+)
 
 MAAI_CODE_REVISION = "0.2.18"
 MODEL_REPOSITORY = "maai-kyoto/vap_tri"
@@ -63,14 +66,21 @@ class _NullInput:
         return queue.Queue()
 
 
-def _build_model(device: str, *, local_files_only: bool = False):
+def _build_model(
+    device: str,
+    *,
+    local_files_only: bool = False,
+    frame_rate_hz: float = FRAME_RATE_HZ,
+    context_window_s: float = CONTEXT_WINDOW_S,
+):
     torch.manual_seed(0)
     np.random.seed(0)
     Maai, cpc_path = _load_maai()
+    filename = realtime_vap_checkpoint_filename(frame_rate_hz, context_window_s)
     checkpoint = Path(
         hf_hub_download(
             repo_id=MODEL_REPOSITORY,
-            filename=MODEL_FILENAME,
+            filename=filename,
             revision=MODEL_REVISION,
             local_files_only=local_files_only,
         )
@@ -80,8 +90,8 @@ def _build_model(device: str, *, local_files_only: bool = False):
         lang="tri",
         audio_ch1=_NullInput(),
         audio_ch2=_NullInput(),
-        frame_rate=FRAME_RATE_HZ,
-        context_len_sec=int(CONTEXT_WINDOW_S),
+        frame_rate=frame_rate_hz,
+        context_len_sec=int(context_window_s),
         device=device,
         cpc_model=str(cpc_path),
         local_model=str(checkpoint),
