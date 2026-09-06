@@ -15,6 +15,11 @@ Interpretation of the completed open-weight baselines, including paired Chinese
 error slices and deployment caveats, is in
 [docs/BASELINE_ANALYSIS.md](docs/BASELINE_ANALYSIS.md).
 
+Which model/benchmark cells are measured, which are blocked by a protocol limit,
+and which are simply unrun is audited in
+[docs/BENCHMARK_COVERAGE_AUDIT.md](docs/BENCHMARK_COVERAGE_AUDIT.md). Read it
+before drawing a cross-benchmark ranking from the comparison report.
+
 The canonical cross-benchmark comparison is
 [`results/comparison/20260906T073000Z/`](results/comparison/20260906T073000Z/):
 `report.md`, `summary.csv`, `summary.json`, `manifest.json`, and figures. That

@@ -178,8 +178,9 @@ Important documentation:
 - [`docs/SPEC.md`](docs/SPEC.md): repository and interface specification.
 - [`docs/STATUS.md`](docs/STATUS.md): detailed implementation and run status.
 - [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md): cross-benchmark interpretation and recommendations.
+- [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md): which model/benchmark cells are measured, blocked, decided, or unrun.
 - [`docs/TURNBENCH_PROTOCOL.md`](docs/TURNBENCH_PROTOCOL.md): official TurnBench matching and timing rules.
-- [`docs/TURNBENCH_BASELINE_AUDIT.md`](docs/TURNBENCH_BASELINE_AUDIT.md): evaluated and missing TurnBench models.
+- [`docs/TURNBENCH_BASELINE_AUDIT.md`](docs/TURNBENCH_BASELINE_AUDIT.md): evaluated and missing TurnBench models, audited against the official roster.
 - [`docs/FASTTURN_PROTOCOL.md`](docs/FASTTURN_PROTOCOL.md): FastTurn state mappings and metrics.
 - [`docs/SIDBENCH_PROTOCOL.md`](docs/SIDBENCH_PROTOCOL.md): SID scoring and mapping caveats.
 - [`docs/RUNTIME_PROTOCOL.md`](docs/RUNTIME_PROTOCOL.md): runtime measurement protocol.
@@ -381,6 +382,7 @@ On the tested older CPU, DualTurn misses an 80 ms p90 frame budget, so GPU execu
 - **Production EOT candidate:** DualTurn, with SmartTurn retained as a very small CPU-friendly reference.
 - **Chinese isolated EOT candidate:** TurnSense INT8, but an explicit abstention and short-utterance policy is still needed.
 - **Four-state reference:** Easy Turn, with the independence and licensing caveats above.
+- **Coverage caveat:** both SID-Bench rows are DualTurn and Realtime-VAP, and both are derived single-channel fallbacks. The native-signal interruption models validated on TurnBench have never been run on SID-Bench, so the interruption ranking below rests on a two-model sample. See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
 - **Interruption interim baseline:** DualTurn-derived policy. It is far safer than the current VAP heuristic on middle speech and noise, but its non-break trigger rate and immediate-barge-in trade-off are still not production quality.
 - **VAP role:** useful research architecture and TurnBench reference, but the evaluated checkpoint/policy is not a production recommendation. Preserve its non-commercial or share-alike license constraints when applicable.
 - **Training decision:** existing models are reasonably promising for EOT, but long HOLD pauses and semantic interruption/backchannel rejection remain weak. If training begins later, prioritize Chinese dual-channel/future-activity or native semantic interruption architectures rather than a broad retraining effort inside this repo.
@@ -436,6 +438,7 @@ Do not use the SID test set or FastTurn test set to choose final production thre
 
 ### P1 — Resolve evidence gaps
 
+0. Close the prioritized coverage gaps in [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md). The audit classifies all 88 model/benchmark cells; 24 are unrun with no recorded reason. Highest value are G1 (VapGPT OTO on SID-EN, the only native interruption signal never tested on the interruption benchmark), G2 (TurnSense on eot-bench, the only natively Chinese model with no streaming result), and G4 (Easy Turn on the FastTurn 2-state subset, re-scoring only).
 1. Investigate the small local-versus-model-card DualTurn eot-bench discrepancy.
 2. Audit Easy Turn training data, FastTurn overlap, and dataset/model licenses.
 3. Define and evaluate TurnSense abstention behavior on independent calibration data.

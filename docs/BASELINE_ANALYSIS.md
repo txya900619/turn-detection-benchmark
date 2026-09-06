@@ -124,6 +124,12 @@ calibration set with an explicit false-cutoff budget, not on FastTurn test.
 
 ## Interruption
 
+The comparison set here is two models, both derived and both single-channel
+fallback. The native-signal interruption architectures validated on TurnBench,
+including the VapGPT OTO native floor-state head at 95.68% recall, have never
+been run on SID-Bench. See [`BENCHMARK_COVERAGE_AUDIT.md`](BENCHMARK_COVERAGE_AUDIT.md)
+before reading the rows below as a ranking of available architectures.
+
 DualTurn's frozen derived-FVAD policy is the strongest current SID-Bench
 fallback: EN/ZH recall is 69.00%/81.45%, FIR is 32.25%/14.44%, and APT is
 1.494/0.839 seconds. It also reduces the noise false-trigger rate from VAP's

@@ -2,6 +2,8 @@
 
 Audited: 2026-09-05 UTC
 
+This file audits TurnBench only, against its official roster. For coverage across every benchmark in this repository, including eot-bench, FastTurn, and SID-Bench, see [`BENCHMARK_COVERAGE_AUDIT.md`](BENCHMARK_COVERAGE_AUDIT.md).
+
 ## Verdict
 
 No: this repository has validated the TurnBench harness, but it has not run all
