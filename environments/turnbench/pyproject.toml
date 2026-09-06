@@ -1,0 +1,10 @@
+[project]
+name = "turn-eval-turnbench-scorer"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "turnbench @ git+https://github.com/SesameAILabs/turnbench.git@e02d547803fd0e45221afcaeb1cd24b61ae7568e",
+]
+
+[tool.uv]
+package = false

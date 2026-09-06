@@ -1,0 +1,15 @@
+[project]
+name = "turn-eval-realtime-vap"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "einops>=0.7",
+    "huggingface-hub>=1.0",
+    "numpy>=2.0",
+    "pyarrow>=17",
+    "soundfile>=0.12.1",
+    "torch==2.9.1",
+]
+
+[tool.uv]
+package = false

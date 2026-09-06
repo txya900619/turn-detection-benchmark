@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T08:20:05.352832+00:00",
+  "analysis_method": "fixed-policy paired clip bootstrap",
+  "bootstrap_resamples": 10000,
+  "seed": 0,
+  "inputs": [
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "42e282b8a881db9c53a17ee8381d7e8786886eae9ff4b39d4f3fcb86d2226209"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/predictions.parquet",
+      "sha256": "439d49c229ee8bf0a498a7d178b948bbb0537a2124360d183b31b9b47888358c"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "e28e9f5aec90d2e050de5e90827d8c46fc9057c6c168572660532db855dec51a"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/predictions.parquet",
+      "sha256": "5316a05a09119130df0bcd300f3512e73fec4450fc57e9ad4b0bf03f28fc0a46"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "5a99a2727f57b40103493fefd21f33b7c8798569d35672b8b126d0048481be5d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/predictions.parquet",
+      "sha256": "c3561e4aaeb9bdbd5c8980199d99950ac5dc78aafe280015327309d34ead2f1e"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "8b799825ffd0ed8465f3ccb4536df2759e13eed5d5b3a11e512720440cbe76db"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/predictions.parquet",
+      "sha256": "164a495c7161354b65dc59f3490629c41307ade705fd842f8390eaa192842e3d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "523f6e7284bf4b278ef5271d986bfa91dc705b7541d93447b197ca359f8e6053"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/predictions.parquet",
+      "sha256": "ee7a7427222c54cb9b2f6895bbee2eeda9d4ceace06bd2713cd68df280f4f289"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "7c872290bbd8b333f7ef35825b225abb05dfa90bc9b58a2f77919ec5c9da63c8"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/predictions.parquet",
+      "sha256": "6ac0133eea0787db93063643ef11cc0fae8bc7b31064a25259dcf785a64ad59e"
+    }
+  ]
+}

@@ -216,3 +216,34 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local benchmark artifacts.
+# Raw run directories, superseded reports, and scratch output stay out of Git;
+# only the canonical comparison, analysis, and runtime artifacts named in
+# HANDOFF.md section 8 are committed as a small provenance record.
+results/*
+!results/comparison/
+!results/analysis/
+!results/runtime/
+
+results/comparison/*
+!results/comparison/20260906T073000Z/
+
+results/analysis/*
+!results/analysis/eotbench/
+!results/analysis/sidbench/
+results/analysis/eotbench/*
+!results/analysis/eotbench/20260906T083000Z/
+results/analysis/sidbench/*
+!results/analysis/sidbench/20260906T080000Z/
+
+results/runtime/*
+!results/runtime/20260905T103200Z/
+!results/runtime/dualturn/
+!results/runtime/realtime_vap/
+results/runtime/dualturn/*
+!results/runtime/dualturn/20260905T103200Z-*.json
+results/runtime/realtime_vap/*
+!results/runtime/realtime_vap/20260905T103200Z-*.json
+environments/realtime_vap/assets/
+environments/realtime_vap/vendor/

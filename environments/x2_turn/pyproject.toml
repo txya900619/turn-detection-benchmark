@@ -1,0 +1,15 @@
+[project]
+name = "turn-eval-x2-turn"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "turn-detection-benchmark",
+    "voxtral-realtime[transformers]",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+turn-detection-benchmark = { path = "../..", editable = true }
+voxtral-realtime = { git = "https://github.com/X-Square-Robot/X2-Turn.git", rev = "3609a0fd11b4a1dc2b2629e95538bbe0860da96d", subdirectory = "voxtral-realtime" }

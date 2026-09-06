@@ -1,0 +1,48 @@
+[project]
+name = "turn-detection-benchmark"
+version = "0.1.0"
+description = "Reproducible turn-detection model evaluation"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+dependencies = [
+    "huggingface-hub>=0.30",
+    "matplotlib>=3.9,<4",
+    "numpy>=2.0",
+    "pyarrow>=17",
+    "soundfile>=0.12.1",
+]
+
+[project.optional-dependencies]
+smart-turn = [
+    "onnxruntime>=1.23",
+    "soxr>=0.5",
+    "transformers>=4.48,<6",
+]
+
+[project.scripts]
+turn-eval = "turn_eval.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.12",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/turn_eval"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

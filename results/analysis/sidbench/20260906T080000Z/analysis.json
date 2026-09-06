@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T08:20:05.352832+00:00",
+  "calibration": "none; all input policies remain frozen",
+  "pairs": [
+    {
+      "split": "en",
+      "candidate_model": "dualturn-endpointing",
+      "reference_model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+      "candidate_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z",
+      "reference_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z",
+      "analysis": {
+        "schema_version": 1,
+        "method": "fixed-policy paired clip bootstrap",
+        "confidence": 0.95,
+        "bootstrap_resamples": 10000,
+        "seed": 0,
+        "tolerance_s": 0.05,
+        "examples": 1600,
+        "overall": {
+          "strict_fir": {
+            "candidate": 0.323125,
+            "reference": 0.673125,
+            "delta": {
+              "estimate": -0.35,
+              "lower": -0.374375,
+              "upper": -0.32625
+            }
+          },
+          "average_penalty_time_s": {
+            "candidate": 1.4940753515624998,
+            "reference": 2.5213501171875,
+            "delta": {
+              "estimate": -1.027274765625,
+              "lower": -1.1513509684244791,
+              "upper": -0.9060873066406251
+            }
+          },
+          "interruption_recall": {
+            "candidate": 0.69,
+            "reference": 0.44,
+            "delta": {
+              "estimate": 0.25,
+              "lower": 0.22272727272727272,
+              "upper": 0.27636363636363637
+            }
+          }
+        },
+        "by_category": {
+          "interruption_beginning": {
+            "examples": 500,
+            "primary_metric": "interruption_recall",
+            "primary": {
+              "candidate": 0.946,
+              "reference": 0.928,
+              "delta": {
+                "estimate": 0.018,
+                "lower": -0.004,
+                "upper": 0.042
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 0.294701,
+              "reference": 0.359592375,
+              "delta": {
+                "estimate": -0.06489137500000002,
+                "lower": -0.17406537500000002,
+                "upper": 0.029776265624999982
+              }
+            },
+            "paired_counts": {
+              "both_positive": 451,
+              "candidate_only": 22,
+              "reference_only": 13,
+              "neither": 14
+            },
+            "early_interruption_rate": {
+              "candidate": 0.022,
+              "reference": 0.07,
+              "delta": {
+                "estimate": -0.048,
+                "lower": -0.068,
+                "upper": -0.03
+              }
+            }
+          },
+          "interruption_middle": {
+            "examples": 600,
+            "primary_metric": "interruption_recall",
+            "primary": {
+              "candidate": 0.4766666666666667,
+              "reference": 0.03333333333333333,
+              "delta": {
+                "estimate": 0.44333333333333336,
+                "lower": 0.4033333333333333,
+                "upper": 0.4816666666666667
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 3.413779895833333,
+              "reference": 5.749833541666667,
+              "delta": {
+                "estimate": -2.336053645833333,
+                "lower": -2.6240337187500007,
+                "upper": -2.0499075078125
+              }
+            },
+            "paired_counts": {
+              "both_positive": 18,
+              "candidate_only": 268,
+              "reference_only": 2,
+              "neither": 312
+            },
+            "early_interruption_rate": {
+              "candidate": 0.49833333333333335,
+              "reference": 0.9666666666666667,
+              "delta": {
+                "estimate": -0.4683333333333333,
+                "lower": -0.51,
+                "upper": -0.42833333333333334
+              }
+            }
+          },
+          "nonbreak": {
+            "examples": 500,
+            "primary_metric": "strict_trigger_rate",
+            "primary": {
+              "candidate": 0.414,
+              "reference": 0.924,
+              "delta": {
+                "estimate": -0.51,
+                "lower": -0.554,
+                "upper": -0.466
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 0.38980425,
+              "reference": 0.80892775,
+              "delta": {
+                "estimate": -0.41912350000000004,
+                "lower": -0.46371664999999995,
+                "upper": -0.37562553750000005
+              }
+            },
+            "paired_counts": {
+              "both_positive": 205,
+              "candidate_only": 2,
+              "reference_only": 257,
+              "neither": 36
+            }
+          }
+        }
+      }
+    },
+    {
+      "split": "zh",
+      "candidate_model": "dualturn-endpointing",
+      "reference_model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+      "candidate_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z",
+      "reference_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z",
+      "analysis": {
+        "schema_version": 1,
+        "method": "fixed-policy paired clip bootstrap",
+        "confidence": 0.95,
+        "bootstrap_resamples": 10000,
+        "seed": 0,
+        "tolerance_s": 0.05,
+        "examples": 1600,
+        "overall": {
+          "strict_fir": {
+            "candidate": 0.144375,
+            "reference": 0.64625,
+            "delta": {
+              "estimate": -0.501875,
+              "lower": -0.52625,
+              "upper": -0.476875
+            }
+          },
+          "average_penalty_time_s": {
+            "candidate": 0.8392531901041668,
+            "reference": 2.4160743359375,
+            "delta": {
+              "estimate": -1.5768211458333332,
+              "lower": -1.7347430527343748,
+              "upper": -1.4218107639973958
+            }
+          },
+          "interruption_recall": {
+            "candidate": 0.8145454545454546,
+            "reference": 0.4718181818181818,
+            "delta": {
+              "estimate": 0.3427272727272727,
+              "lower": 0.30727272727272725,
+              "upper": 0.3790909090909091
+            }
+          }
+        },
+        "by_category": {
+          "interruption_beginning": {
+            "examples": 500,
+            "primary_metric": "interruption_recall",
+            "primary": {
+              "candidate": 0.87,
+              "reference": 0.922,
+              "delta": {
+                "estimate": -0.052,
+                "lower": -0.09,
+                "upper": -0.014
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 0.5447789166666667,
+              "reference": 0.49334341666666665,
+              "delta": {
+                "estimate": 0.051435500000000016,
+                "lower": -0.12445051041666672,
+                "upper": 0.210665190625
+              }
+            },
+            "paired_counts": {
+              "both_positive": 401,
+              "candidate_only": 34,
+              "reference_only": 60,
+              "neither": 5
+            },
+            "early_interruption_rate": {
+              "candidate": 0.002,
+              "reference": 0.078,
+              "delta": {
+                "estimate": -0.076,
+                "lower": -0.1,
+                "upper": -0.054
+              }
+            }
+          },
+          "interruption_middle": {
+            "examples": 600,
+            "primary_metric": "interruption_recall",
+            "primary": {
+              "candidate": 0.7683333333333333,
+              "reference": 0.09666666666666666,
+              "delta": {
+                "estimate": 0.6716666666666666,
+                "lower": 0.63,
+                "upper": 0.7116666666666667
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 1.4409191319444445,
+              "reference": 5.277120555555555,
+              "delta": {
+                "estimate": -3.8362014236111115,
+                "lower": -4.161109480034722,
+                "upper": -3.5173021432291676
+              }
+            },
+            "paired_counts": {
+              "both_positive": 45,
+              "candidate_only": 416,
+              "reference_only": 13,
+              "neither": 126
+            },
+            "early_interruption_rate": {
+              "candidate": 0.15166666666666667,
+              "reference": 0.9033333333333333,
+              "delta": {
+                "estimate": -0.7516666666666667,
+                "lower": -0.785,
+                "upper": -0.7166666666666667
+              }
+            }
+          },
+          "nonbreak": {
+            "examples": 500,
+            "primary_metric": "strict_trigger_rate",
+            "primary": {
+              "candidate": 0.278,
+              "reference": 0.906,
+              "delta": {
+                "estimate": -0.628,
+                "lower": -0.67,
+                "upper": -0.586
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 0.41172833333333336,
+              "reference": 0.9055497916666667,
+              "delta": {
+                "estimate": -0.49382145833333335,
+                "lower": -0.5379287104166667,
+                "upper": -0.4509326239583334
+              }
+            },
+            "paired_counts": {
+              "both_positive": 139,
+              "candidate_only": 0,
+              "reference_only": 314,
+              "neither": 47
+            }
+          }
+        }
+      }
+    },
+    {
+      "split": "noise",
+      "candidate_model": "dualturn-endpointing",
+      "reference_model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+      "candidate_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z",
+      "reference_run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z",
+      "analysis": {
+        "schema_version": 1,
+        "method": "fixed-policy paired clip bootstrap",
+        "confidence": 0.95,
+        "bootstrap_resamples": 10000,
+        "seed": 0,
+        "tolerance_s": 0.05,
+        "examples": 500,
+        "overall": {
+          "strict_fir": {
+            "candidate": 0.042,
+            "reference": 0.916,
+            "delta": {
+              "estimate": -0.874,
+              "lower": -0.902,
+              "upper": -0.844
+            }
+          },
+          "average_penalty_time_s": {
+            "candidate": 0.42433,
+            "reference": 12.303158,
+            "delta": {
+              "estimate": -11.878828,
+              "lower": -13.693957274999999,
+              "upper": -10.254382750000001
+            }
+          }
+        },
+        "by_category": {
+          "noise_or_silence": {
+            "examples": 500,
+            "primary_metric": "strict_trigger_rate",
+            "primary": {
+              "candidate": 0.042,
+              "reference": 0.916,
+              "delta": {
+                "estimate": -0.874,
+                "lower": -0.902,
+                "upper": -0.844
+              }
+            },
+            "average_penalty_time_s": {
+              "candidate": 0.42433,
+              "reference": 12.303158,
+              "delta": {
+                "estimate": -11.878828,
+                "lower": -13.684595825,
+                "upper": -10.219343625000002
+              }
+            },
+            "paired_counts": {
+              "both_positive": 21,
+              "candidate_only": 0,
+              "reference_only": 437,
+              "neither": 42
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T08:36:02.820401+00:00",
+  "candidate_model": "dualturn-endpointing",
+  "operating_point": "false_cutoff_at_300ms",
+  "bootstrap_resamples": 10000,
+  "seed": 0,
+  "inputs": [
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/manifest.json",
+      "sha256": "2166d158ea5b18838fd87764273ac5e33a4c95dfc026fec64a24560e8ab0ce81"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/metrics.json",
+      "sha256": "d12e76fd164d0bd67a3be4c48087d6e27564d583ac45d85824b07dde7acd8d1a"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/policy.json",
+      "sha256": "8e988c10c54631e7694efa18b4fdcefee47c4be58872a6b5c2e02fa1204c5511"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/predictions.parquet",
+      "sha256": "46f83bc134ae2a6f6e61830fe334ef4ecd4b646e082697de8bc232460b2d9fa3"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/manifest.json",
+      "sha256": "6ae3ff1e7a01dd09cb01242e01c8e63ffea5b1f1d9be22fcbe889688a9a0d781"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/metrics.json",
+      "sha256": "fa5b82bd7f54600813277f6599d0e9ba86345597f96cbc630a36fc21ac5d3cfe"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/policy.json",
+      "sha256": "8e988c10c54631e7694efa18b4fdcefee47c4be58872a6b5c2e02fa1204c5511"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/predictions.parquet",
+      "sha256": "0e6f1ec6b1123531c21256886b4b8d05f8cff2558fe296b23146373992a7ad8f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/manifest.json",
+      "sha256": "d951845ec624508e71520e60271cf077622707f5a73c975efb5ccaa8dd2c446d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/metrics.json",
+      "sha256": "32fe66ce58f38291a06beda729bd0d168e6ac1e420c72702574725cf8f14f963"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/policy.json",
+      "sha256": "7d46428975fc0c89e158ddbae5ec328cfce037f0b1b845d2ac6346f515537638"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/predictions.parquet",
+      "sha256": "9f67ca0fa7fc99dda364c2b85a04486d28218da851461e7a2940884e2fe74a54"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/manifest.json",
+      "sha256": "219dbeb6095388ddc98281f118cb85ebeaf6b46a6cec8087d034f200abd1f22e"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/metrics.json",
+      "sha256": "38ed228be591dfe91f31757f934a34c1b7fd0728af76785b9746037eb0843e98"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/policy.json",
+      "sha256": "8e988c10c54631e7694efa18b4fdcefee47c4be58872a6b5c2e02fa1204c5511"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/predictions.parquet",
+      "sha256": "09d086399c1a38e9504564fec3106add00f075aa7dd697b730c6df62c5f44689"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/manifest.json",
+      "sha256": "2af030bfb173a5b97b123a6ed7292d0d5b319d7563e28b5be2ca61b1a794420f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/metrics.json",
+      "sha256": "7b99fe05b19c1749987c8163f9cfb06ef7d1cfdb7cc9d7919d2d8908f2c0b448"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/policy.json",
+      "sha256": "8e988c10c54631e7694efa18b4fdcefee47c4be58872a6b5c2e02fa1204c5511"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/predictions.parquet",
+      "sha256": "0b415ea24638b6537836a8e8bb30de45e00daefe637f9ffae0394af80241689e"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/manifest.json",
+      "sha256": "28e82d957e112bf5c5bffefff1d24c642cca4b1438a5c7b7f86e67718fe5aec4"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/metrics.json",
+      "sha256": "8e747be9fb7b20d9d80aa5f46521d9f1c59c98535f9a720a83da858d6a8b114f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/policy.json",
+      "sha256": "7d46428975fc0c89e158ddbae5ec328cfce037f0b1b845d2ac6346f515537638"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/predictions.parquet",
+      "sha256": "00499f30b4e9cbc95a4e00e26b7fb2bdc56e903111da99f555ce5ca87a321172"
+    }
+  ]
+}

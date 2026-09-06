@@ -1,0 +1,544 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T08:36:02.820401+00:00",
+  "operating_point": "false_cutoff_at_300ms",
+  "calibration": "none; stored operating points replayed without modification",
+  "bootstrap": {
+    "method": "paired conversation-cluster bootstrap",
+    "resamples": 10000,
+    "seed": 0,
+    "confidence": 0.95
+  },
+  "analyses": [
+    {
+      "language": "en",
+      "candidate_model": "dualturn-endpointing",
+      "models": [
+        {
+          "model": "dualturn-endpointing",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.86,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 3000.0,
+            "false_cutoff_rate": 0.22127659574468084,
+            "mean_latency_ms": 298.79999999999995,
+            "false_cutoffs": 156,
+            "hold_spans": 705,
+            "eot_spans": 400
+          },
+          "summary": {
+            "hold_spans": 705,
+            "false_cutoffs": 156,
+            "false_cutoff_rate": 0.22127659574468084,
+            "model_triggered": 155,
+            "timeout_triggered": 1,
+            "safe": 549,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 173,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 246,
+                "false_cutoffs": 35,
+                "false_cutoff_rate": 0.14227642276422764,
+                "model_triggered": 35,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 207,
+                "false_cutoffs": 70,
+                "false_cutoff_rate": 0.33816425120772947,
+                "model_triggered": 70,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 61,
+                "false_cutoffs": 38,
+                "false_cutoff_rate": 0.6229508196721312,
+                "model_triggered": 38,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 18,
+                "false_cutoffs": 13,
+                "false_cutoff_rate": 0.7222222222222222,
+                "model_triggered": 12,
+                "timeout_triggered": 1
+              }
+            ]
+          }
+        },
+        {
+          "model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.14,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 1000.0,
+            "false_cutoff_rate": 0.3333333333333333,
+            "mean_latency_ms": 299.25,
+            "false_cutoffs": 235,
+            "hold_spans": 705,
+            "eot_spans": 400
+          },
+          "summary": {
+            "hold_spans": 705,
+            "false_cutoffs": 235,
+            "false_cutoff_rate": 0.3333333333333333,
+            "model_triggered": 200,
+            "timeout_triggered": 35,
+            "safe": 470,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 173,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 246,
+                "false_cutoffs": 72,
+                "false_cutoff_rate": 0.2926829268292683,
+                "model_triggered": 72,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 207,
+                "false_cutoffs": 90,
+                "false_cutoff_rate": 0.43478260869565216,
+                "model_triggered": 90,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 61,
+                "false_cutoffs": 55,
+                "false_cutoff_rate": 0.9016393442622951,
+                "model_triggered": 31,
+                "timeout_triggered": 24
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 18,
+                "false_cutoffs": 18,
+                "false_cutoff_rate": 1.0,
+                "model_triggered": 7,
+                "timeout_triggered": 11
+              }
+            ]
+          }
+        },
+        {
+          "model": "smart-turn-v3.2-cpu",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.07,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 1000.0,
+            "false_cutoff_rate": 0.375886524822695,
+            "mean_latency_ms": 300.00000000000017,
+            "false_cutoffs": 265,
+            "hold_spans": 705,
+            "eot_spans": 400
+          },
+          "summary": {
+            "hold_spans": 705,
+            "false_cutoffs": 265,
+            "false_cutoff_rate": 0.375886524822695,
+            "model_triggered": 220,
+            "timeout_triggered": 45,
+            "safe": 440,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 173,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 246,
+                "false_cutoffs": 103,
+                "false_cutoff_rate": 0.4186991869918699,
+                "model_triggered": 103,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 207,
+                "false_cutoffs": 89,
+                "false_cutoff_rate": 0.42995169082125606,
+                "model_triggered": 89,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 61,
+                "false_cutoffs": 55,
+                "false_cutoff_rate": 0.9016393442622951,
+                "model_triggered": 23,
+                "timeout_triggered": 32
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 18,
+                "false_cutoffs": 18,
+                "false_cutoff_rate": 1.0,
+                "model_triggered": 5,
+                "timeout_triggered": 13
+              }
+            ]
+          }
+        }
+      ],
+      "paired_comparisons": [
+        {
+          "reference_model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+          "paired_counts": {
+            "both_false": 117,
+            "candidate_only": 39,
+            "reference_only": 118,
+            "both_safe": 431
+          },
+          "false_cutoff_rate_delta": {
+            "estimate": -0.11205673758865248,
+            "lower": -0.1471482863743865,
+            "upper": -0.07568360478174486,
+            "groups": 87,
+            "resamples": 10000
+          }
+        },
+        {
+          "reference_model": "smart-turn-v3.2-cpu",
+          "paired_counts": {
+            "both_false": 123,
+            "candidate_only": 33,
+            "reference_only": 142,
+            "both_safe": 407
+          },
+          "false_cutoff_rate_delta": {
+            "estimate": -0.15460992907801419,
+            "lower": -0.1947248086839426,
+            "upper": -0.11612903225806452,
+            "groups": 87,
+            "resamples": 10000
+          }
+        }
+      ]
+    },
+    {
+      "language": "zh",
+      "candidate_model": "dualturn-endpointing",
+      "models": [
+        {
+          "model": "dualturn-endpointing",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.85,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 1000.0,
+            "false_cutoff_rate": 0.23355263157894737,
+            "mean_latency_ms": 294.6210029069767,
+            "false_cutoffs": 142,
+            "hold_spans": 608,
+            "eot_spans": 344
+          },
+          "summary": {
+            "hold_spans": 608,
+            "false_cutoffs": 142,
+            "false_cutoff_rate": 0.23355263157894737,
+            "model_triggered": 136,
+            "timeout_triggered": 6,
+            "safe": 466,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 179,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 212,
+                "false_cutoffs": 45,
+                "false_cutoff_rate": 0.21226415094339623,
+                "model_triggered": 45,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 171,
+                "false_cutoffs": 61,
+                "false_cutoff_rate": 0.3567251461988304,
+                "model_triggered": 61,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 45,
+                "false_cutoffs": 35,
+                "false_cutoff_rate": 0.7777777777777778,
+                "model_triggered": 30,
+                "timeout_triggered": 5
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 1,
+                "false_cutoffs": 1,
+                "false_cutoff_rate": 1.0,
+                "model_triggered": 0,
+                "timeout_triggered": 1
+              }
+            ]
+          }
+        },
+        {
+          "model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.06,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 1500.0,
+            "false_cutoff_rate": 0.3125,
+            "mean_latency_ms": 298.25581395348837,
+            "false_cutoffs": 190,
+            "hold_spans": 608,
+            "eot_spans": 344
+          },
+          "summary": {
+            "hold_spans": 608,
+            "false_cutoffs": 190,
+            "false_cutoff_rate": 0.3125,
+            "model_triggered": 189,
+            "timeout_triggered": 1,
+            "safe": 418,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 179,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 212,
+                "false_cutoffs": 74,
+                "false_cutoff_rate": 0.3490566037735849,
+                "model_triggered": 74,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 171,
+                "false_cutoffs": 79,
+                "false_cutoff_rate": 0.4619883040935672,
+                "model_triggered": 79,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 45,
+                "false_cutoffs": 36,
+                "false_cutoff_rate": 0.8,
+                "model_triggered": 36,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 1,
+                "false_cutoffs": 1,
+                "false_cutoff_rate": 1.0,
+                "model_triggered": 0,
+                "timeout_triggered": 1
+              }
+            ]
+          }
+        },
+        {
+          "model": "smart-turn-v3.2-cpu",
+          "run": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4",
+          "dataset_revision": "ca9d98a9686b920a2d8c9eb984224ba9be74e4dd",
+          "operating_point": {
+            "threshold": 0.41,
+            "action_delay_ms": 200.0,
+            "timeout_ms": 1000.0,
+            "false_cutoff_rate": 0.41776315789473684,
+            "mean_latency_ms": 300.00000000000017,
+            "false_cutoffs": 254,
+            "hold_spans": 608,
+            "eot_spans": 344
+          },
+          "summary": {
+            "hold_spans": 608,
+            "false_cutoffs": 254,
+            "false_cutoff_rate": 0.41776315789473684,
+            "model_triggered": 243,
+            "timeout_triggered": 11,
+            "safe": 354,
+            "duration_slices": [
+              {
+                "label": "200--<300 ms",
+                "lower_ms": 200,
+                "upper_exclusive_ms": 300,
+                "spans": 179,
+                "false_cutoffs": 0,
+                "false_cutoff_rate": 0.0,
+                "model_triggered": 0,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "300--<500 ms",
+                "lower_ms": 300,
+                "upper_exclusive_ms": 500,
+                "spans": 212,
+                "false_cutoffs": 117,
+                "false_cutoff_rate": 0.5518867924528302,
+                "model_triggered": 117,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "500--<1000 ms",
+                "lower_ms": 500,
+                "upper_exclusive_ms": 1000,
+                "spans": 171,
+                "false_cutoffs": 99,
+                "false_cutoff_rate": 0.5789473684210527,
+                "model_triggered": 99,
+                "timeout_triggered": 0
+              },
+              {
+                "label": "1--<2 s",
+                "lower_ms": 1000,
+                "upper_exclusive_ms": 2000,
+                "spans": 45,
+                "false_cutoffs": 37,
+                "false_cutoff_rate": 0.8222222222222222,
+                "model_triggered": 27,
+                "timeout_triggered": 10
+              },
+              {
+                "label": "2--5 s",
+                "lower_ms": 2000,
+                "upper_exclusive_ms": 5001,
+                "spans": 1,
+                "false_cutoffs": 1,
+                "false_cutoff_rate": 1.0,
+                "model_triggered": 0,
+                "timeout_triggered": 1
+              }
+            ]
+          }
+        }
+      ],
+      "paired_comparisons": [
+        {
+          "reference_model": "maai-realtime-vap-trilingual-cpc-10hz-5s",
+          "paired_counts": {
+            "both_false": 116,
+            "candidate_only": 26,
+            "reference_only": 74,
+            "both_safe": 392
+          },
+          "false_cutoff_rate_delta": {
+            "estimate": -0.07894736842105263,
+            "lower": -0.11601569137186937,
+            "upper": -0.043478260869565216,
+            "groups": 201,
+            "resamples": 10000
+          }
+        },
+        {
+          "reference_model": "smart-turn-v3.2-cpu",
+          "paired_counts": {
+            "both_false": 119,
+            "candidate_only": 23,
+            "reference_only": 135,
+            "both_safe": 331
+          },
+          "false_cutoff_rate_delta": {
+            "estimate": -0.18421052631578946,
+            "lower": -0.2276325914981377,
+            "upper": -0.14031832357303228,
+            "groups": 201,
+            "resamples": 10000
+          }
+        }
+      ]
+    }
+  ]
+}

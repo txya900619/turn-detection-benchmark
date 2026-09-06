@@ -1,0 +1,18 @@
+[project]
+name = "turn-eval-mimi-endpointer"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "huggingface-hub==0.30.2",
+    "moshi==0.2.11",
+    "numpy==1.26.4",
+    "pyarrow>=17",
+    "safetensors>=0.4",
+    "soundfile==0.12.1",
+    "torch==2.7.0",
+    "torchaudio==2.7.0",
+    "transformers==4.53.3",
+]
+
+[tool.uv]
+package = false
