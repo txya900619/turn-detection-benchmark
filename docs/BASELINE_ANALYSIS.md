@@ -314,33 +314,60 @@ Selection replays the cached per-frame traces of the completed DualTurn runs and
 reruns no model; at the incumbent parameters the replay reproduces those runs'
 published metrics to the last digit, which is what licenses the comparison.
 
-Selected on 30% of clips, scored once on the remaining 70%:
+The full design has two paths: a fast one that commits immediately on an
+unambiguous frame, and a slow one that requires the signal to persist. Both
+degenerate cases stay inside the family, so the incumbent and a
+confirmation-only policy are competitors rather than special cases. Selected on
+30% of clips, scored once on the remaining 70%:
 
 | Split | Policy | Recall | FIR | Non-break trigger | IRL p50 | IRL p90 |
 |---|---|---:|---:|---:|---:|---:|
 | ZH | Incumbent | 82.60% | 13.30% | 26.57% | 252 ms | 869 ms |
-| ZH | **Two-stage** | **86.23%** | **4.29%** | **9.43%** | 682 ms | 1343 ms |
+| ZH | **Two-path** | **86.36%** | **4.29%** | **9.43%** | 682 ms | 1322 ms |
 | EN | Incumbent | 67.53% | 33.04% | 41.14% | 178 ms | 660 ms |
-| EN | **Two-stage** | **82.99%** | **7.14%** | **6.00%** | 683 ms | 1490 ms |
+| EN | **Two-path** | **83.51%** | **9.82%** | 10.57% | 620 ms | 1160 ms |
 
-Both languages independently select **8 frames, 640 ms, of confirmation**, at
-different thresholds (0.92 Chinese, 0.97 English). That the persistence
-parameter converges while the threshold does not is evidence that the
-confirmation delay is the operative mechanism rather than a fitting artifact.
+Both languages independently select **8 frames, 640 ms, of confirmation** on the
+slow path, at different slow thresholds (0.92 Chinese, 0.94 English) and a fast
+threshold near the ceiling (0.999 and 0.998). That the persistence parameter
+converges while the thresholds do not is evidence that the confirmation delay is
+the operative mechanism rather than a fitting artifact, and the very high fast
+threshold is the intended semantics: only a genuinely unambiguous frame skips
+confirmation.
+
+One number needs stating plainly. The English held-out non-break rate is 10.57%,
+just above the 10% budget the policy was selected under. A budget is a selection
+constraint on calibration, not a guarantee on held-out data, and this is ordinary
+generalisation slack rather than a protocol breach; but the English policy does
+not in fact deliver a sub-10% non-break rate.
+
+The fast path helps and does not rescue the trade. Against the
+confirmation-only policy it recovers immediate-barge-in recall by 3.15 points in
+English and 0.29 in Chinese and trims the latency tail, but held-out
+beginning-interruption recall still sits below the incumbent's, at 88.86%
+against 94.00% in English and 84.00% against 87.14% in Chinese. A confirmation
+delay cannot be made free; it can only be made cheaper for the clearest cases.
 
 The aggregate gain is a trade, not a free lunch, and the aggregate penalty time
 hides it because non-break false triggers dominate that statistic:
 
-| Split | Category | Incumbent | Two-stage |
+| Split | Category | Incumbent | Two-path |
 |---|---|---:|---:|
-| ZH | interruption_beginning | 87.14% | 83.71% |
+| ZH | interruption_beginning | 87.14% | 84.00% |
 | ZH | interruption_middle | 78.81% | 88.33% |
-| EN | interruption_beginning | 94.00% | 85.71% |
-| EN | interruption_middle | 45.48% | 80.71% |
+| EN | interruption_beginning | 94.00% | 88.86% |
+| EN | interruption_middle | 45.48% | 79.05% |
 
-The policy gives up 3 to 8 points on immediate barge-in and roughly 450 ms of
-response latency, and buys 10 to 35 points on mid-turn interruption plus a 17 to
-35 point reduction in non-break false triggers. For an agent that must not be
+The policy gives up 3 to 5 points on immediate barge-in and roughly 440 ms of
+response latency, and buys 10 to 34 points on mid-turn interruption plus a 17 to
+31 point reduction in non-break false triggers.
+
+It also transfers to noise without ever having been fitted on it. Applying the
+frozen policies to the shared noise split, which contains no interruption at all
+and took no part in any selection, cuts the trigger rate from the incumbent's
+4.20% to 0.60% under the Chinese policy and 0.40% under the English one. That is
+the clearest evidence that the confirmation delay is rejecting transient
+activations rather than memorising a split. For an agent that must not be
 interrupted by an acknowledgement, that is the right side of the trade; for one
 whose users barge in at the very start of a reply, it is not. The choice is now
 an explicit product decision with measured costs on both sides, rather than an

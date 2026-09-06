@@ -205,3 +205,71 @@ def test_persistence_below_one_frame_is_rejected() -> None:
 
     with pytest.raises(ValueError, match="at least one frame"):
         commit_time_s(np.array([1.0]), threshold=0.5, persistence_frames=0, frame_rate_hz=12.5)
+
+
+def test_fast_path_commits_without_waiting_for_confirmation() -> None:
+    import numpy as np
+
+    from turn_eval.reports.sid_calibration import commit_time_s
+
+    # One unambiguous frame, then nothing: the slow path never confirms.
+    probabilities = np.array([0.1, 0.999, 0.1, 0.1])
+    assert (
+        commit_time_s(probabilities, threshold=0.9, persistence_frames=3, frame_rate_hz=12.5)
+        is None
+    )
+    assert commit_time_s(
+        probabilities,
+        threshold=0.9,
+        persistence_frames=3,
+        frame_rate_hz=12.5,
+        fast_threshold=0.99,
+    ) == pytest.approx(2 / 12.5)
+
+
+def test_whichever_path_fires_first_wins() -> None:
+    import numpy as np
+
+    from turn_eval.reports.sid_calibration import commit_time_s
+
+    # The slow path confirms at index 2; the fast frame only arrives at index 5.
+    probabilities = np.array([0.95, 0.95, 0.95, 0.1, 0.1, 0.999])
+    assert commit_time_s(
+        probabilities,
+        threshold=0.9,
+        persistence_frames=3,
+        frame_rate_hz=12.5,
+        fast_threshold=0.99,
+    ) == pytest.approx(3 / 12.5)
+
+
+def test_a_fast_path_weaker_than_the_slow_path_is_rejected() -> None:
+    import numpy as np
+
+    from turn_eval.reports.sid_calibration import commit_time_s
+
+    with pytest.raises(ValueError, match="weaker signal"):
+        commit_time_s(
+            np.array([1.0]),
+            threshold=0.95,
+            persistence_frames=2,
+            frame_rate_hz=12.5,
+            fast_threshold=0.90,
+        )
+
+
+def test_disabling_the_fast_path_recovers_the_confirmation_only_policy() -> None:
+    import numpy as np
+
+    from turn_eval.reports.sid_calibration import commit_time_s
+
+    probabilities = np.array([0.95, 0.95, 0.999, 0.95])
+    without = commit_time_s(probabilities, threshold=0.9, persistence_frames=3, frame_rate_hz=12.5)
+    disabled = commit_time_s(
+        probabilities,
+        threshold=0.9,
+        persistence_frames=3,
+        frame_rate_hz=12.5,
+        fast_threshold=None,
+    )
+    assert without == disabled

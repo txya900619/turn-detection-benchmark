@@ -111,6 +111,7 @@ from turn_eval.reports.plots import write_suite_plots
 from turn_eval.reports.runtime import write_runtime_report
 from turn_eval.reports.sid_analysis import write_sid_paired_analysis
 from turn_eval.reports.sid_calibration import (
+    FAST_THRESHOLD_GRID,
     PERSISTENCE_GRID,
     THRESHOLD_GRID,
     load_traces,
@@ -1615,21 +1616,36 @@ def _calibrate_sid_bench(args: argparse.Namespace) -> int:
         split,
         thresholds=THRESHOLD_GRID,
         persistence_grid=PERSISTENCE_GRID,
+        fast_thresholds=FAST_THRESHOLD_GRID,
         nonbreak_budget=args.nonbreak_budget,
     )
 
-    def scored(ids: tuple[str, ...], threshold: float, persistence: int) -> dict[str, object]:
-        return score(dataset, traces, ids, threshold=threshold, persistence_frames=persistence)
+    def scored(
+        ids: tuple[str, ...],
+        threshold: float,
+        persistence: int,
+        fast: float | None = None,
+    ) -> dict[str, object]:
+        return score(
+            dataset,
+            traces,
+            ids,
+            threshold=threshold,
+            persistence_frames=persistence,
+            fast_threshold=fast,
+        )
 
     incumbent = (traces.incumbent_threshold, 1)
     calibration_incumbent = scored(split.calibration_ids, *incumbent)
     # Selection is finished; only now is the held-out side touched, and the
     # guard refuses if the policy was not frozen on this exact split.
     require_heldout_evaluation(policy, split, split.heldout_ids)
+    frozen_fast = policy.parameters["fast_threshold"]
     heldout_frozen = scored(
         split.heldout_ids,
         float(policy.parameters["threshold"]),
         int(policy.parameters["persistence_frames"]),
+        None if frozen_fast is None else float(frozen_fast),
     )
     heldout_incumbent = scored(split.heldout_ids, *incumbent)
 
@@ -1696,6 +1712,7 @@ def _write_calibration_artifact(
             "nonbreak_budget": args.nonbreak_budget,
             "threshold_grid": list(THRESHOLD_GRID),
             "persistence_grid": list(PERSISTENCE_GRID),
+            "fast_threshold_grid": list(FAST_THRESHOLD_GRID),
         },
     )
     (temporary / "report.md").write_text(

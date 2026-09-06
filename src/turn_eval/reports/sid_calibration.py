@@ -77,25 +77,45 @@ def commit_time_s(
     threshold: float,
     persistence_frames: int,
     frame_rate_hz: float,
+    fast_threshold: float | None = None,
 ) -> float | None:
-    """Commit at the end of the first run of ``persistence_frames`` frames at or above threshold.
+    """Commit at whichever of the two paths fires first.
 
-    With ``persistence_frames = 1`` this is exactly the incumbent rule, so the
-    two policies stay comparable frame for frame.
+    The conservative path commits at the end of the first run of
+    ``persistence_frames`` frames at or above ``threshold``. The fast path, when
+    ``fast_threshold`` is given, commits immediately on any single frame at or
+    above it, which is the "obvious immediate barge-in" half of the two-stage
+    design that the confirmation delay alone cannot serve.
+
+    Both degenerate cases stay inside the family: ``persistence_frames = 1``
+    with no fast path is the incumbent rule, and a ``fast_threshold`` above
+    every observed value disables the fast path entirely.
     """
     if persistence_frames < 1:
         raise ValueError("persistence must be at least one frame")
+    if fast_threshold is not None and fast_threshold < threshold:
+        raise ValueError("the fast path must not accept on a weaker signal than the slow path")
+
+    fast_index: int | None = None
+    if fast_threshold is not None:
+        matches = np.flatnonzero(probabilities >= fast_threshold)
+        fast_index = int(matches[0]) if matches.size else None
+
     above = probabilities >= threshold
+    slow_index: int | None = None
     if persistence_frames == 1:
         matches = np.flatnonzero(above)
-        return None if not matches.size else (int(matches[0]) + 1) / frame_rate_hz
+        slow_index = int(matches[0]) if matches.size else None
+    else:
+        streak = 0
+        for index, value in enumerate(above):
+            streak = streak + 1 if value else 0
+            if streak >= persistence_frames:
+                slow_index = index
+                break
 
-    streak = 0
-    for index, value in enumerate(above):
-        streak = streak + 1 if value else 0
-        if streak >= persistence_frames:
-            return (index + 1) / frame_rate_hz
-    return None
+    candidates = [index for index in (fast_index, slow_index) if index is not None]
+    return None if not candidates else (min(candidates) + 1) / frame_rate_hz
 
 
 def _predictions(
@@ -104,6 +124,7 @@ def _predictions(
     *,
     threshold: float,
     persistence_frames: int,
+    fast_threshold: float | None = None,
 ) -> dict[str, float | None]:
     return {
         example_id: commit_time_s(
@@ -111,6 +132,7 @@ def _predictions(
             threshold=threshold,
             persistence_frames=persistence_frames,
             frame_rate_hz=traces.frame_rate_hz,
+            fast_threshold=fast_threshold,
         )
         for example_id in ids
     }
@@ -123,9 +145,14 @@ def score(
     *,
     threshold: float,
     persistence_frames: int,
+    fast_threshold: float | None = None,
 ) -> dict[str, object]:
     predicted = _predictions(
-        traces, ids, threshold=threshold, persistence_frames=persistence_frames
+        traces,
+        ids,
+        threshold=threshold,
+        persistence_frames=persistence_frames,
+        fast_threshold=fast_threshold,
     )
     records = dataset.prediction_records(predicted, require_exact_coverage=False)
     return evaluate_sid_bench(records)
@@ -150,6 +177,7 @@ def search(
     *,
     thresholds: Sequence[float],
     persistence_grid: Sequence[int],
+    fast_thresholds: Sequence[float],
     nonbreak_budget: float,
 ) -> tuple[FrozenPolicy, list[dict[str, object]]]:
     """Pick the highest-recall policy that stays inside the non-break budget.
@@ -158,53 +186,72 @@ def search(
     that reacts sooner wins among equals. Selection reads calibration ids only.
     """
     sweep: list[dict[str, object]] = []
-    best: tuple[float, float, float, int] | None = None
+    best: tuple[float, float, float, int, float] | None = None
     best_metrics: Mapping[str, object] | None = None
+    # ``None`` disables the fast path, which recovers the confirmation-only
+    # family; a fast threshold below the slow one is meaningless and skipped.
+    fast_options: list[float | None] = [None, *fast_thresholds]
 
     for persistence in persistence_grid:
         for threshold in thresholds:
-            metrics = score(
-                dataset,
-                traces,
-                split.calibration_ids,
-                threshold=threshold,
-                persistence_frames=persistence,
-            )
-            recall = float(metrics["interruption_recall"])
-            nonbreak = _nonbreak_rate(metrics)
-            penalty = float(metrics["average_penalty_time_s"])
-            sweep.append(
-                {
-                    "threshold": threshold,
-                    "persistence_frames": persistence,
-                    "interruption_recall": recall,
-                    "nonbreak_false_positive_rate": nonbreak,
-                    "false_interruption_rate": float(metrics["false_interruption_rate"]),
-                    "average_penalty_time_s": penalty,
-                    "within_budget": nonbreak <= nonbreak_budget,
-                }
-            )
-            if nonbreak > nonbreak_budget:
-                continue
-            candidate = (recall, -penalty, threshold, persistence)
-            if best is None or candidate > best:
-                best, best_metrics = candidate, metrics
+            for fast in fast_options:
+                if fast is not None and fast < threshold:
+                    continue
+                metrics = score(
+                    dataset,
+                    traces,
+                    split.calibration_ids,
+                    threshold=threshold,
+                    persistence_frames=persistence,
+                    fast_threshold=fast,
+                )
+                recall = float(metrics["interruption_recall"])
+                nonbreak = _nonbreak_rate(metrics)
+                penalty = float(metrics["average_penalty_time_s"])
+                sweep.append(
+                    {
+                        "threshold": threshold,
+                        "persistence_frames": persistence,
+                        "fast_threshold": fast,
+                        "interruption_recall": recall,
+                        "nonbreak_false_positive_rate": nonbreak,
+                        "false_interruption_rate": float(metrics["false_interruption_rate"]),
+                        "average_penalty_time_s": penalty,
+                        "within_budget": nonbreak <= nonbreak_budget,
+                    }
+                )
+                if nonbreak > nonbreak_budget:
+                    continue
+                # Rank a disabled fast path last among exact ties so the simpler
+                # policy is not displaced without earning it.
+                candidate = (
+                    recall,
+                    -penalty,
+                    threshold,
+                    persistence,
+                    -1.0 if fast is None else fast,
+                )
+                if best is None or candidate > best:
+                    best, best_metrics = candidate, metrics
 
     if best is None or best_metrics is None:
         raise ValueError(
             f"no policy in the search space meets a non-break budget of {nonbreak_budget:.2%}"
         )
 
-    _, _, threshold, persistence = best
+    _, _, threshold, persistence, fast_rank = best
+    fast_threshold = None if fast_rank < 0 else fast_rank
     policy = FrozenPolicy(
         name=POLICY_NAME,
         parameters={
             "signal": "fvad[0,0] (user, 0-240ms horizon)",
             "threshold": threshold,
             "persistence_frames": persistence,
+            "fast_threshold": fast_threshold,
             "frame_interval_ms": traces.frame_interval_ms,
             "commit_rule": (
-                "end of the first run of persistence_frames consecutive frames >= threshold"
+                "whichever fires first: a single frame >= fast_threshold, or the end of "
+                "the first run of persistence_frames consecutive frames >= threshold"
             ),
         },
         objective=(
@@ -259,6 +306,20 @@ THRESHOLD_GRID: tuple[float, ...] = (
     0.999,
 )
 PERSISTENCE_GRID: tuple[int, ...] = (1, 2, 3, 4, 5, 6, 7, 8)
+# The fast path only makes sense near the top of the range: it exists to accept
+# an unambiguous barge-in without waiting, not to lower the bar.
+FAST_THRESHOLD_GRID: tuple[float, ...] = (
+    0.99,
+    0.992,
+    0.994,
+    0.995,
+    0.996,
+    0.997,
+    0.998,
+    0.999,
+    0.9995,
+    0.9999,
+)
 
 
 def _examples(metrics: Mapping[str, object]) -> int:
@@ -345,9 +406,14 @@ def render_report(
         "",
         f"- Objective: {policy.objective}",
         f"- Search space: {policy.search_space_size} configurations",
-        f"- Threshold `{parameters['threshold']}`, persistence "
+        f"- Slow path: threshold `{parameters['threshold']}`, persistence "
         f"`{parameters['persistence_frames']}` frames of "
         f"{parameters['frame_interval_ms']} ms",
+        (
+            "- Fast path: disabled"
+            if parameters["fast_threshold"] is None
+            else f"- Fast path: commit immediately at `{parameters['fast_threshold']}`"
+        ),
         f"- Incumbent for comparison: threshold `{incumbent_threshold}`, persistence `1`",
         "",
         "## Results",
