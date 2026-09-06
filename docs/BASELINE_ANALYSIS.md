@@ -148,11 +148,28 @@ vocabularies, and inverts the ordering that holds on a shared axis.
 
 ## Interruption
 
-The comparison set here is two models, both derived and both single-channel
-fallback. The native-signal interruption architectures validated on TurnBench,
-including the VapGPT OTO native floor-state head at 95.68% recall, have never
-been run on SID-Bench. See [`BENCHMARK_COVERAGE_AUDIT.md`](BENCHMARK_COVERAGE_AUDIT.md)
-before reading the rows below as a ranking of available architectures.
+Read this section against
+[`BENCHMARK_COVERAGE_AUDIT.md`](BENCHMARK_COVERAGE_AUDIT.md). SID-Bench provides
+no agent channel, so a dual-channel model can only be run with causal silence on
+channel 2, and that is sound only for a signal that is an absolute property of
+the user's own stream. A signal defined relative to the partner channel
+collapses, because a silent partner never holds the floor.
+
+Running VapGPT OTO measured this. Its native floor state has median 0.500 on
+TurnBench dual-channel audio and saturates above 0.958 on all 1,600 SID English
+clips, with the interruption and non-break distributions overlapping almost
+completely. With its externally frozen threshold it commits at the first 20 ms
+frame of every clip: 31.45% recall, 78.38% FIR, and a 100% non-break trigger
+rate. Mimi and ESPnet commit signals with the same relative definition and are
+blocked for the same reason.
+
+The consequence is that DualTurn leads SID-Bench because its signal asks "is
+this user about to speak", which survives the fallback, and not because it
+discriminates interruptions better than the native architectures. The
+Realtime-VAP rows below are degenerate under the same criterion: their non-break
+trigger rates are largely an artifact of the fallback, not a property of that
+checkpoint. Kyutai Semantic VAD is the one remaining dual-channel architecture
+whose signal survives, and it has not yet been run.
 
 DualTurn's frozen derived-FVAD policy is the strongest current SID-Bench
 fallback: EN/ZH recall is 69.00%/81.45%, FIR is 32.25%/14.44%, and APT is
@@ -201,7 +218,7 @@ semantic path for middle-turn speech.
   a native Chinese semantic-interruption model is still an open gap.
 
 The canonical normalized report and plots are under
-`results/comparison/20260906T105645Z/`.
+`results/comparison/20260906T111447Z/`.
 
 The reproducible SID paired report is under
 `results/analysis/sidbench/20260906T080000Z/`. It hashes all manifests, frozen

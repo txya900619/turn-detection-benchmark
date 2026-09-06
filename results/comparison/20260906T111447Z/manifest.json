@@ -1,0 +1,509 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-09-06T11:14:49.615142+00:00",
+  "results_root": "/mnt/md0/user_wayne/turn-detection-benchmark/results",
+  "languages": [
+    "en",
+    "zh"
+  ],
+  "selection_policy": {
+    "complete_primary_runs_only": true,
+    "turnbench_requires_official_scores_and_38_conversations": true,
+    "duplicate_identity": "benchmark + language + model + evaluation mode",
+    "duplicate_resolution": "latest created_at; canonical final directory wins ties",
+    "single_overall_score": false
+  },
+  "inputs": [
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/manifest.json",
+      "sha256": "2166d158ea5b18838fd87764273ac5e33a4c95dfc026fec64a24560e8ab0ce81"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T065528310380Z-1af1ceaa/metrics.json",
+      "sha256": "d12e76fd164d0bd67a3be4c48087d6e27564d583ac45d85824b07dde7acd8d1a"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/fixed_timeout_oracle_vad/20260904T131955441085Z-dc2d6a7b/manifest.json",
+      "sha256": "c128f3f57aac2cef01a45cb87385448a5a77f37360d794a41238936eeeed3372"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/fixed_timeout_oracle_vad/20260904T131955441085Z-dc2d6a7b/metrics.json",
+      "sha256": "a99c9bbccd97ac1bec1b123a6db210ca004c22c37cc6410207915585a0b07237"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/manifest.json",
+      "sha256": "6ae3ff1e7a01dd09cb01242e01c8e63ffea5b1f1d9be22fcbe889688a9a0d781"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/realtime_vap_single_channel_fallback/20260904T173254860352Z-365fc311/metrics.json",
+      "sha256": "fa5b82bd7f54600813277f6599d0e9ba86345597f96cbc630a36fc21ac5d3cfe"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/manifest.json",
+      "sha256": "d951845ec624508e71520e60271cf077622707f5a73c975efb5ccaa8dd2c446d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/smart_turn_v3.2_cpu/20260904T132526687730Z-d6672f41/metrics.json",
+      "sha256": "32fe66ce58f38291a06beda729bd0d168e6ac1e420c72702574725cf8f14f963"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "42e282b8a881db9c53a17ee8381d7e8786886eae9ff4b39d4f3fcb86d2226209"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/metrics.json",
+      "sha256": "9bf9aa018043514d246087a1503c03b9b1e1a5422d71b45857063683eb11c6ad"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "e28e9f5aec90d2e050de5e90827d8c46fc9057c6c168572660532db855dec51a"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/metrics.json",
+      "sha256": "f3de4e3a9420d140f59dcb921f7c06946f5028a56c7f7e94083f246b710abd08"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111025Z/manifest.json",
+      "sha256": "fee5486190239908683733a814b5a4cffe2f006cada44bb388632e10b5cd9c27"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111025Z/metrics.json",
+      "sha256": "8e5554e7a378a31fffdb019aa5b42cae758075c16fc7f0a35bfdd8b31e7112a8"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111025Z/policy.json",
+      "sha256": "21f0821baf6561c79b4a466944b6f9cb03c2c20f8e0f2cd26fe748a71eac1ea6"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/20260904T210300Z/metadata.json",
+      "sha256": "d45e03349bbbde1b256c8a3bc180a7175b388c4ed6d74a3cd0b2b3b9c0ee3328"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/20260904T210300Z/scored/scores.json",
+      "sha256": "3e4115995111fb8ec59b685ac1727e07638053a0567053bc1193104b1431a76e"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/espnet_turntaking/20260904T223000Z-final/metadata.json",
+      "sha256": "a39d33b4b832e38b5a00e6f5eca4f721c45fbba9509a41ef7ed29cc7dfc15e18"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/espnet_turntaking/20260904T223000Z-final/scored/scores.json",
+      "sha256": "2cd01cd079f1a727debf2e38f09c9526797af84964bb9edbc003e2672729636b"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T073700Z-final/metadata.json",
+      "sha256": "d2fe7f52e739e918db1bfc8966fe27b44d5bd373c9221bf72d96db15c6d3d196"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T073700Z-final/scored/scores.json",
+      "sha256": "e3de9ac2b3a23f43b6082a15b74e1c46ab5367cbe462ece120d998b7aa9def26"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/mimi_endpointer/20260905T061000Z/metadata.json",
+      "sha256": "b8165ff2d31cab3ab3edc539652fba757a71d1a54ffe4d24d8510bbc477dd251"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/mimi_endpointer/20260905T061000Z/scored/scores.json",
+      "sha256": "21aaec030b27afd976848612fd06c356629ae07eaa28e307a5ff7690819177bf"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/final/metadata.json",
+      "sha256": "4b1c86dcaa4bc6b77a3e9954c6234be333e2cdcb40a4a3f2688c2b3d5b5c7fa2"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/final/scored/scores.json",
+      "sha256": "aa1f5b6fbe52e53c685f2923bfdde4d64a0e14873d9feddeab7a48454655b62d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/rms_vad/20260904T182738279470Z-9d4327e3/metadata.json",
+      "sha256": "3aa1991896f5c8866bcf57b0323da4a6a9b20c3d2d20700e8f55bafa41b7ae5b"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/rms_vad/20260904T182738279470Z-9d4327e3/scores.json",
+      "sha256": "737d1fee757158cfadcf8078871565718ff86d906749065c5967249e79a219ee"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_1_gpu/20260904T184500Z/metadata.json",
+      "sha256": "e6ebff37e313c70179eaf7474df41d524607de6158862774d1db300af5e6d19d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_1_gpu/20260904T184500Z/scored/scores.json",
+      "sha256": "9d317c49a56cd7d8038bfceed08823dcb36adb8fc8cae74df467fcc3735d2979"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_2_gpu/20260904T190100Z/metadata.json",
+      "sha256": "20e347eb8918308d2cb88d6c4c27536bfda6955493510bc27e6eeb858344f6b7"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_2_gpu/20260904T190100Z/scored/scores.json",
+      "sha256": "372b75278f24b09cf8162dae06ac229b3ced433442bec0ad500ed0ea7eb7e660"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/vap_gpt_oto/20260904T192700Z/metadata.json",
+      "sha256": "5fc7c6cd3c12c183077b5a8855c4e0f5b0b45e3e65b92fd9587f240e56d20eb8"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/vap_gpt_oto/20260904T192700Z/scored/scores.json",
+      "sha256": "5122773bfe2c1d58088c5d57ec9cfa7caa26fecf2b96f6d03f7696d0d580c0b5"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/runtime/20260905T103200Z/summary.json",
+      "sha256": "7bfd009b6edc1cbfcc36028c090de34aa671118ba3479b104044f97e5312f6b6"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "523f6e7284bf4b278ef5271d986bfa91dc705b7541d93447b197ca359f8e6053"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/metrics.json",
+      "sha256": "bf71012eeaab2455016bbac3244133e7dfea4e1b5919c1b317a349e6167d68c2"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "7c872290bbd8b333f7ef35825b225abb05dfa90bc9b58a2f77919ec5c9da63c8"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/metrics.json",
+      "sha256": "2314b2e79437cb358a8521d6563291667a2435062e779b0d8b624f1cc7abe5bb"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111302Z/manifest.json",
+      "sha256": "17430e5fbcc33ec93a8174a63e510e16e22975dc58788ced2afa7b78ed900360"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111302Z/metrics.json",
+      "sha256": "fa118b42e82c1e45b82786b07f16523445b71f7e3a620c273ac2edc015c96ae9"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/shared/sidbench/vap_gpt_oto_single_channel_fallback/20260906T111302Z/policy.json",
+      "sha256": "21f0821baf6561c79b4a466944b6f9cb03c2c20f8e0f2cd26fe748a71eac1ea6"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/manifest.json",
+      "sha256": "219dbeb6095388ddc98281f118cb85ebeaf6b46a6cec8087d034f200abd1f22e"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T065234992726Z-9511ff53/metrics.json",
+      "sha256": "38ed228be591dfe91f31757f934a34c1b7fd0728af76785b9746037eb0843e98"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/fixed_timeout_oracle_vad/20260904T131954888548Z-25979a77/manifest.json",
+      "sha256": "5c14804e1066abd167f548587db9ca4b8828eab73fcfdd658492ee8cf344a79f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/fixed_timeout_oracle_vad/20260904T131954888548Z-25979a77/metrics.json",
+      "sha256": "7bb42006e3182ca1e9646d07c24bee29646ab7ff68c37ba7b8948bcb4a95a070"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/manifest.json",
+      "sha256": "2af030bfb173a5b97b123a6ed7292d0d5b319d7563e28b5be2ca61b1a794420f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T171258618568Z-3112c7e7/metrics.json",
+      "sha256": "7b99fe05b19c1749987c8163f9cfb06ef7d1cfdb7cc9d7919d2d8908f2c0b448"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/manifest.json",
+      "sha256": "28e82d957e112bf5c5bffefff1d24c642cca4b1438a5c7b7f86e67718fe5aec4"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/smart_turn_v3.2_cpu/20260904T132512978680Z-b98439c4/metrics.json",
+      "sha256": "8e747be9fb7b20d9d80aa5f46521d9f1c59c98535f9a720a83da858d6a8b114f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/easy-turn/20260906T105513163046Z-04c037a1/label_mapping.json",
+      "sha256": "87e6646ffff261ed96bfba08712de41b06a2435e9c403f7d69a40d73b4183cad"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/easy-turn/20260906T105513163046Z-04c037a1/manifest.json",
+      "sha256": "16bb27f84e9b7dfe2fddfa22c16a976e43167f3875c2289eb754652002cf0ff0"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/easy-turn/20260906T105513163046Z-04c037a1/metrics.json",
+      "sha256": "157373440a997a702ddf166d7d24dcfaed7963bb8bdbe538d718fecd9c7c0f9f"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/easy-turn/20260906T105513163046Z-04c037a1/runtime.json",
+      "sha256": "df66ab4137bf264ac9c1ad699058478c5c7983062e1dc8b0da8d4a247bed476c"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/smart-turn-v3.2-cpu/20260905T235530638173Z-71b3330e/label_mapping.json",
+      "sha256": "9ba05e0037ebdbe3a248573c44873cddcf9ef502412d1defe7746d1aba257e0d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/smart-turn-v3.2-cpu/20260905T235530638173Z-71b3330e/manifest.json",
+      "sha256": "ef238699366cc10c72630e0f811799a6ea921062c2849108ef842a7379bb6732"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/smart-turn-v3.2-cpu/20260905T235530638173Z-71b3330e/metrics.json",
+      "sha256": "da54e904b88fdc2d74160ff32a146db0e0ec4cbd1323635e231af2ec54bbf202"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/smart-turn-v3.2-cpu/20260905T235530638173Z-71b3330e/runtime.json",
+      "sha256": "7e1a721f2e80159e63f076a21b7c5255ec565d4b10f546976275a3ee67ee65dd"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T113151624921Z-a5893f4c/label_mapping.json",
+      "sha256": "8125dffcee87257770f778a85510bb4e2cf2d4b4ac3a88eb9fe97344378ea87c"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T113151624921Z-a5893f4c/manifest.json",
+      "sha256": "3ebdef1971ac3457830e61f23a93da5eb6bc6d5e9d89a03cfacbc8bcd858cbef"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T113151624921Z-a5893f4c/metrics.json",
+      "sha256": "f763668670bc7ef430fae399b353ae58a97911039ea82f3b04f7dbd85e25ae00"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T113151624921Z-a5893f4c/runtime.json",
+      "sha256": "64ae0278c729e3e05cab6b0b19d69ee3e440b54410165a8ba7169be0dd881967"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T220700516857Z-a9d86d2a/label_mapping.json",
+      "sha256": "6a778c4e7e3e726b6dd5295fa610d39ba4c7da6f34925b060ab440443f554f27"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T220700516857Z-a9d86d2a/manifest.json",
+      "sha256": "276fafe13c130a279b27f5c5a02e5e45b9f0ba883741ab3b07689bfb73484f8d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T220700516857Z-a9d86d2a/metrics.json",
+      "sha256": "9c3a207a78f83f0f47c6b096d360660f0814b8ec3ee5558cf732b83c1770c341"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T220700516857Z-a9d86d2a/runtime.json",
+      "sha256": "e1fdbbbf300588ea881548a3f645ffebcea0404ccaf3cc610600559034a4c507"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/manifest.json",
+      "sha256": "5a99a2727f57b40103493fefd21f33b7c8798569d35672b8b126d0048481be5d"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/metrics.json",
+      "sha256": "cdc624eb89f08204369e8f51ea9dbdce273511b8fcc5f29a501d8d49d74c8a88"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/20260905T095000Z/policy.json",
+      "sha256": "0fae3afc3f84c9c6f475821dd8ee3431afd32db8d3f8b17ad30c2e477ed84458"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/manifest.json",
+      "sha256": "8b799825ffd0ed8465f3ccb4536df2759e13eed5d5b3a11e512720440cbe76db"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/metrics.json",
+      "sha256": "102734b30b27dc34089a341558340eb6f75dec079d8fe7f35d3dec81eaca4ce2"
+    },
+    {
+      "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/20260905T090900Z/policy.json",
+      "sha256": "dc0cc0767108e67fa6860d78a32e6cfc39f0bfdc5d1f9860673fb2188816d804"
+    }
+  ],
+  "selected_row_count": 42,
+  "rejected": {
+    "eot_bench": [
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/eotbench/dualturn_single_channel_fallback/20260906T063736593305Z-e7cc4ff1",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/dualturn_single_channel_fallback/20260906T063755592419Z-56899645",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/eotbench/realtime_vap_single_channel_fallback/20260904T165648459841Z-e1a6537a",
+        "reason": "partial run"
+      }
+    ],
+    "turnbench": [
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/20260904T200000Z-shard0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/20260904T200000Z-shard1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/20260904T200000Z-shard2",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/smoke-cuda",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/dualturn_endpointing/smoke-cuda-iobinding",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/espnet_turntaking/20260904T223000Z-shard0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/espnet_turntaking/20260904T223000Z-shard1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/espnet_turntaking/20260904T223000Z-shard2",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905-smoke",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905-smoke-gpu-resample",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T062300Z-shard0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T062300Z-shard1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T062300Z-shard2",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T073700Z-shard0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T073700Z-shard1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T073700Z-shard2",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/mimi_endpointer/20260905-smoke",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/shard-0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/shard-1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/shard-2",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/rms_vad/20260904T182606983483Z-27555050",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_1_gpu/smoke-1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/smart_turn_v3_2_gpu/smoke-1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/vap_gpt_oto/20260904T191800Z-shard0",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/vap_gpt_oto/20260904T191800Z-shard1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/vap_gpt_oto/smoke-1",
+        "reason": "not leaderboard eligible"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/kyutai_semantic_vad/20260905T062300Z-final",
+        "reason": "superseded canonical run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/en/turnbench/realtime_vap_tri/20260904T142500Z/merged",
+        "reason": "superseded canonical run"
+      }
+    ],
+    "sid_bench": [
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/smoke-1",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/smoke-10-cpu",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/dualturn_single_channel_fallback/smoke-10-gpu",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/sidbench/realtime_vap_single_channel_fallback/smoke-1",
+        "reason": "partial run"
+      }
+    ],
+    "fastturn": [
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/smart-turn-v3.2-cpu/20260905T230507242160Z-25d0526e",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T110956434848Z-9aec555a",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/turnsense-int8/20260905T113600695976Z-9aec555a",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/eot/x2-turn-4b-0812/20260904T161921591205Z-c287214a",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T125910541237Z-d5441c65",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T130413495635Z-2440dc43",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T134328266611Z-27f1cc46",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T134427200661Z-43520924",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/easy-turn/20260905T164859317448Z-43520924",
+        "reason": "partial run"
+      },
+      {
+        "path": "/mnt/md0/user_wayne/turn-detection-benchmark/results/zh/fastturn/full/fixed-state-complete/20260904T160143969862Z-94ecfd0f",
+        "reason": "partial run"
+      }
+    ]
+  }
+}

@@ -9,7 +9,7 @@ This is the primary handoff document for the next working session. Read this fil
 - The benchmark harness, dataset adapters, model adapters, metrics, reports, runtime probes, and CI fixtures are implemented.
 - The complete test suite passes: **128 passed** with the `smart-turn` extra installed. A plain `uv sync --frozen`, which is what CI does, gives 127 passed and 1 skipped.
 - No benchmark or model process was running at the time of handoff.
-- The canonical cross-benchmark report is in [`results/comparison/20260906T105645Z/`](results/comparison/20260906T105645Z/).
+- The canonical cross-benchmark report is in [`results/comparison/20260906T111447Z/`](results/comparison/20260906T111447Z/).
 - The current research interpretation is in [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
 - English and Chinese component suites have been run for the selected open-weight baselines.
 - **X2-Turn is explicitly deferred** because the released checkpoint is very large. Do not resume a full X2-Turn run unless the user reverses this decision.
@@ -196,7 +196,7 @@ New analysis code:
 
 ### 8.1 Unified comparison report
 
-Canonical directory: [`results/comparison/20260906T105645Z/`](results/comparison/20260906T105645Z/)
+Canonical directory: [`results/comparison/20260906T111447Z/`](results/comparison/20260906T111447Z/)
 
 It contains:
 
@@ -363,7 +363,21 @@ Easy Turn inference p50/p90/p95 was 416.5/818.1/1027.5 ms with RTF 0.244. Treat 
 | ZH | DualTurn fallback | 81.45% | 14.44% | 14.44% | 260 ms | 876 ms | 0.839 s | 27.8% |
 | ZH | VAP fallback | 47.18% | 64.50% | 64.62% | 88 ms | 162 ms | 2.416 s | 90.6% |
 
-Noise trigger rates were 4.2% for DualTurn and 91.6% for VAP.
+| EN | VapGPT OTO fallback | 31.45% | 78.38% | 78.38% | 0 ms | 57 ms | 2.843 s | 100.0% |
+
+Noise trigger rates were 4.2% for DualTurn, 91.6% for VAP, and 100.0% for VapGPT OTO.
+
+**Read these rows against the single-channel fallback criterion.** SID-Bench has
+no agent channel, so a dual-channel model runs with causal silence on channel 2.
+That is sound only for a signal that is an absolute property of the user stream.
+Floor-state signals, which ask which of two channels holds the floor, collapse:
+VapGPT's native floor state has median 0.500 on TurnBench dual-channel audio and
+saturates above 0.958 on all 1,600 SID English clips, so it commits at the first
+frame of every clip. DualTurn leads here because its future-VAD signal survives
+the fallback, not because it discriminates better than the native architectures.
+The VAP rows are degenerate for the same reason. Mimi and ESPnet are blocked.
+Kyutai is the one dual-channel architecture left whose signal survives, and it
+has not been run. See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
 
 Paired comparisons:
 
@@ -390,7 +404,7 @@ On the tested older CPU, DualTurn misses an 80 ms p90 frame budget, so GPU execu
 - **Production EOT candidate:** DualTurn, with SmartTurn retained as a very small CPU-friendly reference.
 - **Chinese isolated EOT candidate:** TurnSense INT8, but an explicit abstention and short-utterance policy is still needed.
 - **Four-state reference:** Easy Turn, with the independence and licensing caveats above.
-- **Coverage caveat:** both SID-Bench rows are DualTurn and Realtime-VAP, and both are derived single-channel fallbacks. The native-signal interruption models validated on TurnBench have never been run on SID-Bench, so the interruption ranking below rests on a two-model sample. See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
+- **Coverage caveat:** SID-Bench cannot evaluate floor-state interruption signals at all, because it provides no agent channel. Four of the seven candidate signals are blocked or degenerate under that criterion, including both Realtime-VAP rows. The interruption ranking below is "best among the signals this benchmark can measure", not "best available". See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
 - **Interruption interim baseline:** DualTurn-derived policy. It is far safer than the current VAP heuristic on middle speech and noise, but its non-break trigger rate and immediate-barge-in trade-off are still not production quality.
 - **VAP role:** useful research architecture and TurnBench reference, but the evaluated checkpoint/policy is not a production recommendation. Preserve its non-commercial or share-alike license constraints when applicable.
 - **Training decision:** existing models are reasonably promising for EOT, but long HOLD pauses and semantic interruption/backchannel rejection remain weak. If training begins later, prioritize Chinese dual-channel/future-activity or native semantic interruption architectures rather than a broad retraining effort inside this repo.
@@ -446,7 +460,7 @@ Do not use the SID test set or FastTurn test set to choose final production thre
 
 ### P1 — Resolve evidence gaps
 
-0. Close the prioritized coverage gaps in [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md). The audit classifies all 88 model/benchmark cells; 24 are unrun with no recorded reason. Highest value are G1 (VapGPT OTO on SID-EN, the only native interruption signal never tested on the interruption benchmark), G2 (TurnSense on eot-bench, the only natively Chinese model with no streaming result), and G4 (Easy Turn on the FastTurn 2-state subset, re-scoring only).
+0. Close the prioritized coverage gaps in [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md). The audit classifies all 88 model/benchmark cells; 24 are unrun with no recorded reason. G1 and G4 are closed. The open priorities are G3 (Kyutai on SID-EN, the only dual-channel architecture whose signal survives the fallback criterion) and G2 (TurnSense on eot-bench, the only natively Chinese model with no streaming result).
 1. Investigate the small local-versus-model-card DualTurn eot-bench discrepancy.
 2. Audit Easy Turn training data, FastTurn overlap, and dataset/model licenses.
 3. Define and evaluate TurnSense abstention behavior on independent calibration data.

@@ -1,6 +1,6 @@
 # Cross-Benchmark Coverage Audit
 
-Audited: 2026-09-06 UTC. Last updated after closing gap G4.
+Audited: 2026-09-06 UTC. Last updated after closing gaps G4 and G1.
 
 ## Purpose
 
@@ -17,9 +17,13 @@ simply unrun work.
 ## Verdict
 
 Across 11 models and 8 benchmark splits there are 88 cells. The canonical
-comparison fills **24**. Of the 64 empty cells, **28 are blocked** by a
-capability or protocol limit, **13 are recorded decisions**, and **23 are gaps
+comparison fills **26**. Of the 62 empty cells, **34 are blocked** by a
+capability or protocol limit, **11 are recorded decisions**, and **17 are gaps
 with no recorded reason**.
+
+Closing G1 produced a structural result that reclassified six further cells and
+placed a caveat on two rows that were already published. It is stated in full
+under "The single-channel fallback criterion" below.
 
 Seven of the ten evaluated models appear in exactly one benchmark. Only DualTurn
 and Realtime-VAP have cross-benchmark coverage, and both of the interruption
@@ -36,7 +40,7 @@ Classification is decided by comparing what a benchmark requires against what a
 model declares in its `ModelDescriptor`
 ([`src/turn_eval/core/types.py:276`](../src/turn_eval/core/types.py)) and in the
 `channel_mode` / `execution_mode` / `signal_provenance` fields recorded in
-[`results/comparison/20260906T105645Z/summary.csv`](../results/comparison/20260906T105645Z/summary.csv).
+[`results/comparison/20260906T111447Z/summary.csv`](../results/comparison/20260906T111447Z/summary.csv).
 
 | Code | Meaning |
 | --- | --- |
@@ -81,18 +85,90 @@ explains most of the `BLOCKED` cells in both directions.
 | Model | eot-EN | eot-ZH | TurnBench-EN | FastTurn-2 | FastTurn-4 | SID-EN | SID-ZH | SID-noise |
 | --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DualTurn Endpointing | DONE | DONE | DONE | GAP | BLOCKED | DONE | DONE | DONE |
-| Realtime-VAP | DONE | DONE | DONE | GAP | BLOCKED | DONE | DONE | DONE |
+| Realtime-VAP | DONE | DONE | DONE | GAP | BLOCKED | DONE* | DONE* | DONE* |
 | SmartTurn v3.2 | DONE | DONE | DONE | DONE | BLOCKED | GAP | GAP | GAP |
 | SmartTurn v3.1 | DECIDED | DECIDED | DONE | DECIDED | BLOCKED | DECIDED | DECIDED | DECIDED |
-| VapGPT OTO | GAP | GAP | DONE | BLOCKED | BLOCKED | **GAP** | DECIDED | GAP |
-| ESPnet TurnTaking | GAP | GAP | DONE | BLOCKED | BLOCKED | GAP | DECIDED | GAP |
-| Mimi Endpointer | GAP | GAP | DONE | BLOCKED | BLOCKED | GAP | DECIDED | GAP |
+| VapGPT OTO | GAP | GAP | DONE | BLOCKED | BLOCKED | DONE | DECIDED | DONE |
+| ESPnet TurnTaking | GAP | GAP | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
+| Mimi Endpointer | GAP | GAP | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
 | Kyutai Semantic VAD | GAP | GAP | DONE | BLOCKED | BLOCKED | **GAP** | DECIDED | GAP |
 | TurnSense INT8 | **GAP** | **GAP** | DECIDED | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
 | Easy Turn | BLOCKED | BLOCKED | BLOCKED | DONE | DONE | BLOCKED | BLOCKED | BLOCKED |
 | X2-Turn 4B | BLOCKED | BLOCKED | BLOCKED | DECIDED | DECIDED | BLOCKED | BLOCKED | BLOCKED |
 
-Bold cells are the prioritized gaps listed below.
+Bold cells are the prioritized gaps listed below. `DONE*` marks a completed
+row whose signal is degenerate under the criterion in the next section; the
+run is valid and the number is real, but it does not measure model quality.
+
+## The single-channel fallback criterion
+
+Running G1 produced a negative result that generalizes, so it is recorded here
+rather than only in the gap entry.
+
+SID-Bench releases user-only mono clips and provides no agent channel. Every
+dual-channel model must therefore be run in single-channel fallback, with the
+user on channel 1 and causal silence on channel 2. That configuration is only
+sound for a signal that is an **absolute property of the user's own stream**. A
+signal defined **relative to the partner channel** collapses to a constant,
+because a silent partner trivially never holds the floor.
+
+VapGPT OTO makes this measurable. Its interruption signal is `p_now[speaker]`,
+the native floor state. Comparing the same checkpoint across the two
+configurations, on frames rather than on labels:
+
+| Configuration | q10 | Median | Frames at or above the frozen 0.859 threshold |
+| --- | ---: | ---: | ---: |
+| TurnBench EN dev, native dual channel | 0.007 | 0.500 | 40.12% |
+| SID-Bench EN, single-channel fallback | — | ~0.99 | effectively all |
+
+In fallback the signal saturates within the first frames of every clip. The
+per-clip maximum is above 0.958 for **all 1,600** English clips, and the
+interruption and non-break distributions almost completely overlap:
+
+| Category | n | Min of per-clip max | Median | Max |
+| --- | ---: | ---: | ---: | ---: |
+| interruption_beginning | 500 | 0.9602 | 0.9987 | 0.9997 |
+| interruption_middle | 600 | 0.9806 | 0.9991 | 0.9997 |
+| nonbreak | 500 | 0.9583 | 0.9913 | 0.9990 |
+
+No threshold separates them, so this is not a calibration problem that a
+different operating point would fix. Re-selecting a threshold on SID would in
+any case be test-set tuning, which the protocol forbids.
+
+### Which signals the criterion admits
+
+| Model | Committed SID signal | Relative to partner channel? | Consequence |
+| --- | --- | --- | --- |
+| DualTurn Endpointing | `fvad[0,0]`, user 0-240 ms future activity | No | Evaluable; the completed row is meaningful |
+| SmartTurn v3.2 | `P(complete)` on user audio | No | Evaluable; gap G7 stands |
+| Kyutai Semantic VAD | `1 - vad_heads[2]`, P(turn ending) per stream | No | Evaluable; gap G3 stands |
+| Realtime-VAP | `p_now[channel_1]` | **Yes**, floor state | Degenerate; see the caveat below |
+| VapGPT OTO | `p_now[speaker]` | **Yes**, floor state | Degenerate; measured by G1 |
+| Mimi Endpointer | `P(active speaker)` | **Yes**, floor state | Blocked, same mechanism |
+| ESPnet TurnTaking | class probability times an `energy_1/(energy_1+energy_2)` onset share | **Yes**, energy-share attribution | Blocked; with channel 2 silent the share is identically 1 |
+
+This is why DualTurn leads SID-Bench while losing to VapGPT's native head on
+TurnBench. DualTurn's signal asks "is this user about to speak", which survives
+the fallback. The floor-state models ask "which of the two is speaking", which
+does not.
+
+### Caveat on two already-published rows
+
+The Realtime-VAP SID-Bench rows use the same floor-state signal and are
+therefore degenerate in the same way. Their 92.4% English and 90.6% Chinese
+non-break trigger rates are largely an artifact of the fallback, not a measure
+of that checkpoint's interruption ability. The runs remain valid and are kept,
+but they must not be read as evidence that Realtime-VAP is poor at interruption.
+The matrix marks them `DONE*`.
+
+### What this means for the benchmark, not just the models
+
+SID-Bench cannot currently evaluate the native dual-channel interruption
+architectures at all. Answering "which architecture is best for Chinese
+interruption" therefore needs either a dual-channel Chinese interruption set, or
+a fallback protocol that supplies a realistic agent channel instead of digital
+silence. Both are larger pieces of work than a missing runner, and both belong
+with the P1 calibration effort rather than with coverage filling.
 
 ## Blocked cells, with reasons
 
@@ -106,6 +182,7 @@ would breach HANDOFF section 4.5.
 | Easy Turn, X2-Turn on TurnBench | Same continuous-score requirement as eot-bench, plus no dual-channel input path. |
 | DualTurn, Realtime-VAP, VapGPT, ESPnet, Mimi, Kyutai on FastTurn 4-state | None has a native Backchannel or Wait class. All declare `output_signals={"eot"}` or a floor-state head. |
 | VapGPT, ESPnet, Mimi, Kyutai on FastTurn 2-state | These are dual-channel conversation models. FastTurn releases isolated mono clips with no other-speaker channel, no conversation ID, and no timeline (`FASTTURN_PROTOCOL.md` section 1), so their defining input is absent. |
+| VapGPT, Mimi, ESPnet on SID-Bench EN, ZH, and noise | Their committed interruption signal is defined relative to the partner channel, which SID-Bench does not provide. See "The single-channel fallback criterion". Measured for VapGPT, inferred for Mimi and ESPnet from identical signal definitions. |
 | SmartTurn v3.1/v3.2 and TurnSense on FastTurn 4-state | SmartTurn is binary EOT only. TurnSense's native labels are `complete` / `incomplete` / `invalid` with no Backchannel or Wait, as recorded in `STATUS.md:505`. |
 
 ## Recorded decisions
@@ -114,14 +191,14 @@ would breach HANDOFF section 4.5.
 | --- | --- |
 | X2-Turn, FastTurn 2-state and 4-state | Deferred. The release stores about 5.235B parameters in a 10,470,070,544-byte BF16 file and the local path is two-pass. See HANDOFF section 6 and [`X2_TURN_PROTOCOL.md`](X2_TURN_PROTOCOL.md). A verified adapter and a partial smoke artifact are retained. |
 | SmartTurn v3.1, everything except TurnBench | v3.1 is carried only as the official TurnBench reference version; v3.2 is the production candidate. The role split is stated in the README's TurnBench section. |
-| VapGPT, ESPnet, Mimi, Kyutai on SID-ZH | All four are English-only checkpoints (Kyutai is EN/FR). A Chinese row would be unverified zero-shot, which HANDOFF section 4.5 requires to be labelled as such. Deprioritized below their SID-EN cells rather than blocked. |
+| VapGPT and Kyutai on SID-ZH | Both are English-only checkpoints (Kyutai is EN/FR). A Chinese row would be unverified zero-shot, which HANDOFF section 4.5 requires to be labelled as such. Deprioritized below their SID-EN cells rather than blocked. ESPnet and Mimi were previously listed here; they are now blocked outright by the fallback criterion. |
 | TurnSense on TurnBench | TurnSense declares `supported_languages={"zh"}` and TurnBench dev is English, so the row would be unverified zero-shot. Deprioritized below its eot-bench cells. |
 
 ## Gaps, prioritized
 
 Every gap below has an existing precedent in this repository, so the work is a
 new runner or a re-scoring pass, not new protocol design. The seven groups below
-account for all 24 gap cells.
+account for all 17 remaining gap cells.
 
 Each SID-Bench run also produces the shared noise split under the same frozen
 policy, so a SID gap group always covers its model's `SID-EN` and `SID-noise`
@@ -129,28 +206,53 @@ cells together.
 
 | Group | Cells | Cost |
 | --- | --- | --- |
-| G1 | VapGPT OTO on SID-EN, SID-noise | GPU inference |
+| G1 | VapGPT OTO on SID-EN, SID-noise | Closed 2026-09-06; negative result |
 | G2 | TurnSense on eot-ZH, eot-EN | New adapter, then CPU inference |
-| G3 | Kyutai on SID-EN, SID-noise | GPU inference |
+| G3 | Kyutai on SID-EN, SID-noise | GPU inference; signal survives the criterion |
 | G4 | Easy Turn on FastTurn 2-state | Closed 2026-09-06, re-scoring only |
 | G5 | DualTurn and Realtime-VAP on FastTurn 2-state | Blocked on P1 calibration |
 | G6 | VapGPT, ESPnet, Mimi, Kyutai on eot-EN and eot-ZH | 8 cells, low value |
 | G7 | SmartTurn v3.2 on SID-EN, SID-ZH, SID-noise | Cheap, CPU |
-| G8 | ESPnet and Mimi on SID-EN, SID-noise | GPU inference |
+| G8 | ESPnet and Mimi on SID-EN, SID-noise | Withdrawn; blocked by the criterion |
 
-### G1. VapGPT OTO on SID-Bench EN
+### G1. VapGPT OTO on SID-Bench EN — CLOSED, negative result
 
-The strongest reason to run this is signal provenance, not headline recall.
-On TurnBench dev, VapGPT OTO reaches 95.68% interruption recall at 9.99% FPR
-from a **native floor-state** head, whereas DualTurn's comparable 96.25% is
-`derived-fvad`. SID-Bench is the dedicated interruption benchmark, and both of
-its current rows are derived single-channel fallbacks. A native-signal row would
-test whether the SID conclusion survives a change of signal provenance.
-The checkpoint is CC-BY-4.0, so unlike Realtime-VAP it is not license-blocked.
+Closed on 2026-09-06 with `turn-eval run-sidbench-vap-gpt`, using the
+interruption threshold 0.8591171121643947 frozen from
+`results/en/turnbench/vap_gpt_oto/20260904T192700Z/scored/scores.json`. No
+SID-Bench label was used to select it.
 
-Precedent: `run-sidbench-vap` and `run-sidbench-dualturn` already implement the
-`user=CH0, silence=CH1` fallback. Requires a frozen threshold from TurnBench EN
-dev, matching the existing procedure.
+| Split | Model | Recall | FIR | IRL p50 | APT | Non-break FPR |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| EN | DualTurn, derived FVAD | 69.00% | 32.25% | 178 ms | 1.494 s | 41.40% |
+| EN | Realtime-VAP, floor state | 44.00% | 67.25% | 62 ms | 2.521 s | 92.40% |
+| EN | VapGPT OTO, native floor state | 31.45% | 78.38% | 0 ms | 2.843 s | 100.00% |
+| NOISE | VapGPT OTO, native floor state | n/a | 100.00% | n/a | 12.976 s | 100.00% |
+
+By category, the failure is total on exactly the cases that matter: on
+`interruption_middle` recall is 0.17% with a 99.83% false-interruption rate,
+because the policy commits at the first 20 ms frame, long before the annotated
+break. On `interruption_beginning` recall is 69.00%, which is what committing
+immediately happens to score when the interruption really is at the start.
+
+The model with the strongest native interruption head on TurnBench, at 95.68%
+recall, is thus the worst row on the dedicated interruption benchmark. That is
+not a statement about VapGPT. It is a property of the fallback, explained by the
+criterion above, and it is the reason this cell and five others are now blocked
+rather than open.
+
+Two implementation notes for anyone reproducing this:
+
+- `VapGPT.probs` computes `p_now` and then unconditionally computes a training
+  loss whose label extractor needs about 101 future frames. Its `vad` argument
+  cannot switch that off, because the body reassigns `vad` before the branch
+  that tests it. 746 of the 1,600 English SID clips are shorter than the
+  resulting 2.02-second floor. The runner therefore recomputes `p_now` from the
+  forward pass using upstream's own objective, rather than padding the audio and
+  changing the model input. `environments/vap_turnbench/verify_p_now_equivalence.py`
+  asserts the two paths agree; they are bit-for-bit identical, with a maximum
+  absolute difference of 0.
+- Runtime is not the constraint: RTF is 0.015, about 67 times real time.
 
 ### G2. TurnSense on eot-bench ZH and EN
 
@@ -172,12 +274,18 @@ score; treating it as "do not decide, keep waiting" is more defensible but is a
 policy choice that must be frozen on calibration data, not selected on
 eot-bench.
 
-### G3. Kyutai Semantic VAD on SID-Bench EN
+### G3. Kyutai Semantic VAD on SID-Bench EN — now the highest-value open gap
 
-93.08% TurnBench interruption recall at 8.52% FPR, CC-BY-4.0, native streaming
-at 80 ms. Same precedent and threshold procedure as G1. Lower priority than G1
-because its interruption signal is already `derived`, so it does not add the
-native-provenance evidence that G1 does.
+Promoted on 2026-09-06. After G1, Kyutai is the **only** remaining dual-channel
+TurnBench architecture whose committed SID signal survives the fallback
+criterion: `1 - vad_heads[2]` is a per-stream turn-ending probability, not a
+comparison against the partner channel. It scores 93.08% TurnBench interruption
+recall at 8.52% FPR, is CC-BY-4.0, and runs natively streaming at 80 ms.
+
+It is now the only way left to test whether DualTurn's SID-Bench lead reflects
+its architecture or merely the fact that its signal is one of the few that the
+fallback does not destroy. Use the same frozen-threshold procedure as G1, and
+check the committed signal's saturation before trusting the row.
 
 ### G4. Easy Turn restricted to the FastTurn 2-state subset — CLOSED
 
@@ -239,36 +347,39 @@ expectation is currently recorded nowhere. Cheap on CPU. Unlike the four
 English-only checkpoints, SmartTurn declares Chinese support, so its `SID-ZH`
 cell is a gap rather than a zero-shot deprioritization.
 
-### G8. ESPnet TurnTaking and Mimi Endpointer on SID-Bench EN
+### G8. ESPnet TurnTaking and Mimi Endpointer on SID-Bench EN — WITHDRAWN
 
-Completes the interruption picture across all TurnBench architectures. Both are
-CC-BY-4.0. Lower priority than G1 and G3 on their TurnBench interruption recall
-(ESPnet 64.27%, Mimi 87.61%), and Mimi's runner performs full-sequence
-inference, so a streaming SID fallback would need its execution mode restated
-in metadata.
+Withdrawn on 2026-09-06. Mimi commits `P(active speaker)` and ESPnet weights its
+class probability by an `energy_1/(energy_1+energy_2)` onset share. Both are
+defined relative to the partner channel, so both degenerate exactly as VapGPT
+did. These cells are now blocked, not open.
 
 ## Effect on the current conclusions
 
-Two statements in [`BASELINE_ANALYSIS.md`](BASELINE_ANALYSIS.md) should be read
-with this coverage in mind.
-
 1. "DualTurn's frozen derived-FVAD policy is the strongest current SID-Bench
-   fallback" is true, but the comparison set is two models, both derived and
-   both single-channel fallback. It is not evidence that DualTurn beats the
-   native-signal interruption models, which have never been run on SID.
-2. "Isolated Chinese Complete/Incomplete candidate: TurnSense" and "EOT
+   fallback" survives G1, but the reason has changed. DualTurn does not lead
+   because it discriminates interruptions better than the native architectures;
+   it leads because its signal is one of the few that the single-channel
+   fallback does not destroy. Four of the seven candidate signals cannot be
+   measured on SID-Bench at all. Until G3 runs, the ranking should be read as
+   "best among the signals this benchmark can measure", not "best available".
+2. The Realtime-VAP SID rows are degenerate under the same criterion. Their
+   non-break trigger rates are an artifact of the fallback and were previously
+   presented as a model-behaviour contrast with DualTurn.
+3. "Isolated Chinese Complete/Incomplete candidate: TurnSense" and "EOT
    production candidate: DualTurn" are drawn from different benchmarks with
-   different evaluation units. The two models have never been compared on any
-   shared axis. G2 and G5 exist to close that.
+   different evaluation units. G4 closed the TurnSense-versus-Easy-Turn half of
+   this; TurnSense and DualTurn still share no axis, which is what G2 and G5
+   exist to fix.
 
-Nothing in this audit contradicts a published number. The canonical comparison
-report remains valid for what it measures; this document records what it does
-not measure.
+Nothing in this audit contradicts a published number. Every run remains valid
+for what it measures; this document records what those measurements do and do
+not support.
 
 ## Maintenance
 
 Update this file whenever a model or benchmark is added, and re-derive the
 matrix from the canonical comparison manifest rather than from memory. The
 matrix above was generated against
-`results/comparison/20260906T105645Z/summary.csv`, which selects 40 rows from 69
+`results/comparison/20260906T111447Z/summary.csv`, which selects 40 rows from 69
 hashed input artifacts.
