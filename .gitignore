@@ -234,6 +234,8 @@ results/comparison/*
 !results/comparison/20260906T150444Z/
 !results/comparison/20260906T161125Z/
 
+!results/calibration/
+results/calibration/.*-partial/
 results/analysis/*
 !results/analysis/eotbench/
 !results/analysis/sidbench/

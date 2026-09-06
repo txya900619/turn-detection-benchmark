@@ -1,0 +1,287 @@
+{
+  "frozen_policy": {
+    "false_interruption_rate": 0.04285714285714286,
+    "official_mean_irl_s": 0.7974773755656108,
+    "average_penalty_time_s": 0.7147376674107143,
+    "interruption_recall": 0.8623376623376623,
+    "response_latency_s": {
+      "p50": 0.6825,
+      "p90": 1.3432500000000012,
+      "p95": 1.7758750000000008
+    },
+    "diagnostics": {
+      "nonbreak_false_positive_rate": 0.09428571428571429,
+      "early_interruption_rate": 0.01948051948051948,
+      "strict_paper_fir": 0.04285714285714286,
+      "notebook_end_boundary_exemptions": 0
+    },
+    "counts": {
+      "examples": 1120,
+      "groups": 1120,
+      "positive_interruptions": 770,
+      "nonbreak": 350,
+      "false_interruptions": 48,
+      "strict_paper_false_interruptions": 48,
+      "correct_interruptions": 664,
+      "latency_samples": 664,
+      "official_irl_samples": 663,
+      "outcomes": {
+        "early_interruption": 15,
+        "false_interruption_nonbreak": 33,
+        "late_interruption": 663,
+        "missed_interruption": 91,
+        "true_negative": 317,
+        "within_tolerance": 1
+      }
+    },
+    "metric_protocol": "sid-bench-paper-and-official-notebook-v1",
+    "tolerance_s": 0.05,
+    "fir_denominator": "all evaluated examples",
+    "official_irl_population": "late correct detections beyond tolerance only",
+    "by_category": {
+      "interruption_beginning": {
+        "false_interruption_rate": 0.0,
+        "official_mean_irl_s": 0.8493430034129693,
+        "average_penalty_time_s": 0.8865928571428572,
+        "interruption_recall": 0.8371428571428572,
+        "response_latency_s": {
+          "p50": 0.7025,
+          "p90": 1.3845000000000003,
+          "p95": 1.7025000000000001
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": null,
+          "early_interruption_rate": 0.0,
+          "strict_paper_fir": 0.0,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 350,
+          "groups": 350,
+          "positive_interruptions": 350,
+          "nonbreak": 0,
+          "false_interruptions": 0,
+          "strict_paper_false_interruptions": 0,
+          "correct_interruptions": 293,
+          "latency_samples": 293,
+          "official_irl_samples": 293,
+          "outcomes": {
+            "late_interruption": 293,
+            "missed_interruption": 57
+          }
+        }
+      },
+      "interruption_middle": {
+        "false_interruption_rate": 0.03571428571428571,
+        "official_mean_irl_s": 0.7564054054054055,
+        "average_penalty_time_s": 1.0390917162698412,
+        "interruption_recall": 0.8833333333333333,
+        "response_latency_s": {
+          "p50": 0.66,
+          "p90": 1.32,
+          "p95": 1.88
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": null,
+          "early_interruption_rate": 0.03571428571428571,
+          "strict_paper_fir": 0.03571428571428571,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 420,
+          "groups": 420,
+          "positive_interruptions": 420,
+          "nonbreak": 0,
+          "false_interruptions": 15,
+          "strict_paper_false_interruptions": 15,
+          "correct_interruptions": 371,
+          "latency_samples": 371,
+          "official_irl_samples": 370,
+          "outcomes": {
+            "early_interruption": 15,
+            "late_interruption": 370,
+            "missed_interruption": 34,
+            "within_tolerance": 1
+          }
+        }
+      },
+      "nonbreak": {
+        "false_interruption_rate": 0.09428571428571429,
+        "official_mean_irl_s": null,
+        "average_penalty_time_s": 0.15365761904761904,
+        "interruption_recall": null,
+        "response_latency_s": {
+          "p50": null,
+          "p90": null,
+          "p95": null
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": 0.09428571428571429,
+          "early_interruption_rate": null,
+          "strict_paper_fir": 0.09428571428571429,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 350,
+          "groups": 350,
+          "positive_interruptions": 0,
+          "nonbreak": 350,
+          "false_interruptions": 33,
+          "strict_paper_false_interruptions": 33,
+          "correct_interruptions": 0,
+          "latency_samples": 0,
+          "official_irl_samples": 0,
+          "outcomes": {
+            "false_interruption_nonbreak": 33,
+            "true_negative": 317
+          }
+        }
+      }
+    }
+  },
+  "incumbent": {
+    "false_interruption_rate": 0.13303571428571428,
+    "official_mean_irl_s": 0.45605113636363637,
+    "average_penalty_time_s": 0.7708086495535714,
+    "interruption_recall": 0.825974025974026,
+    "response_latency_s": {
+      "p50": 0.2525,
+      "p90": 0.86875,
+      "p95": 1.40875
+    },
+    "diagnostics": {
+      "nonbreak_false_positive_rate": 0.26571428571428574,
+      "early_interruption_rate": 0.07272727272727272,
+      "strict_paper_fir": 0.13303571428571428,
+      "notebook_end_boundary_exemptions": 0
+    },
+    "counts": {
+      "examples": 1120,
+      "groups": 1120,
+      "positive_interruptions": 770,
+      "nonbreak": 350,
+      "false_interruptions": 149,
+      "strict_paper_false_interruptions": 149,
+      "correct_interruptions": 636,
+      "latency_samples": 636,
+      "official_irl_samples": 616,
+      "outcomes": {
+        "early_interruption": 56,
+        "false_interruption_nonbreak": 93,
+        "late_interruption": 616,
+        "missed_interruption": 78,
+        "true_negative": 257,
+        "within_tolerance": 20
+      }
+    },
+    "metric_protocol": "sid-bench-paper-and-official-notebook-v1",
+    "tolerance_s": 0.05,
+    "fir_denominator": "all evaluated examples",
+    "official_irl_population": "late correct detections beyond tolerance only",
+    "by_category": {
+      "interruption_beginning": {
+        "false_interruption_rate": 0.002857142857142857,
+        "official_mean_irl_s": 0.42498360655737705,
+        "average_penalty_time_s": 0.5678756547619047,
+        "interruption_recall": 0.8714285714285714,
+        "response_latency_s": {
+          "p50": 0.2825,
+          "p90": 0.7450000000000003,
+          "p95": 1.2485000000000013
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": null,
+          "early_interruption_rate": 0.002857142857142857,
+          "strict_paper_fir": 0.002857142857142857,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 350,
+          "groups": 350,
+          "positive_interruptions": 350,
+          "nonbreak": 0,
+          "false_interruptions": 1,
+          "strict_paper_false_interruptions": 1,
+          "correct_interruptions": 305,
+          "latency_samples": 305,
+          "official_irl_samples": 305,
+          "outcomes": {
+            "early_interruption": 1,
+            "late_interruption": 305,
+            "missed_interruption": 44
+          }
+        }
+      },
+      "interruption_middle": {
+        "false_interruption_rate": 0.13095238095238096,
+        "official_mean_irl_s": 0.48651929260450155,
+        "average_penalty_time_s": 1.2590884424603175,
+        "interruption_recall": 0.7880952380952381,
+        "response_latency_s": {
+          "p50": 0.22750000000000004,
+          "p90": 0.9525,
+          "p95": 1.49375
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": null,
+          "early_interruption_rate": 0.13095238095238096,
+          "strict_paper_fir": 0.13095238095238096,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 420,
+          "groups": 420,
+          "positive_interruptions": 420,
+          "nonbreak": 0,
+          "false_interruptions": 55,
+          "strict_paper_false_interruptions": 55,
+          "correct_interruptions": 331,
+          "latency_samples": 331,
+          "official_irl_samples": 311,
+          "outcomes": {
+            "early_interruption": 55,
+            "late_interruption": 311,
+            "missed_interruption": 34,
+            "within_tolerance": 20
+          }
+        }
+      },
+      "nonbreak": {
+        "false_interruption_rate": 0.26571428571428574,
+        "official_mean_irl_s": null,
+        "average_penalty_time_s": 0.3878058928571429,
+        "interruption_recall": null,
+        "response_latency_s": {
+          "p50": null,
+          "p90": null,
+          "p95": null
+        },
+        "diagnostics": {
+          "nonbreak_false_positive_rate": 0.26571428571428574,
+          "early_interruption_rate": null,
+          "strict_paper_fir": 0.26571428571428574,
+          "notebook_end_boundary_exemptions": 0
+        },
+        "counts": {
+          "examples": 350,
+          "groups": 350,
+          "positive_interruptions": 0,
+          "nonbreak": 350,
+          "false_interruptions": 93,
+          "strict_paper_false_interruptions": 93,
+          "correct_interruptions": 0,
+          "latency_samples": 0,
+          "official_irl_samples": 0,
+          "outcomes": {
+            "false_interruption_nonbreak": 93,
+            "true_negative": 257
+          }
+        }
+      }
+    }
+  },
+  "incumbent_parameters": {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 1
+  }
+}

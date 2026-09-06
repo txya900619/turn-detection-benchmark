@@ -298,6 +298,54 @@ difference with a 95% interval of -9.0 to -1.4 points. A production policy may
 need a fast acoustic path for obvious immediate barge-in and a more conservative
 semantic path for middle-turn speech.
 
+## Calibrated interruption policy
+
+Every policy above was frozen on some other dataset, because none of these
+benchmarks publishes a development split. `turn-eval calibrate-sidbench` supplies
+the missing piece: a seeded, stratified, persisted split of SID-Bench, a frozen
+policy artifact pinned to that split, and a guard that refuses to score held-out
+ids with a policy that was not frozen beforehand.
+
+The policy fits the two-stage design proposed below: a fast acoustic crossing
+followed by a confirmation that the crossing persists. Its two parameters are a
+threshold and a number of consecutive 80 ms frames, and `persistence = 1`
+reproduces the incumbent exactly, so the incumbent sits inside the search space.
+Selection replays the cached per-frame traces of the completed DualTurn runs and
+reruns no model; at the incumbent parameters the replay reproduces those runs'
+published metrics to the last digit, which is what licenses the comparison.
+
+Selected on 30% of clips, scored once on the remaining 70%:
+
+| Split | Policy | Recall | FIR | Non-break trigger | IRL p50 | IRL p90 |
+|---|---|---:|---:|---:|---:|---:|
+| ZH | Incumbent | 82.60% | 13.30% | 26.57% | 252 ms | 869 ms |
+| ZH | **Two-stage** | **86.23%** | **4.29%** | **9.43%** | 682 ms | 1343 ms |
+| EN | Incumbent | 67.53% | 33.04% | 41.14% | 178 ms | 660 ms |
+| EN | **Two-stage** | **82.99%** | **7.14%** | **6.00%** | 683 ms | 1490 ms |
+
+Both languages independently select **8 frames, 640 ms, of confirmation**, at
+different thresholds (0.92 Chinese, 0.97 English). That the persistence
+parameter converges while the threshold does not is evidence that the
+confirmation delay is the operative mechanism rather than a fitting artifact.
+
+The aggregate gain is a trade, not a free lunch, and the aggregate penalty time
+hides it because non-break false triggers dominate that statistic:
+
+| Split | Category | Incumbent | Two-stage |
+|---|---|---:|---:|
+| ZH | interruption_beginning | 87.14% | 83.71% |
+| ZH | interruption_middle | 78.81% | 88.33% |
+| EN | interruption_beginning | 94.00% | 85.71% |
+| EN | interruption_middle | 45.48% | 80.71% |
+
+The policy gives up 3 to 8 points on immediate barge-in and roughly 450 ms of
+response latency, and buys 10 to 35 points on mid-turn interruption plus a 17 to
+35 point reduction in non-break false triggers. For an agent that must not be
+interrupted by an acknowledgement, that is the right side of the trade; for one
+whose users barge in at the very start of a reply, it is not. The choice is now
+an explicit product decision with measured costs on both sides, rather than an
+uncalibrated threshold borrowed from another benchmark.
+
 ## Current decision
 
 - EOT production candidate: DualTurn first, with SmartTurn as the small-model

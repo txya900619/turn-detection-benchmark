@@ -466,6 +466,28 @@ Nothing in this audit contradicts a published number. Every run remains valid
 for what it measures; this document records what those measurements do and do
 not support.
 
+## Why eot-bench cannot calibrate a long-HOLD guard
+
+Recorded so the next session does not retry it on this data. The long-HOLD guard
+is the other policy the baseline analysis calls for, and eot-bench does not hold
+enough spans to both select and test one:
+
+| Language | HOLD spans >= 1 s | Conversations | Spans at 2-5 s |
+| --- | ---: | ---: | ---: |
+| ZH | 45 | 38 | **1** |
+| EN | 79 | 29 | 18 |
+
+Splitting the Chinese set at the usual 30% leaves roughly 13 long spans to
+select on and 32 to test on, and the single 2-5 s span lands wholly on one side
+whatever the seed. Any guard fitted that way would carry intervals far too wide
+to act on, and the 2-5 s slice would be unmeasurable by construction.
+
+Closing this needs more long-pause data, not more models: either a Chinese
+eot-bench-style set with a usable count of pauses beyond one second, or a
+targeted collection of long-hesitation turns. Until then the long-HOLD failure
+rates in `BASELINE_ANALYSIS.md` should be read as a measured deficiency with no
+calibrated remedy available.
+
 ## Maintenance
 
 Update this file whenever a model or benchmark is added, and re-derive the

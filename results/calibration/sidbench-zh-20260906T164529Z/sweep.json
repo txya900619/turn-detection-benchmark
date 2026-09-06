@@ -1,0 +1,1658 @@
+[
+  {
+    "threshold": 0.5,
+    "persistence_frames": 1,
+    "interruption_recall": 0.4727272727272727,
+    "nonbreak_false_positive_rate": 0.9933333333333333,
+    "false_interruption_rate": 0.6729166666666667,
+    "average_penalty_time_s": 2.5312292100694447,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 1,
+    "interruption_recall": 0.4818181818181818,
+    "nonbreak_false_positive_rate": 0.98,
+    "false_interruption_rate": 0.6625,
+    "average_penalty_time_s": 2.507180251736111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 1,
+    "interruption_recall": 0.5060606060606061,
+    "nonbreak_false_positive_rate": 0.9666666666666667,
+    "false_interruption_rate": 0.6395833333333333,
+    "average_penalty_time_s": 2.390999001736111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 1,
+    "interruption_recall": 0.5575757575757576,
+    "nonbreak_false_positive_rate": 0.9133333333333333,
+    "false_interruption_rate": 0.5854166666666667,
+    "average_penalty_time_s": 2.1841203993055553,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 1,
+    "interruption_recall": 0.5696969696969697,
+    "nonbreak_false_positive_rate": 0.88,
+    "false_interruption_rate": 0.5645833333333333,
+    "average_penalty_time_s": 2.135602690972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 1,
+    "interruption_recall": 0.6090909090909091,
+    "nonbreak_false_positive_rate": 0.82,
+    "false_interruption_rate": 0.5166666666666667,
+    "average_penalty_time_s": 1.9753121961805555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 1,
+    "interruption_recall": 0.6393939393939394,
+    "nonbreak_false_positive_rate": 0.76,
+    "false_interruption_rate": 0.475,
+    "average_penalty_time_s": 1.848845486111111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 1,
+    "interruption_recall": 0.6666666666666666,
+    "nonbreak_false_positive_rate": 0.7,
+    "false_interruption_rate": 0.4354166666666667,
+    "average_penalty_time_s": 1.6912100260416667,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 1,
+    "interruption_recall": 0.6878787878787879,
+    "nonbreak_false_positive_rate": 0.66,
+    "false_interruption_rate": 0.4041666666666667,
+    "average_penalty_time_s": 1.5853183593749998,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7151515151515152,
+    "nonbreak_false_positive_rate": 0.5933333333333334,
+    "false_interruption_rate": 0.3625,
+    "average_penalty_time_s": 1.4770299913194445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7515151515151515,
+    "nonbreak_false_positive_rate": 0.5333333333333333,
+    "false_interruption_rate": 0.31666666666666665,
+    "average_penalty_time_s": 1.2979507812500002,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7666666666666667,
+    "nonbreak_false_positive_rate": 0.5066666666666667,
+    "false_interruption_rate": 0.28541666666666665,
+    "average_penalty_time_s": 1.1946319878472222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7787878787878788,
+    "nonbreak_false_positive_rate": 0.4666666666666667,
+    "false_interruption_rate": 0.2520833333333333,
+    "average_penalty_time_s": 1.1131268663194445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 1,
+    "interruption_recall": 0.8,
+    "nonbreak_false_positive_rate": 0.38666666666666666,
+    "false_interruption_rate": 0.20625,
+    "average_penalty_time_s": 1.0392800347222222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7878787878787878,
+    "nonbreak_false_positive_rate": 0.30666666666666664,
+    "false_interruption_rate": 0.17083333333333334,
+    "average_penalty_time_s": 0.9989571180555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7848484848484848,
+    "nonbreak_false_positive_rate": 0.30666666666666664,
+    "false_interruption_rate": 0.17083333333333334,
+    "average_penalty_time_s": 1.0025737847222222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7848484848484848,
+    "nonbreak_false_positive_rate": 0.25333333333333335,
+    "false_interruption_rate": 0.13541666666666666,
+    "average_penalty_time_s": 0.9013717447916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7848484848484848,
+    "nonbreak_false_positive_rate": 0.18666666666666668,
+    "false_interruption_rate": 0.09583333333333334,
+    "average_penalty_time_s": 0.8372980034722222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7909090909090909,
+    "nonbreak_false_positive_rate": 0.14,
+    "false_interruption_rate": 0.07083333333333333,
+    "average_penalty_time_s": 0.8206092013888888,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7787878787878788,
+    "nonbreak_false_positive_rate": 0.11333333333333333,
+    "false_interruption_rate": 0.05625,
+    "average_penalty_time_s": 0.8738310763888889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 1,
+    "interruption_recall": 0.7424242424242424,
+    "nonbreak_false_positive_rate": 0.08666666666666667,
+    "false_interruption_rate": 0.0375,
+    "average_penalty_time_s": 0.9413686197916667,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 1,
+    "interruption_recall": 0.6545454545454545,
+    "nonbreak_false_positive_rate": 0.02,
+    "false_interruption_rate": 0.010416666666666666,
+    "average_penalty_time_s": 1.1377288194444444,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 1,
+    "interruption_recall": 0.23333333333333334,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.2635243055555554,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 2,
+    "interruption_recall": 0.5303030303030303,
+    "nonbreak_false_positive_rate": 0.9933333333333333,
+    "false_interruption_rate": 0.63125,
+    "average_penalty_time_s": 2.3315594618055555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 2,
+    "interruption_recall": 0.5484848484848485,
+    "nonbreak_false_positive_rate": 0.96,
+    "false_interruption_rate": 0.6083333333333333,
+    "average_penalty_time_s": 2.2406761284722223,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 2,
+    "interruption_recall": 0.5818181818181818,
+    "nonbreak_false_positive_rate": 0.9333333333333333,
+    "false_interruption_rate": 0.575,
+    "average_penalty_time_s": 2.100452734375,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 2,
+    "interruption_recall": 0.6181818181818182,
+    "nonbreak_false_positive_rate": 0.86,
+    "false_interruption_rate": 0.5229166666666667,
+    "average_penalty_time_s": 1.9606621961805557,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 2,
+    "interruption_recall": 0.6515151515151515,
+    "nonbreak_false_positive_rate": 0.8133333333333334,
+    "false_interruption_rate": 0.48333333333333334,
+    "average_penalty_time_s": 1.7986278211805555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 2,
+    "interruption_recall": 0.6909090909090909,
+    "nonbreak_false_positive_rate": 0.7666666666666667,
+    "false_interruption_rate": 0.43333333333333335,
+    "average_penalty_time_s": 1.6112850694444445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7151515151515152,
+    "nonbreak_false_positive_rate": 0.6733333333333333,
+    "false_interruption_rate": 0.38958333333333334,
+    "average_penalty_time_s": 1.4865026475694445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7515151515151515,
+    "nonbreak_false_positive_rate": 0.5866666666666667,
+    "false_interruption_rate": 0.33125,
+    "average_penalty_time_s": 1.3503070746527779,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7727272727272727,
+    "nonbreak_false_positive_rate": 0.5533333333333333,
+    "false_interruption_rate": 0.30416666666666664,
+    "average_penalty_time_s": 1.2326487847222223,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 2,
+    "interruption_recall": 0.793939393939394,
+    "nonbreak_false_positive_rate": 0.5066666666666667,
+    "false_interruption_rate": 0.27291666666666664,
+    "average_penalty_time_s": 1.1165508680555556,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 2,
+    "interruption_recall": 0.8,
+    "nonbreak_false_positive_rate": 0.44666666666666666,
+    "false_interruption_rate": 0.2375,
+    "average_penalty_time_s": 1.0593987847222222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 2,
+    "interruption_recall": 0.806060606060606,
+    "nonbreak_false_positive_rate": 0.3933333333333333,
+    "false_interruption_rate": 0.2125,
+    "average_penalty_time_s": 1.0270196180555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 2,
+    "interruption_recall": 0.8181818181818182,
+    "nonbreak_false_positive_rate": 0.32666666666666666,
+    "false_interruption_rate": 0.16666666666666666,
+    "average_penalty_time_s": 0.884373828125,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 2,
+    "interruption_recall": 0.8090909090909091,
+    "nonbreak_false_positive_rate": 0.2866666666666667,
+    "false_interruption_rate": 0.15,
+    "average_penalty_time_s": 0.8912249131944444,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 2,
+    "interruption_recall": 0.806060606060606,
+    "nonbreak_false_positive_rate": 0.19333333333333333,
+    "false_interruption_rate": 0.10625,
+    "average_penalty_time_s": 0.8471019965277777,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 2,
+    "interruption_recall": 0.8090909090909091,
+    "nonbreak_false_positive_rate": 0.18,
+    "false_interruption_rate": 0.09791666666666667,
+    "average_penalty_time_s": 0.8300562065972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 2,
+    "interruption_recall": 0.8,
+    "nonbreak_false_positive_rate": 0.13333333333333333,
+    "false_interruption_rate": 0.07083333333333333,
+    "average_penalty_time_s": 0.7683830295138888,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7787878787878788,
+    "nonbreak_false_positive_rate": 0.09333333333333334,
+    "false_interruption_rate": 0.05416666666666667,
+    "average_penalty_time_s": 0.8509696614583333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7575757575757576,
+    "nonbreak_false_positive_rate": 0.08666666666666667,
+    "false_interruption_rate": 0.041666666666666664,
+    "average_penalty_time_s": 0.8610644531249999,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 2,
+    "interruption_recall": 0.7303030303030303,
+    "nonbreak_false_positive_rate": 0.04666666666666667,
+    "false_interruption_rate": 0.022916666666666665,
+    "average_penalty_time_s": 0.9432707031249999,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 2,
+    "interruption_recall": 0.6909090909090909,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.008333333333333333,
+    "average_penalty_time_s": 1.0961331597222221,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 2,
+    "interruption_recall": 0.5454545454545454,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.0020833333333333333,
+    "average_penalty_time_s": 1.440346657986111,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 2,
+    "interruption_recall": 0.09696969696969697,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.7060407118055556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 3,
+    "interruption_recall": 0.6212121212121212,
+    "nonbreak_false_positive_rate": 0.9533333333333334,
+    "false_interruption_rate": 0.5458333333333333,
+    "average_penalty_time_s": 1.9649688802083332,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 3,
+    "interruption_recall": 0.6454545454545455,
+    "nonbreak_false_positive_rate": 0.9,
+    "false_interruption_rate": 0.5083333333333333,
+    "average_penalty_time_s": 1.8848296006944445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 3,
+    "interruption_recall": 0.6909090909090909,
+    "nonbreak_false_positive_rate": 0.86,
+    "false_interruption_rate": 0.46458333333333335,
+    "average_penalty_time_s": 1.7071863281250002,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7333333333333333,
+    "nonbreak_false_positive_rate": 0.76,
+    "false_interruption_rate": 0.4041666666666667,
+    "average_penalty_time_s": 1.5062612413194443,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7545454545454545,
+    "nonbreak_false_positive_rate": 0.6933333333333334,
+    "false_interruption_rate": 0.37083333333333335,
+    "average_penalty_time_s": 1.3873778645833332,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7818181818181819,
+    "nonbreak_false_positive_rate": 0.5666666666666667,
+    "false_interruption_rate": 0.30625,
+    "average_penalty_time_s": 1.24799453125,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8,
+    "nonbreak_false_positive_rate": 0.5133333333333333,
+    "false_interruption_rate": 0.275,
+    "average_penalty_time_s": 1.18890390625,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8121212121212121,
+    "nonbreak_false_positive_rate": 0.46,
+    "false_interruption_rate": 0.25,
+    "average_penalty_time_s": 1.1418736979166666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8242424242424242,
+    "nonbreak_false_positive_rate": 0.43333333333333335,
+    "false_interruption_rate": 0.23125,
+    "average_penalty_time_s": 1.0832861979166666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8545454545454545,
+    "nonbreak_false_positive_rate": 0.38,
+    "false_interruption_rate": 0.18958333333333333,
+    "average_penalty_time_s": 0.9046029947916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.32,
+    "false_interruption_rate": 0.16458333333333333,
+    "average_penalty_time_s": 0.8919103732638889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.28,
+    "false_interruption_rate": 0.13958333333333334,
+    "average_penalty_time_s": 0.8533978732638888,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8272727272727273,
+    "nonbreak_false_positive_rate": 0.22,
+    "false_interruption_rate": 0.11666666666666667,
+    "average_penalty_time_s": 0.8180291232638889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 3,
+    "interruption_recall": 0.8212121212121212,
+    "nonbreak_false_positive_rate": 0.18,
+    "false_interruption_rate": 0.09791666666666667,
+    "average_penalty_time_s": 0.8194926649305555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 3,
+    "interruption_recall": 0.796969696969697,
+    "nonbreak_false_positive_rate": 0.15333333333333332,
+    "false_interruption_rate": 0.075,
+    "average_penalty_time_s": 0.8235729166666667,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7909090909090909,
+    "nonbreak_false_positive_rate": 0.14666666666666667,
+    "false_interruption_rate": 0.07291666666666667,
+    "average_penalty_time_s": 0.8267793402777778,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7878787878787878,
+    "nonbreak_false_positive_rate": 0.10666666666666667,
+    "false_interruption_rate": 0.05,
+    "average_penalty_time_s": 0.798985329861111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7454545454545455,
+    "nonbreak_false_positive_rate": 0.07333333333333333,
+    "false_interruption_rate": 0.03333333333333333,
+    "average_penalty_time_s": 0.8949717447916666,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7212121212121212,
+    "nonbreak_false_positive_rate": 0.04,
+    "false_interruption_rate": 0.01875,
+    "average_penalty_time_s": 0.9701425781249999,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 3,
+    "interruption_recall": 0.7,
+    "nonbreak_false_positive_rate": 0.013333333333333334,
+    "false_interruption_rate": 0.008333333333333333,
+    "average_penalty_time_s": 1.0829009114583334,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 3,
+    "interruption_recall": 0.5787878787878787,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.004166666666666667,
+    "average_penalty_time_s": 1.3748682725694443,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 3,
+    "interruption_recall": 0.38484848484848483,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.8405710503472221,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 3,
+    "interruption_recall": 0.03636363636363636,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.9370711805555554,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 4,
+    "interruption_recall": 0.7212121212121212,
+    "nonbreak_false_positive_rate": 0.8,
+    "false_interruption_rate": 0.42916666666666664,
+    "average_penalty_time_s": 1.621294140625,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 4,
+    "interruption_recall": 0.7606060606060606,
+    "nonbreak_false_positive_rate": 0.7466666666666667,
+    "false_interruption_rate": 0.3854166666666667,
+    "average_penalty_time_s": 1.4328643663194442,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 4,
+    "interruption_recall": 0.7818181818181819,
+    "nonbreak_false_positive_rate": 0.6733333333333333,
+    "false_interruption_rate": 0.34791666666666665,
+    "average_penalty_time_s": 1.3647143663194443,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 4,
+    "interruption_recall": 0.793939393939394,
+    "nonbreak_false_positive_rate": 0.5866666666666667,
+    "false_interruption_rate": 0.29791666666666666,
+    "average_penalty_time_s": 1.25014765625,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8151515151515152,
+    "nonbreak_false_positive_rate": 0.5333333333333333,
+    "false_interruption_rate": 0.2708333333333333,
+    "average_penalty_time_s": 1.1131466145833333,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8303030303030303,
+    "nonbreak_false_positive_rate": 0.4533333333333333,
+    "false_interruption_rate": 0.23333333333333334,
+    "average_penalty_time_s": 1.046370529513889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8424242424242424,
+    "nonbreak_false_positive_rate": 0.38666666666666666,
+    "false_interruption_rate": 0.20208333333333334,
+    "average_penalty_time_s": 0.9999361979166667,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8515151515151516,
+    "nonbreak_false_positive_rate": 0.35333333333333333,
+    "false_interruption_rate": 0.18125,
+    "average_penalty_time_s": 0.9022842013888889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8454545454545455,
+    "nonbreak_false_positive_rate": 0.32,
+    "false_interruption_rate": 0.16666666666666666,
+    "average_penalty_time_s": 0.9012040364583334,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8454545454545455,
+    "nonbreak_false_positive_rate": 0.28,
+    "false_interruption_rate": 0.14375,
+    "average_penalty_time_s": 0.8399092447916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8393939393939394,
+    "nonbreak_false_positive_rate": 0.23333333333333334,
+    "false_interruption_rate": 0.11666666666666667,
+    "average_penalty_time_s": 0.8179572482638889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8333333333333334,
+    "nonbreak_false_positive_rate": 0.21333333333333335,
+    "false_interruption_rate": 0.10625,
+    "average_penalty_time_s": 0.8268332899305555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.18666666666666668,
+    "false_interruption_rate": 0.08958333333333333,
+    "average_penalty_time_s": 0.7842749565972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 4,
+    "interruption_recall": 0.8272727272727273,
+    "nonbreak_false_positive_rate": 0.16666666666666666,
+    "false_interruption_rate": 0.075,
+    "average_penalty_time_s": 0.781234375,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 4,
+    "interruption_recall": 0.796969696969697,
+    "nonbreak_false_positive_rate": 0.12666666666666668,
+    "false_interruption_rate": 0.05625,
+    "average_penalty_time_s": 0.79797265625,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 4,
+    "interruption_recall": 0.793939393939394,
+    "nonbreak_false_positive_rate": 0.10666666666666667,
+    "false_interruption_rate": 0.05,
+    "average_penalty_time_s": 0.7967394965277778,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 4,
+    "interruption_recall": 0.7636363636363637,
+    "nonbreak_false_positive_rate": 0.08,
+    "false_interruption_rate": 0.0375,
+    "average_penalty_time_s": 0.8608936631944444,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 4,
+    "interruption_recall": 0.696969696969697,
+    "nonbreak_false_positive_rate": 0.06,
+    "false_interruption_rate": 0.027083333333333334,
+    "average_penalty_time_s": 1.0689727430555556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 4,
+    "interruption_recall": 0.6666666666666666,
+    "nonbreak_false_positive_rate": 0.013333333333333334,
+    "false_interruption_rate": 0.00625,
+    "average_penalty_time_s": 1.1438497395833334,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 4,
+    "interruption_recall": 0.603030303030303,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0020833333333333333,
+    "average_penalty_time_s": 1.297880078125,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 4,
+    "interruption_recall": 0.48484848484848486,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0020833333333333333,
+    "average_penalty_time_s": 1.6070891493055555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 4,
+    "interruption_recall": 0.29393939393939394,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.167164930555556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 4,
+    "interruption_recall": 0.012121212121212121,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.993982638888889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8121212121212121,
+    "nonbreak_false_positive_rate": 0.64,
+    "false_interruption_rate": 0.3104166666666667,
+    "average_penalty_time_s": 1.2325863715277776,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8272727272727273,
+    "nonbreak_false_positive_rate": 0.5666666666666667,
+    "false_interruption_rate": 0.2791666666666667,
+    "average_penalty_time_s": 1.1737341579861111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8393939393939394,
+    "nonbreak_false_positive_rate": 0.54,
+    "false_interruption_rate": 0.2625,
+    "average_penalty_time_s": 1.1148195746527778,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8484848484848485,
+    "nonbreak_false_positive_rate": 0.4533333333333333,
+    "false_interruption_rate": 0.22291666666666668,
+    "average_penalty_time_s": 1.0222164930555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8515151515151516,
+    "nonbreak_false_positive_rate": 0.3933333333333333,
+    "false_interruption_rate": 0.19583333333333333,
+    "average_penalty_time_s": 0.9782821180555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8515151515151516,
+    "nonbreak_false_positive_rate": 0.32666666666666666,
+    "false_interruption_rate": 0.16666666666666666,
+    "average_penalty_time_s": 0.9118748263888888,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8606060606060606,
+    "nonbreak_false_positive_rate": 0.3,
+    "false_interruption_rate": 0.15,
+    "average_penalty_time_s": 0.8451227864583333,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8575757575757575,
+    "nonbreak_false_positive_rate": 0.28,
+    "false_interruption_rate": 0.13541666666666666,
+    "average_penalty_time_s": 0.8198613715277777,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8484848484848485,
+    "nonbreak_false_positive_rate": 0.25333333333333335,
+    "false_interruption_rate": 0.125,
+    "average_penalty_time_s": 0.8128311631944444,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8393939393939394,
+    "nonbreak_false_positive_rate": 0.22,
+    "false_interruption_rate": 0.10625,
+    "average_penalty_time_s": 0.7899519965277778,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.17333333333333334,
+    "false_interruption_rate": 0.08333333333333333,
+    "average_penalty_time_s": 0.7894187065972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8333333333333334,
+    "nonbreak_false_positive_rate": 0.13333333333333333,
+    "false_interruption_rate": 0.06666666666666667,
+    "average_penalty_time_s": 0.7632739149305555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 5,
+    "interruption_recall": 0.8272727272727273,
+    "nonbreak_false_positive_rate": 0.13333333333333333,
+    "false_interruption_rate": 0.06458333333333334,
+    "average_penalty_time_s": 0.7907020399305555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 5,
+    "interruption_recall": 0.806060606060606,
+    "nonbreak_false_positive_rate": 0.10666666666666667,
+    "false_interruption_rate": 0.052083333333333336,
+    "average_penalty_time_s": 0.8224699218749999,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 5,
+    "interruption_recall": 0.7787878787878788,
+    "nonbreak_false_positive_rate": 0.06666666666666667,
+    "false_interruption_rate": 0.03125,
+    "average_penalty_time_s": 0.8467301215277777,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 5,
+    "interruption_recall": 0.7727272727272727,
+    "nonbreak_false_positive_rate": 0.06666666666666667,
+    "false_interruption_rate": 0.027083333333333334,
+    "average_penalty_time_s": 0.8452478298611111,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 5,
+    "interruption_recall": 0.7393939393939394,
+    "nonbreak_false_positive_rate": 0.04,
+    "false_interruption_rate": 0.014583333333333334,
+    "average_penalty_time_s": 0.9439498263888889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 5,
+    "interruption_recall": 0.6545454545454545,
+    "nonbreak_false_positive_rate": 0.02,
+    "false_interruption_rate": 0.010416666666666666,
+    "average_penalty_time_s": 1.1800581163194444,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 5,
+    "interruption_recall": 0.5969696969696969,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.004166666666666667,
+    "average_penalty_time_s": 1.30640078125,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 5,
+    "interruption_recall": 0.5333333333333333,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0020833333333333333,
+    "average_penalty_time_s": 1.4807217013888887,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 5,
+    "interruption_recall": 0.4121212121212121,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.8293091145833331,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 5,
+    "interruption_recall": 0.18787878787878787,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.451328602430556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 5,
+    "interruption_recall": 0.006060606060606061,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 3.023813888888889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.46,
+    "false_interruption_rate": 0.23541666666666666,
+    "average_penalty_time_s": 1.0895654513888888,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8484848484848485,
+    "nonbreak_false_positive_rate": 0.44666666666666666,
+    "false_interruption_rate": 0.21875,
+    "average_penalty_time_s": 1.017665451388889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8575757575757575,
+    "nonbreak_false_positive_rate": 0.3933333333333333,
+    "false_interruption_rate": 0.19166666666666668,
+    "average_penalty_time_s": 0.9776289930555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8727272727272727,
+    "nonbreak_false_positive_rate": 0.3466666666666667,
+    "false_interruption_rate": 0.16041666666666668,
+    "average_penalty_time_s": 0.8662686631944445,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8696969696969697,
+    "nonbreak_false_positive_rate": 0.3,
+    "false_interruption_rate": 0.13958333333333334,
+    "average_penalty_time_s": 0.8415946614583334,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8666666666666667,
+    "nonbreak_false_positive_rate": 0.26666666666666666,
+    "false_interruption_rate": 0.12083333333333333,
+    "average_penalty_time_s": 0.808533203125,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8636363636363636,
+    "nonbreak_false_positive_rate": 0.23333333333333334,
+    "false_interruption_rate": 0.10625,
+    "average_penalty_time_s": 0.7679311197916667,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8575757575757575,
+    "nonbreak_false_positive_rate": 0.19333333333333333,
+    "false_interruption_rate": 0.08958333333333333,
+    "average_penalty_time_s": 0.7494530815972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8515151515151516,
+    "nonbreak_false_positive_rate": 0.18,
+    "false_interruption_rate": 0.08125,
+    "average_penalty_time_s": 0.7425791232638889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8424242424242424,
+    "nonbreak_false_positive_rate": 0.16666666666666666,
+    "false_interruption_rate": 0.075,
+    "average_penalty_time_s": 0.7620937065972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8303030303030303,
+    "nonbreak_false_positive_rate": 0.14,
+    "false_interruption_rate": 0.0625,
+    "average_penalty_time_s": 0.7961259982638889,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8303030303030303,
+    "nonbreak_false_positive_rate": 0.11333333333333333,
+    "false_interruption_rate": 0.052083333333333336,
+    "average_penalty_time_s": 0.7966582899305555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 6,
+    "interruption_recall": 0.8151515151515152,
+    "nonbreak_false_positive_rate": 0.10666666666666667,
+    "false_interruption_rate": 0.04791666666666667,
+    "average_penalty_time_s": 0.83293125,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 6,
+    "interruption_recall": 0.803030303030303,
+    "nonbreak_false_positive_rate": 0.06,
+    "false_interruption_rate": 0.022916666666666665,
+    "average_penalty_time_s": 0.8184738715277777,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 6,
+    "interruption_recall": 0.7545454545454545,
+    "nonbreak_false_positive_rate": 0.02,
+    "false_interruption_rate": 0.00625,
+    "average_penalty_time_s": 0.8718021701388888,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 6,
+    "interruption_recall": 0.7484848484848485,
+    "nonbreak_false_positive_rate": 0.013333333333333334,
+    "false_interruption_rate": 0.00625,
+    "average_penalty_time_s": 0.9022282118055556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 6,
+    "interruption_recall": 0.7,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.004166666666666667,
+    "average_penalty_time_s": 1.0490469184027778,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 6,
+    "interruption_recall": 0.6272727272727273,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.0020833333333333333,
+    "average_penalty_time_s": 1.2360395833333333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 6,
+    "interruption_recall": 0.5696969696969697,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.3945833333333333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 6,
+    "interruption_recall": 0.48484848484848486,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.6253424913194443,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 6,
+    "interruption_recall": 0.3333333333333333,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.002713454861111,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 6,
+    "interruption_recall": 0.1393939393939394,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.6321057291666667,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 6,
+    "interruption_recall": 0.0030303030303030303,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 3.0263430555555555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8393939393939394,
+    "nonbreak_false_positive_rate": 0.36,
+    "false_interruption_rate": 0.17916666666666667,
+    "average_penalty_time_s": 0.9989196614583332,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8424242424242424,
+    "nonbreak_false_positive_rate": 0.3333333333333333,
+    "false_interruption_rate": 0.16458333333333333,
+    "average_penalty_time_s": 0.9760779947916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8575757575757575,
+    "nonbreak_false_positive_rate": 0.31333333333333335,
+    "false_interruption_rate": 0.14583333333333334,
+    "average_penalty_time_s": 0.8945581597222223,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8757575757575757,
+    "nonbreak_false_positive_rate": 0.25333333333333335,
+    "false_interruption_rate": 0.11458333333333333,
+    "average_penalty_time_s": 0.7945217447916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8787878787878788,
+    "nonbreak_false_positive_rate": 0.2,
+    "false_interruption_rate": 0.09583333333333334,
+    "average_penalty_time_s": 0.7740217447916666,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8636363636363636,
+    "nonbreak_false_positive_rate": 0.18,
+    "false_interruption_rate": 0.0875,
+    "average_penalty_time_s": 0.762019704861111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8636363636363636,
+    "nonbreak_false_positive_rate": 0.16,
+    "false_interruption_rate": 0.07916666666666666,
+    "average_penalty_time_s": 0.7692217881944444,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8636363636363636,
+    "nonbreak_false_positive_rate": 0.12666666666666668,
+    "false_interruption_rate": 0.06041666666666667,
+    "average_penalty_time_s": 0.7492052083333333,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8424242424242424,
+    "nonbreak_false_positive_rate": 0.12,
+    "false_interruption_rate": 0.058333333333333334,
+    "average_penalty_time_s": 0.7804280815972222,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.1,
+    "false_interruption_rate": 0.04791666666666667,
+    "average_penalty_time_s": 0.7688801649305556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8242424242424242,
+    "nonbreak_false_positive_rate": 0.08,
+    "false_interruption_rate": 0.03958333333333333,
+    "average_penalty_time_s": 0.8078187065972222,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 7,
+    "interruption_recall": 0.8272727272727273,
+    "nonbreak_false_positive_rate": 0.06666666666666667,
+    "false_interruption_rate": 0.03125,
+    "average_penalty_time_s": 0.8159489149305555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 7,
+    "interruption_recall": 0.803030303030303,
+    "nonbreak_false_positive_rate": 0.06,
+    "false_interruption_rate": 0.027083333333333334,
+    "average_penalty_time_s": 0.8609105034722222,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 7,
+    "interruption_recall": 0.7696969696969697,
+    "nonbreak_false_positive_rate": 0.02,
+    "false_interruption_rate": 0.008333333333333333,
+    "average_penalty_time_s": 0.8417302083333333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 7,
+    "interruption_recall": 0.7,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 0.9989986545138889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 7,
+    "interruption_recall": 0.696969696969697,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.004129904513889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 7,
+    "interruption_recall": 0.6545454545454545,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.1484965711805555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 7,
+    "interruption_recall": 0.5636363636363636,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.3895195746527778,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 7,
+    "interruption_recall": 0.5121212121212121,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.5106397135416667,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 7,
+    "interruption_recall": 0.4121212121212121,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.7846286458333334,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 7,
+    "interruption_recall": 0.2696969696969697,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.2617141927083333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 7,
+    "interruption_recall": 0.09393939393939393,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.7721182291666664,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 7,
+    "interruption_recall": 0.0030303030303030303,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 3.0265097222222224,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.5,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8636363636363636,
+    "nonbreak_false_positive_rate": 0.26,
+    "false_interruption_rate": 0.13125,
+    "average_penalty_time_s": 0.8500362847222221,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.6,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8727272727272727,
+    "nonbreak_false_positive_rate": 0.23333333333333334,
+    "false_interruption_rate": 0.11458333333333333,
+    "average_penalty_time_s": 0.8395383680555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.7,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8818181818181818,
+    "nonbreak_false_positive_rate": 0.21333333333333335,
+    "false_interruption_rate": 0.1,
+    "average_penalty_time_s": 0.7934571180555555,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.8,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8757575757575757,
+    "nonbreak_false_positive_rate": 0.18666666666666668,
+    "false_interruption_rate": 0.08541666666666667,
+    "average_penalty_time_s": 0.7842811631944444,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.85,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8575757575757575,
+    "nonbreak_false_positive_rate": 0.14,
+    "false_interruption_rate": 0.07291666666666667,
+    "average_penalty_time_s": 0.792463454861111,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.9,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8515151515151516,
+    "nonbreak_false_positive_rate": 0.11333333333333333,
+    "false_interruption_rate": 0.06041666666666667,
+    "average_penalty_time_s": 0.7854708333333333,
+    "within_budget": false
+  },
+  {
+    "threshold": 0.92,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8484848484848485,
+    "nonbreak_false_positive_rate": 0.08666666666666667,
+    "false_interruption_rate": 0.05,
+    "average_penalty_time_s": 0.7808437065972222,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.94,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8424242424242424,
+    "nonbreak_false_positive_rate": 0.08666666666666667,
+    "false_interruption_rate": 0.04375,
+    "average_penalty_time_s": 0.7964457899305555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.95,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8333333333333334,
+    "nonbreak_false_positive_rate": 0.08,
+    "false_interruption_rate": 0.041666666666666664,
+    "average_penalty_time_s": 0.8100562065972222,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.96,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8363636363636363,
+    "nonbreak_false_positive_rate": 0.07333333333333333,
+    "false_interruption_rate": 0.03125,
+    "average_penalty_time_s": 0.7938926649305557,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.97,
+    "persistence_frames": 8,
+    "interruption_recall": 0.8151515151515152,
+    "nonbreak_false_positive_rate": 0.05333333333333334,
+    "false_interruption_rate": 0.022916666666666665,
+    "average_penalty_time_s": 0.8201625,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.975,
+    "persistence_frames": 8,
+    "interruption_recall": 0.803030303030303,
+    "nonbreak_false_positive_rate": 0.02,
+    "false_interruption_rate": 0.010416666666666666,
+    "average_penalty_time_s": 0.8039001302083333,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.98,
+    "persistence_frames": 8,
+    "interruption_recall": 0.7666666666666667,
+    "nonbreak_false_positive_rate": 0.013333333333333334,
+    "false_interruption_rate": 0.008333333333333333,
+    "average_penalty_time_s": 0.8592769531250001,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.985,
+    "persistence_frames": 8,
+    "interruption_recall": 0.7303030303030303,
+    "nonbreak_false_positive_rate": 0.006666666666666667,
+    "false_interruption_rate": 0.004166666666666667,
+    "average_penalty_time_s": 0.9270156684027777,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.9896328579889585,
+    "persistence_frames": 8,
+    "interruption_recall": 0.6545454545454545,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.1009590711805555,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.99,
+    "persistence_frames": 8,
+    "interruption_recall": 0.6484848484848484,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.1170903211805556,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.992,
+    "persistence_frames": 8,
+    "interruption_recall": 0.5969696969696969,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.273373654513889,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.994,
+    "persistence_frames": 8,
+    "interruption_recall": 0.5151515151515151,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.5083898871527777,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.995,
+    "persistence_frames": 8,
+    "interruption_recall": 0.44545454545454544,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.6994100260416665,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.996,
+    "persistence_frames": 8,
+    "interruption_recall": 0.35454545454545455,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 1.995729470486111,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.997,
+    "persistence_frames": 8,
+    "interruption_recall": 0.21212121212121213,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.419470703125,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.998,
+    "persistence_frames": 8,
+    "interruption_recall": 0.0696969696969697,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 2.860615147569445,
+    "within_budget": true
+  },
+  {
+    "threshold": 0.999,
+    "persistence_frames": 8,
+    "interruption_recall": 0.0,
+    "nonbreak_false_positive_rate": 0.0,
+    "false_interruption_rate": 0.0,
+    "average_penalty_time_s": 3.0388542534722225,
+    "within_budget": true
+  }
+]

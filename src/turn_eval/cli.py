@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 from datetime import UTC, datetime
@@ -23,6 +25,7 @@ from turn_eval.artifacts import (
 from turn_eval.benchmarks.eot_bench import EOT_BENCH_REVISION, load_eot_bench
 from turn_eval.benchmarks.fastturn import load_fastturn, prepare_fastturn_dataset
 from turn_eval.benchmarks.sid_bench import (
+    SID_BENCH_REVISION,
     load_sid_bench,
     load_sid_bench_predictions,
     prepare_sid_bench_dataset,
@@ -37,6 +40,12 @@ from turn_eval.benchmarks.turnbench import (
     load_turnbench,
     score_with_official_turnbench,
     sweep_with_official_turnbench,
+)
+from turn_eval.calibration import (
+    make_calibration_split,
+    require_heldout_evaluation,
+    write_calibration_split,
+    write_frozen_policy,
 )
 from turn_eval.core.types import (
     ChannelMode,
@@ -101,6 +110,14 @@ from turn_eval.reports.fastturn_rescore import (
 from turn_eval.reports.plots import write_suite_plots
 from turn_eval.reports.runtime import write_runtime_report
 from turn_eval.reports.sid_analysis import write_sid_paired_analysis
+from turn_eval.reports.sid_calibration import (
+    PERSISTENCE_GRID,
+    THRESHOLD_GRID,
+    load_traces,
+    render_report,
+    score,
+    search,
+)
 from turn_eval.reports.summary import recompute_run_metrics, render_markdown
 from turn_eval.runner.clip_classification import ClipClassificationRun, run_clip_classification
 from turn_eval.runner.decision_point import run_decision_points
@@ -127,6 +144,21 @@ class _CliProgress:
             file=sys.stderr,
         )
         self.last_update = now
+
+
+def _write_json_file(path: Path, value: object) -> None:
+    path.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _sha256_path(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _evaluation_mode(
@@ -1551,6 +1583,137 @@ def _rescore_fastturn_eot(args: argparse.Namespace) -> int:
     return 0
 
 
+def _calibrate_sid_bench(args: argparse.Namespace) -> int:
+    output = args.output_dir.resolve()
+    if output.exists():
+        raise FileExistsError(f"calibration artifact already exists: {output}")
+
+    traces = load_traces(args.run)
+    source_manifest = json.loads((traces.source_run / "manifest.json").read_text(encoding="utf-8"))
+    split_name = source_manifest["dataset"]["split"]
+    root = prepare_sid_bench_dataset(
+        split_name,
+        with_audio=False,
+        local_files_only=args.local_files_only,
+    )
+    dataset = load_sid_bench(root, split_name)
+    missing = {item.id for item in dataset.items} - set(traces.traces)
+    if missing:
+        raise ValueError(f"resume cache is missing {len(missing)} clips; cannot calibrate")
+
+    split = make_calibration_split(
+        dataset=f"sid-bench-{split_name}",
+        dataset_revision=SID_BENCH_REVISION,
+        groups={item.id: item.category for item in dataset.items},
+        seed=args.seed,
+        fraction=args.fraction,
+        group_field="example_id",
+    )
+    policy, sweep = search(
+        dataset,
+        traces,
+        split,
+        thresholds=THRESHOLD_GRID,
+        persistence_grid=PERSISTENCE_GRID,
+        nonbreak_budget=args.nonbreak_budget,
+    )
+
+    def scored(ids: tuple[str, ...], threshold: float, persistence: int) -> dict[str, object]:
+        return score(dataset, traces, ids, threshold=threshold, persistence_frames=persistence)
+
+    incumbent = (traces.incumbent_threshold, 1)
+    calibration_incumbent = scored(split.calibration_ids, *incumbent)
+    # Selection is finished; only now is the held-out side touched, and the
+    # guard refuses if the policy was not frozen on this exact split.
+    require_heldout_evaluation(policy, split, split.heldout_ids)
+    heldout_frozen = scored(
+        split.heldout_ids,
+        float(policy.parameters["threshold"]),
+        int(policy.parameters["persistence_frames"]),
+    )
+    heldout_incumbent = scored(split.heldout_ids, *incumbent)
+
+    temporary = output.with_name(f".{output.name}-partial")
+    shutil.rmtree(temporary, ignore_errors=True)
+    temporary.mkdir(parents=True)
+    try:
+        _write_calibration_artifact(
+            temporary,
+            split=split,
+            policy=policy,
+            traces=traces,
+            args=args,
+            calibration_incumbent=calibration_incumbent,
+            heldout_frozen=heldout_frozen,
+            heldout_incumbent=heldout_incumbent,
+            incumbent=incumbent,
+            sweep=sweep,
+        )
+    except BaseException:
+        # A partial artifact must never survive a failure; it would be
+        # indistinguishable from a completed one apart from its name.
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+    temporary.rename(output)
+    print(output)
+    return 0
+
+
+def _write_calibration_artifact(
+    temporary: Path,
+    *,
+    split: object,
+    policy: object,
+    traces: object,
+    args: argparse.Namespace,
+    calibration_incumbent: dict[str, object],
+    heldout_frozen: dict[str, object],
+    heldout_incumbent: dict[str, object],
+    incumbent: tuple[float, int],
+    sweep: list[dict[str, object]],
+) -> None:
+    write_calibration_split(temporary / "split.json", split)
+    write_frozen_policy(temporary / "policy.json", policy)
+    _write_json_file(temporary / "sweep.json", sweep)
+    _write_json_file(
+        temporary / "heldout.json",
+        {
+            "frozen_policy": heldout_frozen,
+            "incumbent": heldout_incumbent,
+            "incumbent_parameters": {"threshold": incumbent[0], "persistence_frames": 1},
+        },
+    )
+    _write_json_file(
+        temporary / "manifest.json",
+        {
+            "schema_version": 1,
+            "created_at": datetime.now(UTC).isoformat(),
+            "source_run": str(traces.source_run),
+            "source_manifest_sha256": _sha256_path(traces.source_run / "manifest.json"),
+            "source_policy_sha256": _sha256_path(traces.source_run / "policy.json"),
+            "source_metrics_sha256": _sha256_path(traces.source_run / "metrics.json"),
+            "inference_rerun": False,
+            "nonbreak_budget": args.nonbreak_budget,
+            "threshold_grid": list(THRESHOLD_GRID),
+            "persistence_grid": list(PERSISTENCE_GRID),
+        },
+    )
+    (temporary / "report.md").write_text(
+        render_report(
+            split=split,
+            policy=policy,
+            incumbent_threshold=incumbent[0],
+            nonbreak_budget=args.nonbreak_budget,
+            calibration_incumbent=calibration_incumbent,
+            heldout_frozen=heldout_frozen,
+            heldout_incumbent=heldout_incumbent,
+            source_run=traces.source_run,
+        ),
+        encoding="utf-8",
+    )
+    (temporary / "SUCCESS").write_text("ok\n", encoding="utf-8")
+
+
 def _prepare_sid_bench(args: argparse.Namespace) -> int:
     root = prepare_sid_bench_dataset(
         args.split,
@@ -1994,6 +2157,18 @@ def build_parser() -> argparse.ArgumentParser:
     sid_vap_gpt.add_argument("--local-files-only", action="store_true")
     sid_vap_gpt.add_argument("--quiet", action="store_true")
     sid_vap_gpt.set_defaults(handler=_run_sid_bench_vap_gpt)
+
+    sid_calibrate = commands.add_parser(
+        "calibrate-sidbench",
+        help="freeze a two-stage interruption policy on a seeded calibration split",
+    )
+    sid_calibrate.add_argument("--run", type=Path, required=True)
+    sid_calibrate.add_argument("--output-dir", type=Path, required=True)
+    sid_calibrate.add_argument("--seed", type=int, default=0)
+    sid_calibrate.add_argument("--fraction", type=float, default=0.3)
+    sid_calibrate.add_argument("--nonbreak-budget", type=float, default=0.10)
+    sid_calibrate.add_argument("--local-files-only", action="store_true")
+    sid_calibrate.set_defaults(handler=_calibrate_sid_bench)
 
     sid_kyutai = commands.add_parser(
         "run-sidbench-kyutai",

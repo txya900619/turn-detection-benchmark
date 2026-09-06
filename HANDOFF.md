@@ -466,11 +466,22 @@ Still open:
 
 ### P1 — Build a valid calibration path for production policies
 
-1. Find or construct an independent Chinese development/calibration split for interruption and HOLD policy design.
-2. Record dataset revision, license, checksums, provenance, and leakage audit.
-3. Add a first-class calibration artifact that freezes thresholds and mapping parameters before held-out evaluation.
-4. Evaluate a long-HOLD guard and the proposed two-stage interruption policy.
-5. Report both component quality and end-to-end decision latency.
+Done on 2026-09-06:
+
+1. `src/turn_eval/calibration.py` supplies seeded, stratified, grouped calibration splits and frozen policy artifacts. `require_heldout_evaluation` fails closed on a policy frozen on a different split, a policy selected on the held-out side, and an evaluation set that reaches into calibration ids.
+2. `turn-eval calibrate-sidbench` fits the two-stage interruption policy by replaying a completed run's cached traces. At the incumbent parameters the replay reproduces that run's published metrics exactly, which is what licenses the comparison.
+3. Both languages independently select 8 frames (640 ms) of confirmation. Held-out ZH: recall 82.60% to 86.23%, non-break trigger 26.57% to 9.43%. Held-out EN: recall 67.53% to 82.99%, non-break trigger 41.14% to 6.00%.
+4. The gain is a trade, and the aggregate APT hides it: response latency p50 roughly triples, and immediate-barge-in recall falls 3 to 8 points while mid-turn recall rises 10 to 35. See [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
+
+Blocked, with the reason recorded:
+
+- **The long-HOLD guard cannot be calibrated on eot-bench.** ZH holds 45 spans of 1 s or more across 38 conversations and exactly one span at 2-5 s; a 30% split leaves about 13 spans to fit on and 32 to test on. Closing this needs more long-pause data, not more models. See [`docs/BENCHMARK_COVERAGE_AUDIT.md`](docs/BENCHMARK_COVERAGE_AUDIT.md).
+
+Still open:
+
+1. Decide whether the two-stage latency cost is acceptable for the target product, or fit a variant that keeps a fast path for immediate barge-in.
+2. Report end-to-end decision latency including VAD and policy delay, not only the model's response latency.
+3. Re-run the frozen policy on the noise split, which the current artifact does not cover.
 
 Do not use the SID test set or FastTurn test set to choose final production thresholds.
 
