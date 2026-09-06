@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import os
 import platform
@@ -19,6 +18,7 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from turn_eval.core.hashing import canonical_json, content_hash
 from turn_eval.core.types import (
     EvaluationMode,
     ModelDescriptor,
@@ -42,14 +42,6 @@ REQUIRED_RUN_FILES = frozenset(
 EOT_RUN_FILES = frozenset({"policy.json", "summary.csv", "pareto.parquet"})
 LEGACY_EOT_RUN_FILES = frozenset({"policy.json"})
 STATE_RUN_FILES = frozenset({"label_mapping.json", "summary.csv", "confusion_matrix.csv"})
-
-
-def canonical_json(value: object) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-
-
-def content_hash(value: object) -> str:
-    return hashlib.sha256(canonical_json(value).encode()).hexdigest()
 
 
 def _package_version(name: str) -> str | None:

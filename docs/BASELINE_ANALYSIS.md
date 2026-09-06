@@ -159,17 +159,33 @@ Running VapGPT OTO measured this. Its native floor state has median 0.500 on
 TurnBench dual-channel audio and saturates above 0.958 on all 1,600 SID English
 clips, with the interruption and non-break distributions overlapping almost
 completely. With its externally frozen threshold it commits at the first 20 ms
-frame of every clip: 31.45% recall, 78.38% FIR, and a 100% non-break trigger
-rate. Mimi and ESPnet commit signals with the same relative definition and are
-blocked for the same reason.
+frame of every clip. Mimi and ESPnet commit signals with the same relative
+definition and are blocked for the same reason.
 
-The consequence is that DualTurn leads SID-Bench because its signal asks "is
-this user about to speak", which survives the fallback, and not because it
-discriminates interruptions better than the native architectures. The
-Realtime-VAP rows below are degenerate under the same criterion: their non-break
-trigger rates are largely an artifact of the fallback, not a property of that
-checkpoint. Kyutai Semantic VAD is the one remaining dual-channel architecture
-whose signal survives, and it has not yet been run.
+Partner independence is necessary but not sufficient. Kyutai's streams are batch
+items, verified bit-for-bit independent of the partner slot, so the fallback
+costs it nothing, and it still fails: `1 - P(turn ending)` asks "is this speaker
+not about to finish", which is true for nearly all of an utterance. Its per-clip
+maximum is exactly 1.0000 in every category and all 1,600 clips commit at the
+first 80 ms frame.
+
+| EN | Signal | Recall | FIR | Non-break FPR | Middle recall |
+|---|---|---:|---:|---:|---:|
+| DualTurn | user 0-240 ms future activity | 69.00% | 32.25% | 41.40% | — |
+| Realtime-VAP | floor state | 44.00% | 67.25% | 92.40% | — |
+| Kyutai | 1 - P(turn ending) | 37.27% | 74.38% | 100.00% | 0.17% |
+| VapGPT OTO | native floor state | 31.45% | 78.38% | 100.00% | 0.17% |
+
+A usable SID signal must be low by default and rise at the onset. DualTurn's
+0-240 ms forward horizon is the only evaluated signal that is both partner
+independent and onset localizing, and 58.6% of English non-break clips never
+trigger it. Every other architecture commits at the first frame of every clip.
+
+The consequence is that DualTurn's SID-Bench lead is close to uncontested rather
+than close to fair. It is not evidence that its architecture discriminates
+interruptions better than the alternatives; it is evidence that the alternatives
+cannot be measured on this benchmark. The Realtime-VAP rows below are degenerate
+in the same way, so their non-break trigger rates are largely an artifact.
 
 DualTurn's frozen derived-FVAD policy is the strongest current SID-Bench
 fallback: EN/ZH recall is 69.00%/81.45%, FIR is 32.25%/14.44%, and APT is
@@ -218,7 +234,7 @@ semantic path for middle-turn speech.
   a native Chinese semantic-interruption model is still an open gap.
 
 The canonical normalized report and plots are under
-`results/comparison/20260906T111447Z/`.
+`results/comparison/20260906T135941Z/`.
 
 The reproducible SID paired report is under
 `results/analysis/sidbench/20260906T080000Z/`. It hashes all manifests, frozen

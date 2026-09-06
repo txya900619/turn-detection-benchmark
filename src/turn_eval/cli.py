@@ -522,6 +522,39 @@ def _run_sid_bench_vap_gpt(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_sid_bench_kyutai(args: argparse.Namespace) -> int:
+    project = Path("environments/kyutai_semantic_vad").resolve()
+    command = [
+        "uv",
+        "run",
+        "--project",
+        str(project),
+        "--frozen",
+        "python",
+        str(project / "run_sidbench.py"),
+        "--split",
+        args.split,
+        "--output-dir",
+        str(args.output_dir),
+        "--device",
+        args.device,
+        "--threshold",
+        str(args.threshold),
+    ]
+    if args.limit is not None:
+        command.extend(("--limit", str(args.limit)))
+    if args.local_files_only:
+        command.append("--local-files-only")
+    if args.quiet:
+        command.append("--quiet")
+    environment = os.environ.copy()
+    environment.pop("VIRTUAL_ENV", None)
+    completed = subprocess.run(command, check=False, env=environment)
+    if completed.returncode:
+        raise RuntimeError(f"Kyutai SID-Bench backend exited with status {completed.returncode}")
+    return 0
+
+
 def _run_sid_bench_dualturn(args: argparse.Namespace) -> int:
     project = Path("environments/dualturn_endpointing").resolve()
     command = [
@@ -1879,6 +1912,19 @@ def build_parser() -> argparse.ArgumentParser:
     sid_vap_gpt.add_argument("--local-files-only", action="store_true")
     sid_vap_gpt.add_argument("--quiet", action="store_true")
     sid_vap_gpt.set_defaults(handler=_run_sid_bench_vap_gpt)
+
+    sid_kyutai = commands.add_parser(
+        "run-sidbench-kyutai",
+        help="run pinned Kyutai Semantic VAD on a SID-Bench split as a native single stream",
+    )
+    sid_kyutai.add_argument("--split", choices=("en", "zh", "noise"), required=True)
+    sid_kyutai.add_argument("--output-dir", type=Path, required=True)
+    sid_kyutai.add_argument("--device", default="cuda")
+    sid_kyutai.add_argument("--threshold", type=float, default=0.9735107421875)
+    sid_kyutai.add_argument("--limit", type=int)
+    sid_kyutai.add_argument("--local-files-only", action="store_true")
+    sid_kyutai.add_argument("--quiet", action="store_true")
+    sid_kyutai.set_defaults(handler=_run_sid_bench_kyutai)
 
     sid_dualturn = commands.add_parser(
         "run-sidbench-dualturn",
