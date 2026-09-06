@@ -29,6 +29,10 @@ raw run directories they were built from are not. Restore or regenerate those
 runs before reproducing numbers, and select rows through the comparison manifest
 rather than by scanning run directories for a `SUCCESS` marker.
 
+`results/ARCHIVE_MANIFEST.json` is a hashed inventory of the uncommitted run
+tree. Re-run `scripts/archive_manifest.py` after restoring `results/` elsewhere
+to confirm the copy matches file for file.
+
 ## Development
 
 Use the shared Hugging Face cache and let `uv` manage the Python environment:

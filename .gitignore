@@ -222,6 +222,7 @@ __marimo__/
 # only the canonical comparison, analysis, and runtime artifacts named in
 # HANDOFF.md section 8 are committed as a small provenance record.
 results/*
+!results/ARCHIVE_MANIFEST.json
 !results/comparison/
 !results/analysis/
 !results/runtime/

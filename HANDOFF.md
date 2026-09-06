@@ -19,6 +19,7 @@ Important repository-state warning:
 
 - The implementation is committed on `main`. `origin/main` is still at the original commit `cb22646`; nothing has been pushed.
 - Raw benchmark run directories under `results/` are **not** committed and exist only on this machine. Preserve `results/` separately if moving or cloning the work.
+- [`results/ARCHIVE_MANIFEST.json`](results/ARCHIVE_MANIFEST.json) indexes that tree: 12,587 files, 0.963 GiB, 53 completed runs, every file hashed. Regenerate it with `uv run python scripts/archive_manifest.py --output results/ARCHIVE_MANIFEST.json` after a restore to prove the copy is identical.
 - Only the canonical comparison, analysis, and runtime artifacts listed in section 8 are tracked in Git, as a provenance record.
 - Do **not** run `git reset --hard`, `git checkout --`, `git clean`, or otherwise discard the working tree; untracked run artifacts are not recoverable from Git.
 
