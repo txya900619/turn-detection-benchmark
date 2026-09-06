@@ -21,7 +21,7 @@ and which are simply unrun is audited in
 before drawing a cross-benchmark ranking from the comparison report.
 
 The canonical cross-benchmark comparison is
-[`results/comparison/20260906T073000Z/`](results/comparison/20260906T073000Z/):
+[`results/comparison/20260906T105645Z/`](results/comparison/20260906T105645Z/):
 `report.md`, `summary.csv`, `summary.json`, `manifest.json`, and figures. That
 directory, the two analysis reports under `results/analysis/`, and the runtime
 comparison under `results/runtime/` are committed as a provenance record; the

@@ -9,7 +9,7 @@ This is the primary handoff document for the next working session. Read this fil
 - The benchmark harness, dataset adapters, model adapters, metrics, reports, runtime probes, and CI fixtures are implemented.
 - The complete test suite passes: **128 passed** with the `smart-turn` extra installed. A plain `uv sync --frozen`, which is what CI does, gives 127 passed and 1 skipped.
 - No benchmark or model process was running at the time of handoff.
-- The canonical cross-benchmark report is in [`results/comparison/20260906T073000Z/`](results/comparison/20260906T073000Z/).
+- The canonical cross-benchmark report is in [`results/comparison/20260906T105645Z/`](results/comparison/20260906T105645Z/).
 - The current research interpretation is in [`docs/BASELINE_ANALYSIS.md`](docs/BASELINE_ANALYSIS.md).
 - English and Chinese component suites have been run for the selected open-weight baselines.
 - **X2-Turn is explicitly deferred** because the released checkpoint is very large. Do not resume a full X2-Turn run unless the user reverses this decision.
@@ -196,7 +196,7 @@ New analysis code:
 
 ### 8.1 Unified comparison report
 
-Canonical directory: [`results/comparison/20260906T073000Z/`](results/comparison/20260906T073000Z/)
+Canonical directory: [`results/comparison/20260906T105645Z/`](results/comparison/20260906T105645Z/)
 
 It contains:
 
@@ -327,12 +327,20 @@ The exact VapGPT OTO reproduction matches the official score. Detailed tolerance
 
 ### 9.3 FastTurn Chinese test set
 
-Two-state EOT:
+Two-state EOT, on the identical 18,352 Complete/Incomplete clips:
 
-| Model | Complete F1 | Incomplete F1 | Macro-F1 | Incomplete → Complete | p50 inference | RTF | Size |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| TurnSense INT8 | 85.51% | 59.48% | 72.50% | 23.77% | 35.6 ms | 0.0193 | 52.2 MB |
-| SmartTurn v3.2 | 76.48% | 34.14% | 55.31% | 54.74% | 164.7 ms | 0.0694 | 8.68 MB |
+| Model | Complete F1 | Incomplete F1 | Macro-F1 | Incomplete → Complete | Abstain | p50 inference | RTF | Size |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| TurnSense INT8 | 85.51% | 59.48% | 72.50% | 23.77% | 2.85% | 35.6 ms | 0.0193 | 52.2 MB |
+| Easy Turn | 84.67% | 56.34% | 70.50% | 25.75% | 6.22% | 455 ms | 0.244 | 3.45 GB |
+| SmartTurn v3.2 | 76.48% | 34.14% | 55.31% | 54.74% | 0.00% | 164.7 ms | 0.0694 | 8.68 MB |
+
+The Easy Turn row is derived from its completed four-state run by restriction,
+without rerunning inference; its RTF is inherited from that run rather than
+measured on the subset. TurnSense leads it on every two-state metric at about
+one sixty-sixth of the size. Do not compare Easy Turn's four-state Macro-F1 of
+79.41% against a two-state Macro-F1: different clip sets, different label
+vocabularies, and the ordering inverts on a shared axis.
 
 TurnSense produced 523 abstentions, or 2.85% of examples. On 18,352 paired valid predictions, TurnSense accuracy was 77.93% versus SmartTurn at 65.33%, a +12.59 pp difference with 95% CI [11.72, 13.49]. The gain is mainly on longer examples and incomplete turns; TurnSense was 0.71 pp worse on examples up to one second.
 

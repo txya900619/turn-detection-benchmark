@@ -122,6 +122,30 @@ Incomplete-to-Complete error from 23.77% to 25.56%. Of 108 abstained Incomplete
 clips, SmartTurn cuts off 65. Such a hybrid must be selected on an external
 calibration set with an explicit false-cutoff budget, not on FastTurn test.
 
+### Easy Turn on the same two-state axis
+
+Easy Turn's completed four-state run already covers the 18,352 Complete and
+Incomplete clips, so its two-state row is derived by restriction rather than by
+rerunning inference (`turn-eval rescore-fastturn-eot`). Predictions of
+`backchannel` or `wait` on a two-state clip are abstentions scored as closed-set
+errors, which is the policy the source run already declared.
+
+| Model | Complete F1 | Incomplete F1 | Macro-F1 | Inc-to-Com | Abstain | p50 | Size |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| TurnSense INT8 | 85.51% | 59.48% | 72.50% | 23.77% | 2.85% | 36 ms | 52 MB |
+| Easy Turn | 84.67% | 56.34% | 70.50% | 25.75% | 6.22% | 455 ms | 3.45 GB |
+| SmartTurn v3.2 | 76.48% | 34.14% | 55.31% | 54.74% | 0.00% | 165 ms | 8.7 MB |
+
+TurnSense leads Easy Turn on every two-state metric at roughly one sixty-sixth
+of the size. Easy Turn misroutes 1,135 two-state clips into Backchannel or Wait,
+which is 6.19 percentage points of pure abstention loss that the four-state view
+hides.
+
+This does not make Easy Turn a weak model; it makes the two views
+non-interchangeable. Reading its four-state Macro-F1 of 79.41% against
+TurnSense's two-state 72.50% compares different clip sets under different label
+vocabularies, and inverts the ordering that holds on a shared axis.
+
 ## Interruption
 
 The comparison set here is two models, both derived and both single-channel
@@ -177,7 +201,7 @@ semantic path for middle-turn speech.
   a native Chinese semantic-interruption model is still an open gap.
 
 The canonical normalized report and plots are under
-`results/comparison/20260906T073000Z/`.
+`results/comparison/20260906T105645Z/`.
 
 The reproducible SID paired report is under
 `results/analysis/sidbench/20260906T080000Z/`. It hashes all manifests, frozen

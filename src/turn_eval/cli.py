@@ -88,11 +88,20 @@ from turn_eval.models.x2_turn import (
 )
 from turn_eval.reports.comparison import write_comparison_report
 from turn_eval.reports.eot_analysis import write_eot_hold_analysis
+from turn_eval.reports.fastturn_rescore import (
+    EOT_STATES,
+    derive_eot_run,
+    derived_benchmark_metadata,
+    derived_model_options,
+    descriptor_from_manifest,
+    evaluation_mode_from_manifest,
+    read_source_run,
+)
 from turn_eval.reports.plots import write_suite_plots
 from turn_eval.reports.runtime import write_runtime_report
 from turn_eval.reports.sid_analysis import write_sid_paired_analysis
 from turn_eval.reports.summary import recompute_run_metrics, render_markdown
-from turn_eval.runner.clip_classification import run_clip_classification
+from turn_eval.runner.clip_classification import ClipClassificationRun, run_clip_classification
 from turn_eval.runner.decision_point import run_decision_points
 
 
@@ -1338,6 +1347,63 @@ def _run_fastturn(args: argparse.Namespace) -> int:
     return 0
 
 
+def _rescore_fastturn_eot(args: argparse.Namespace) -> int:
+    source = read_source_run(args.run)
+    derived = derive_eot_run(source)
+    metrics = evaluate_turn_states(derived.records, EOT_STATES)
+
+    source_runtime = json.loads((source.run_dir / "runtime.json").read_text(encoding="utf-8"))
+    # Wall-clock and audio totals describe the full source suite. They are
+    # inherited rather than split, because per-clip audio duration is not
+    # recorded in the artifact and a scaled estimate would be invented. Only the
+    # latency percentiles are recomputed, from the derived subset's own records.
+    run = ClipClassificationRun(
+        predictions=derived.records,
+        initialization_time_ms=source_runtime["initialization_time_ms"],
+        inference_wall_s=source_runtime["inference_wall_s"],
+        resampling_wall_s=source_runtime["resampling_wall_s"],
+        audio_s=source_runtime["audio_s"],
+    )
+    derivation = dict(derived.derivation)
+    derivation["runtime_aggregates"] = "inherited-from-source-run-not-subset-measured"
+    derivation["runtime_latency_percentiles"] = "recomputed-on-derived-subset"
+
+    descriptor = descriptor_from_manifest(source.manifest)
+    mode = evaluation_mode_from_manifest(source.manifest)
+    model_options = derived_model_options(source.manifest, derivation)
+    run_id = make_state_run_id(descriptor, derived.label_mapping, model_options)
+
+    dataset_metadata = dict(source.manifest["dataset"])
+    class_counts = dict(dataset_metadata.get("class_counts", {}))
+    dataset_metadata["class_counts"] = {
+        state.value: class_counts[state.value]
+        for state in EOT_STATES
+        if state.value in class_counts
+    }
+    dataset_metadata["evaluated_rows"] = len(derived.records)
+
+    manifest = build_state_manifest(
+        run_id=run_id,
+        model=descriptor,
+        mode=mode,
+        label_mapping=derived.label_mapping,
+        model_options=model_options,
+        dataset_metadata=dataset_metadata,
+        benchmark_metadata=derived_benchmark_metadata(source.manifest, derived.records),
+        execution_metadata=dict(source.manifest["execution"]),
+    )
+    destination = write_state_run_artifacts(
+        args.output_dir / "zh" / "fastturn" / "eot" / descriptor.name,
+        run_id=run_id,
+        manifest=manifest,
+        run=run,
+        label_mapping=derived.label_mapping,
+        metrics=metrics,
+    )
+    print(destination)
+    return 0
+
+
 def _prepare_sid_bench(args: argparse.Namespace) -> int:
     root = prepare_sid_bench_dataset(
         args.split,
@@ -1688,6 +1754,14 @@ def build_parser() -> argparse.ArgumentParser:
     fastturn_run.add_argument("--quiet", action="store_true")
     fastturn_run.add_argument("--local-files-only", action="store_true")
     fastturn_run.set_defaults(handler=_run_fastturn)
+
+    fastturn_rescore = commands.add_parser(
+        "rescore-fastturn-eot",
+        help="derive the two-state FastTurn EOT row from a completed multi-state run",
+    )
+    fastturn_rescore.add_argument("run", type=Path)
+    fastturn_rescore.add_argument("--output-dir", type=Path, default=Path("results"))
+    fastturn_rescore.set_defaults(handler=_rescore_fastturn_eot)
 
     sid_prepare = commands.add_parser(
         "prepare-sidbench",

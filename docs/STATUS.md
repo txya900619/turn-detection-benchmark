@@ -276,7 +276,7 @@ hashes 65 source artifacts and records every excluded partial, diagnostic,
 intermediate, or superseded run. The report keeps native/derived and
 single/dual-channel modes visible and explicitly refuses a single overall
 score. Canonical outputs are stored under
-`results/comparison/20260906T073000Z/`.
+`results/comparison/20260906T105645Z/`.
 
 TurnBench dev access was verified for the pinned 38-conversation revision. The
 pinned official scorer reproduced `1904+/1063-` EOT events, `347+/3733-` INT
@@ -574,7 +574,7 @@ policy. Full interpretation is recorded in `docs/BASELINE_ANALYSIS.md`.
 ## Next
 
 The schema-v2 unified comparison at
-`results/comparison/20260906T073000Z/` contains 39 selected rows. FastTurn EOT
+`results/comparison/20260906T105645Z/` contains 40 selected rows. FastTurn EOT
 has two rows (TurnSense and SmartTurn) and FastTurn Full has one native
 four-state row (Easy Turn); they render in separate tables and normalized CSV
 columns. DualTurn EN/ZH eot-bench rows and refreshed EOT Pareto plots are now

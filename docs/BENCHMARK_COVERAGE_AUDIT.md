@@ -1,6 +1,6 @@
 # Cross-Benchmark Coverage Audit
 
-Audited: 2026-09-06 UTC
+Audited: 2026-09-06 UTC. Last updated after closing gap G4.
 
 ## Purpose
 
@@ -17,15 +17,15 @@ simply unrun work.
 ## Verdict
 
 Across 11 models and 8 benchmark splits there are 88 cells. The canonical
-comparison fills **23**. Of the 65 empty cells, **28 are blocked** by a
-capability or protocol limit, **13 are recorded decisions**, and **24 are gaps
+comparison fills **24**. Of the 64 empty cells, **28 are blocked** by a
+capability or protocol limit, **13 are recorded decisions**, and **23 are gaps
 with no recorded reason**.
 
 Seven of the ten evaluated models appear in exactly one benchmark. Only DualTurn
 and Realtime-VAP have cross-benchmark coverage, and both of the interruption
 rows in the canonical report belong to those two models. Conclusions that rank
 models across benchmarks therefore rest on a much narrower sample than the
-39-row report suggests.
+40-row report suggests.
 
 ## Method
 
@@ -36,7 +36,7 @@ Classification is decided by comparing what a benchmark requires against what a
 model declares in its `ModelDescriptor`
 ([`src/turn_eval/core/types.py:276`](../src/turn_eval/core/types.py)) and in the
 `channel_mode` / `execution_mode` / `signal_provenance` fields recorded in
-[`results/comparison/20260906T073000Z/summary.csv`](../results/comparison/20260906T073000Z/summary.csv).
+[`results/comparison/20260906T105645Z/summary.csv`](../results/comparison/20260906T105645Z/summary.csv).
 
 | Code | Meaning |
 | --- | --- |
@@ -89,7 +89,7 @@ explains most of the `BLOCKED` cells in both directions.
 | Mimi Endpointer | GAP | GAP | DONE | BLOCKED | BLOCKED | GAP | DECIDED | GAP |
 | Kyutai Semantic VAD | GAP | GAP | DONE | BLOCKED | BLOCKED | **GAP** | DECIDED | GAP |
 | TurnSense INT8 | **GAP** | **GAP** | DECIDED | DONE | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
-| Easy Turn | BLOCKED | BLOCKED | BLOCKED | **GAP** | DONE | BLOCKED | BLOCKED | BLOCKED |
+| Easy Turn | BLOCKED | BLOCKED | BLOCKED | DONE | DONE | BLOCKED | BLOCKED | BLOCKED |
 | X2-Turn 4B | BLOCKED | BLOCKED | BLOCKED | DECIDED | DECIDED | BLOCKED | BLOCKED | BLOCKED |
 
 Bold cells are the prioritized gaps listed below.
@@ -132,7 +132,7 @@ cells together.
 | G1 | VapGPT OTO on SID-EN, SID-noise | GPU inference |
 | G2 | TurnSense on eot-ZH, eot-EN | New adapter, then CPU inference |
 | G3 | Kyutai on SID-EN, SID-noise | GPU inference |
-| G4 | Easy Turn on FastTurn 2-state | Re-scoring only, no inference |
+| G4 | Easy Turn on FastTurn 2-state | Closed 2026-09-06, re-scoring only |
 | G5 | DualTurn and Realtime-VAP on FastTurn 2-state | Blocked on P1 calibration |
 | G6 | VapGPT, ESPnet, Mimi, Kyutai on eot-EN and eot-ZH | 8 cells, low value |
 | G7 | SmartTurn v3.2 on SID-EN, SID-ZH, SID-noise | Cheap, CPU |
@@ -179,16 +179,39 @@ at 80 ms. Same precedent and threshold procedure as G1. Lower priority than G1
 because its interruption signal is already `derived`, so it does not add the
 native-provenance evidence that G1 does.
 
-### G4. Easy Turn restricted to the FastTurn 2-state subset
+### G4. Easy Turn restricted to the FastTurn 2-state subset — CLOSED
 
-**Analysis only; requires no new inference.** The completed Easy Turn run covers
-all 22,432 clips, which already includes the 18,352 Complete/Incomplete clips
-used by the 2-state leaderboard. Restricting the existing predictions to that
-subset would place Easy Turn, TurnSense, and SmartTurn on one axis.
+Closed on 2026-09-06 by `turn-eval rescore-fastturn-eot`, which restricts a
+completed multi-state run to the native Complete/Incomplete subset without
+rerunning inference. The derived run pins the source run's manifest and
+prediction hashes and records `inference_rerun: false`.
 
-A mapping decision must be recorded first: Easy Turn may predict `backchannel`
-or `wait` on a 2-state clip. That is a closed-set confusion, not an abstention,
-and must be scored as an error rather than dropped.
+Easy Turn predicted `backchannel` or `wait` on **1,135** of the 18,352 two-state
+clips. Following the source run's own declared `out_of_suite_labels` policy,
+those become abstentions that stay in the denominator as closed-set errors; the
+raw four-way scores are preserved in the derived artifact. Total abstentions are
+1,141, or 6.22%, against TurnSense's 2.85%.
+
+Result, on the identical 18,352 clips:
+
+| Model | Complete F1 | Incomplete F1 | Macro-F1 | Inc→Com | Abstain | p50 | Size |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| TurnSense INT8 | 85.51% | 59.48% | **72.50%** | **23.77%** | 2.85% | 36 ms | 52 MB |
+| Easy Turn | 84.67% | 56.34% | 70.50% | 25.75% | 6.22% | 455 ms | 3.45 GB |
+| SmartTurn v3.2 | 76.48% | 34.14% | 55.31% | 54.74% | 0.00% | 165 ms | 8.7 MB |
+
+TurnSense is ahead of Easy Turn on every two-state metric while being about 66
+times smaller and an order of magnitude faster. This is the first comparison of
+the two on a shared axis, and it reverses the impression left by placing Easy
+Turn's four-state Macro-F1 of 79.41% next to TurnSense's two-state 72.50%: those
+two numbers were never comparable, because they score different clip sets under
+different label vocabularies.
+
+Runtime caveat: the derived run recomputes latency percentiles on the subset,
+which raises Easy Turn's p50 from 417 ms to 455 ms because the two-state clips
+are longer on average than the backchannel clips excluded from the subset. The
+wall-clock and audio totals, and therefore RTF, are inherited from the source
+run and are not subset measurements; the manifest records this.
 
 ### G5. DualTurn and Realtime-VAP on the FastTurn 2-state subset
 
@@ -247,5 +270,5 @@ not measure.
 Update this file whenever a model or benchmark is added, and re-derive the
 matrix from the canonical comparison manifest rather than from memory. The
 matrix above was generated against
-`results/comparison/20260906T073000Z/summary.csv`, whose 65 input hashes were
-re-verified on 2026-09-06.
+`results/comparison/20260906T105645Z/summary.csv`, which selects 40 rows from 69
+hashed input artifacts.
